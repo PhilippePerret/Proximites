@@ -48,6 +48,19 @@ class String
   end
   alias :to_seconds :as_seconds
 
+  # truncate le texte
+  def segmente longueur, heading = ''
+    li  = Array.new
+    seg = self
+    while seg.length > longueur
+      ri = seg.rindex(' ', longueur)
+      li << seg[0..ri]
+      seg = seg[ri+1..-1]
+    end
+    seg.length > 0 && li << seg
+    return heading + li.join("\n#{heading}")
+  end
+
   # Transformer les caractères diacritiques et autres en ASCII
   # simples
   unless defined? DATA_NORMALIZE

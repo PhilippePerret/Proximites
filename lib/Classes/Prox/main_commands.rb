@@ -21,6 +21,7 @@ class << self
   # Check d'un fichier dont le path doit être défini en argument.
   #
   def check
+    texte_courant.set_info(:last_command, ARGV.join(' '))
     texte_courant.analyse
   end
   alias :analyse :check
@@ -28,7 +29,13 @@ class << self
   # Montre les informations d'occurence et de proximité du fichier donné
   # en argument
   def show
+    texte_courant.set_info(:last_command, ARGV.join(' '))
     show_informations
+  end
+
+  # Affichage des infos sur le texte (ne pas confondre avec les statistiques)
+  def infos
+    texte_courant.show_infos
   end
 
 end #/<< self

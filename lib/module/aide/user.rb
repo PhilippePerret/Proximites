@@ -134,6 +134,54 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
       Par défaut, le format est du simple texte (.txt)
 
+
+  Affichage des proximités pour corrections
+  ------------------------------------------
+
+  C’est cette fonction qui a présidé à la construction de ce petit programme.
+  Pouvoir faire une analyse des proximités de mots et pouvoir les corriger, sa-
+  chant que le français supporte mal ces répétitions.
+
+  Après avoir lancé le check du texte (`#{'prox check mon/fichier.txt'.jaune}`), on
+  peut lancer la commande suivante pour voir s’afficher toutes les proximités :
+
+      #{'prox show proximites'.jaune}
+
+  (noter que le path a été mémorisé, inutile de le remettre)
+  Cette méthode affiche toutes les proximités de mots trouvés.
+
+  Mais pour un texte long (quelques centaines de pages), c’est plutôt indigeste,
+  et il est beaucoup plus pratique d’afficher les proximités les unes après les
+  autres grâce à l’option `interactif` :
+
+      #{'prox -i show proximites'.jaune}
+
+  Les avantages sont les suivants :
+
+    * On peut indiquer les corrections que l’on fait (les proximités ne seront
+      plus présentées aux prochaines sessions).
+    * On peut supprimer des proximités qu’on ne juge pas pertinentes.
+    * La portion de texte montrée est beaucoup plus grande, qui permet de cor-
+      riger “à l’écran” avant de reporter la correction.
+    * Le programme calcule le temps de correction et estime le temps qui sera
+      nécessaire pour corriger tout le texte. Ce temps est bien sûr enregistré
+      d’une session à l’autre, ce qui permet d’affiner grandement le calcul.
+
+
+  Informations sur le texte
+  -------------------------
+
+  #{'prox[imite] infos'.gras}
+
+  Affiche des informations générales sur le texte, comme la dernière commande
+  utilisée, le nombre de corrections effectuées, la durée moyenne de correction,
+  etc. Ce fichier a été initié notamment pour pouvoir prédire le temps de cor-
+  rection du texte entier en fonction de la durée moyenne de correction.
+
+  Cette commande n’est pas à confondre avec la commande `prox show stats` qui
+  affiche des statistiques sur le nombre de mots, de signes, de proximités,
+  etc.
+
     EOT
   end
   #/tableau_help

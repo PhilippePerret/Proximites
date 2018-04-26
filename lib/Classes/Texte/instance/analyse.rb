@@ -21,6 +21,8 @@ class Texte
 
     marque_temps 'FIN DE L’ANALYSE'
     puts RET2
+
+    set_info(:last_analyse, Time.now)
   end
 
 

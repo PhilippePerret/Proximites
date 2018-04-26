@@ -12,6 +12,11 @@ class Proximity
   # valeur de distance min beaucoup trop élevée. On indique que cette distance
   # ne peut pas être supérieure à 10 pages pour les mots de peu d'occurence
   # DISTANCE_MAX_POSSIBLE = 10 * DISTANCE_MAX_NORMALE
-  DISTANCE_MAX_POSSIBLE = 2 * DISTANCE_MAX_NORMALE # 2 pages
+  DISTANCE_MAX_POSSIBLE = 3 * DISTANCE_MAX_NORMALE # 2 pages
 
+  class << self
+
+    def texte ; @texte ||= Texte.current end
+
+  end
 end #/ Proximity

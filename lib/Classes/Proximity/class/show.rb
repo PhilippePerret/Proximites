@@ -67,10 +67,41 @@ class << self
     end
   end
 
+  # Enregistre la nouvelle durée de correction en calculant la
+  # moyenne.
+  def enregistre_duree_correction_proximite(debut_op, fin_op)
+    duree_op  = fin_op - debut_op
+
+    nbcorprox = texte.info(:nombre_corrections_prox) || 0
+    duree_moy = texte.info(:duree_moy_correction_prox)
+
+    duree_moy =
+      if nbcorprox > 0
+        ((duree_moy.to_f * nbcorprox) + duree_op).to_f / (nbcorprox + 1).round(2)
+      else
+        duree_op.round(2)
+      end
+
+    texte.set_info({
+      nombre_corrections_prox:    nbcorprox + 1,
+      duree_moy_correction_prox:  duree_moy
+      })
+  end
+
+  # TODO : implémenter
+  def temps_moyen_correction_proximite
+
+  end
+  # TODO : implémenter
+  def display_temps_correction_prevu
+
+  end
+
 
   def traite_proximite_mode_interactif iprox
     while true
       print "Opération (n=suivante, o=marquer traitée, s=supprimer, z=tout arrêter) : "
+      debut_op = Time.now.to_f # utile pour compter le temps d'une correction
       c = STDIN.gets.strip_nil
       case c
       when NilClass, 'n' then return false # pour poursuivre
@@ -78,6 +109,7 @@ class << self
       when 'o', 'ok', 'oui'
         # => marquer cette proximité traitée
         yesOrNo('Cette proximité a-t-elle vraiment été traitée ?') && begin
+          enregistre_duree_correction_proximite(debut_op, Time.now.to_f)
           iprox.set_treated
           self.changements_operes = true
         end

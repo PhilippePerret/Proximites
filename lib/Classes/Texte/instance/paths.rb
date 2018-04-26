@@ -15,4 +15,8 @@ class Texte
     @path_file_mots ||= File.join(Prox.folder, "#{Prox.today_mark}-mots.msh")
   end
 
+  def path_file_infos
+    @path_file_infos ||= File.join(Prox.folder, "infos.msh")
+  end
+
 end #/Texte
