@@ -6,7 +6,6 @@
 class Texte
 
   attr_reader :mots
-  attr_reader :nombre_total_mots
 
   # Méthode qui analyse le texte pour le décomposer en mots et faire les
   # occurences.
@@ -25,9 +24,12 @@ class Texte
       add_mot(mot, index_mot, current_offset)
       current_offset += mot.length + 1
     end
-    @nombre_total_mots = mots.count
     # Enregistrement des mots et des occurences
     save_mots_et_occurences
+  end
+
+  def nombre_total_mots
+    @nombre_total_mots ||= mots.count
   end
 
   def liste_mots

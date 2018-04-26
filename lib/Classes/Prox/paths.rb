@@ -5,9 +5,8 @@
 class Prox
 class << self
 
-  # Défini dans et par Texte.current si c'est un path de fichier qui est
-  # fourni. Sinon, c'est le dossier où on se trouve.
-  attr_accessor :path
+  def path ; @path ||= CLI.params[-1] end
+  def path= value ; @path = value end # utilisé par class Texte
 
   def today_mark ; @today_mark ||= Time.now.strftime('%Y-%m-%d') end
 

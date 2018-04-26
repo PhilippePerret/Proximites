@@ -17,12 +17,6 @@ class Texte
     end
   end
 
-  # Affiche les occurences, soit en les prenant dans les données, soit en
-  # les calculant en direct, mais @occurences doit être défini
-  def show_occurences
-    Occurences.show
-  end
-
   # Affiche la fréquence des mots, en pourcentage (millième) et la distance
   # minimale pour considérer la répétition.
   def show_distances_per_frequences

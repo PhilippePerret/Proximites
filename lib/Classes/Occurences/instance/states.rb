@@ -5,7 +5,6 @@
 =end
 class Occurences
 
-  attr_accessor :raison_non_traitable
 
   # @return TRUE si le mot doit être traité en proximité
   #
@@ -17,9 +16,9 @@ class Occurences
   end
 
   def check_if_traitable
-    count > 1 || (return 'occurence unique')
-    mot_length > 2 && self.long_a_eviter? && (return 'mot long à éviter')
-    mot_length < 3 && !self.court_a_prendre? && (return 'mot trop court')
+    count > 1 || (return 'unique')
+    mot_length > 2 && self.long_a_eviter?     && (return 'mot long à éviter')
+    mot_length < 3 && !self.court_a_prendre?  && (return 'mot trop court')
     return nil # aucune raison de ne pas le traiter
   end
 

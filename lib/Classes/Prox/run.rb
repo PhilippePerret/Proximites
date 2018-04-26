@@ -4,7 +4,7 @@
 
   ATTENTION : cette classe n'est pas à confondre avec la classe Promixity qui
   gère les proximités elles-mêmes.
-  
+
 =end
 class Prox
 class << self
@@ -18,10 +18,7 @@ class << self
   #
   def run
     marque_temps 'Démarrage du programme…'
-    self.respond_to?(main_command.to_sym) || begin
-      error "La commande `#{main_command.inspect}` est indéfinie."
-    end
-    # Sinon, on joue la commande
+    runable? || return
     send(main_command.to_sym)
   rescue Exception => e
     error e.message
@@ -33,9 +30,21 @@ class << self
     Log.reflog.close
   end
 
-  def main_command
-    @main_command ||= (CLI.command || 'help')
+  # @retourne TRUE si le programme peut être lancé
+  def runable?
+    self.path || main_command == 'help' || begin
+      raise "Le path du fichier ou le texte doivent impérativement être définis, sauf pour la commande `help`."
+    end
+    self.respond_to?(main_command.to_sym) || begin
+      raise "La commande `#{main_command.inspect}` est indéfinie."
+    end
+    return true
+  rescue Exception => e
+    error e.message
+    return false
   end
+
+  def main_command ; @main_command ||= (CLI.command || 'help') end
 
 end #/<< self
 end #/Prox

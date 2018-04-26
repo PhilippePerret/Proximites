@@ -12,7 +12,7 @@ class << self
     t = new()
     t.has_a_file= File.exist?(File.expand_path(texte_or_path))
     if t.has_file?
-      Prox.path = t.path = File.expand_path(texte_or_path)
+      Prox.path= t.path = File.expand_path(texte_or_path)
     else
       t.texte = texte_or_path
     end

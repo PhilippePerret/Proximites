@@ -18,6 +18,17 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
       #{'--verbose/-vb'.gras}     Mode verbeux, pour afficher tous les messages.
 
+      #{'--ksort=[count|mot]'.gras}
+
+          Permet de déterminer la clé de classement lors de l'affichage d'une
+          liste. Par exemple, pour voir les occurences de tous les mots classés
+          par ordre alphabétique :
+
+              prox show occurences text/texte_court --ksort=mot
+
+          Par défaut, c'est `count` qui est utilisé, en mettant les plus nom-
+          breux en haut (ordre décroissant).
+
 
   Aide
   ----
@@ -63,22 +74,25 @@ problème de trop grande proximité des mots dans un texte quelconque.
             normal du programme, on étudie la distance de proximité en fonction
             de l'occurence du mot. Plus il est rare et plus cette distance est
             élevée.
-            
+
             Valeur distance fixe : (#{Texte::Mot::DISTANCE_DEFAUT})
 
   Affichage des résultats
   -----------------------
 
-  #{'prox show [path] [options]'.gras}
+  #{'prox show [what] [path] [options]'.gras}
 
       Permet d'afficher les résultats de test de proximité  et  d'occurence.  On
       peut les afficher en console ou  dans un fichier séparés  ne contenant que
       les informations demandées.
 
+      Noter que le `path` doit toujours être  le dernier paramètre,  et  que  la
+      chose à afficher doit toujours être en second paramètre après le `show`.
+
       Sans option, les données sont affichées en console. Pour les  mettre  dans
       un fichier qui sera ouvert :
 
-          prox show [path] --output=[format]/-o=[format]
+          prox show [path] --output=[format]/-o=[format] --open
 
       Par défaut, le format est du simple texte (.txt)
 

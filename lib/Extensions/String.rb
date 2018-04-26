@@ -25,6 +25,10 @@ class String
     "\033[0;91m#{self}\033[0m"
   end
 
+  def gris
+    "\033[0;90m#{self}\033[0m"
+  end
+
   # Le texte en gras pour le terminal
   def gras
     "\033[1m#{self}\033[0m"

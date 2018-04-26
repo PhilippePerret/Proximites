@@ -3,7 +3,7 @@ class Proximity
 class << self
 
   # TODO Méthodes pour construire les tables à afficher
-  
+
 
 end #/<< self
 end #/ Proximity

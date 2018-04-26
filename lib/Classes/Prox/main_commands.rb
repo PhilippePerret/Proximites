@@ -25,7 +25,7 @@ class << self
   # Check d'un fichier dont le path doit être défini en argument.
   #
   def check
-    Texte.current = CLI.params[1].strip_nil
+    Texte.current= path
     texte_courant.analyse
   end
   alias :analyse :check
@@ -33,6 +33,7 @@ class << self
   # Montre les informations d'occurence et de proximité du fichier donné
   # en argument
   def show
+    Texte.current= path
     show_informations
   end
 
