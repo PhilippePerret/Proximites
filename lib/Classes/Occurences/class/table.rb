@@ -7,14 +7,15 @@
 class Occurences
 class << self
 
-  # La table complète de toutes les listes d'occurences
-  attr_reader :table
+
+  def table ; @table ||= Hash.new  end
 
   # Retourne l'instance {Occurences} du mot +mot+ en la créant si elle n'existe
   # pas.
   def [] mot
-    @table      ||= Hash.new
-    @table[mot] ||= new(mot)
+    # @table      ||= Hash.new
+    # @table[mot] ||= new(mot)
+    table[mot] ||= new(mot)
   end
 
   # Le nombre de mots unique aka d'occurences (pour l'affichage surtout)
@@ -47,14 +48,6 @@ class << self
     else
       # Sortie en console
       display_table_occurences
-    end
-  end
-
-  # Check les proximités de toutes les occurences traitables
-  def check_proximites
-    table.each do |mot, occurence|
-      occurence.traitable? || next
-      occurence.check_proximites
     end
   end
 

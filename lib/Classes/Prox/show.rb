@@ -25,7 +25,7 @@ class << self
     when 'occurences', 'occurence'
       Occurences.show
     when 'stats', 'statistiques'
-      'Je ne sais pas encore afficher les statistiques d’un texte.'.rouge_gras
+      Texte.current.show_statistiques
     else
       error "Je ne connais pas #{what.inspect}… Impossible de l'afficher…"
     end

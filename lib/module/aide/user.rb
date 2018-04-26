@@ -44,6 +44,26 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
               #{'prox show proximites test/texte_long.txt --all'.jaune}
 
+      #{'--only=X'.gras}
+
+          Pour limiter l’affichage à un certain nombre d’items. Ne fonctionne
+          pas encore pour tout.
+          Par exemple, si on veut seulement voir les 100 premiers mots à occu-
+          rences fortes, on peut faire :
+
+              #{'prox show occurences --only=100 mon/fichier/texte.txt'.jaune}
+
+      #{'-tr/--treated'.gras}
+
+          Pour ne considérer que les occurences traitées. Par exemple, quand on
+          demande :
+
+              #{'prox show occurences --treated'.jaune}
+
+          … alors seules les occurences traitées seront affichées.
+          Noter que le path n'est pas indiqué, il s'agit donc du dernier fichier
+          traités.
+
       #{'-t/--texte'.gras}
 
           Indique que le dernier paramètre n’est pas le path  du  fichier texte,

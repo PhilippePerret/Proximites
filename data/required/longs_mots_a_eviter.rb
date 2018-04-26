@@ -6,6 +6,7 @@ class Mot
     'elle',
     'être',
     'nous',
+    'par',
     'pas',
     'son',
     'une',

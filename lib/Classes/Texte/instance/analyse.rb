@@ -8,16 +8,13 @@ class Texte
 
     # Le fait d'appeler la méthode-propriété `mots` va calculer toutes les
     # occurences des mots et créer des instances Texte::Mot de ces mots
-    marque_temps 'Décomposition du texte en mot (occurences)…'
     decompose_en_mots
-    puts "= Décomposition du texte en mots opérée (#{nombre_total_mots} mots)"
+    puts "= Décomposition du texte en mots opérée (#{nombre_total_mots.mille} mots)"
 
-    marque_temps 'Calcul des proximités…'
     Occurences.check_proximites
-    puts "= Occurences analysées (#{Occurences.count} mots uniques)"
-    puts "= Proximités trouvées (#{Proximity.count})"
+    puts "= Occurences analysées (#{Occurences.count.mille} mots uniques)"
+    puts "= Proximités trouvées (#{Proximity.count.mille})"
 
-    marque_temps 'Enregistrement des informations…'
     save_all
     puts "= Données sauvegardées dans les fichiers."
     puts '(utiliser la commande `prox show [what] [path]` pour voir les résultats — ou demander l’aide)'

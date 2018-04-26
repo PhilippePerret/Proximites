@@ -17,7 +17,7 @@ class << self
   # dans le module class/Prox/commands
   #
   def run
-    marque_temps 'Démarrage du programme…'
+    # marque_temps 'Démarrage du programme…'
     runable? || return
     send(main_command.to_sym)
   rescue Exception => e

@@ -17,6 +17,7 @@ class Texte
   # La méthode demande aussi d'enregistrer le résultat
   #
   def decompose_en_mots
+    marque_temps 'Décomposition du texte en mot (occurences)…'
     @mots = Array.new
     # Pour connaitre le décalage du mot.
     current_offset = 0
@@ -26,6 +27,18 @@ class Texte
     end
   end
 
+  # On ajoute le mot du texte à l'instance Texte
+  # En même temps, on gère les instances Occurences
+  #
+  # C'est la grande méthode qui permet ensuite de traiter les proximités.
+  def add_mot mot_str, index_mot, current_offset
+    mot = Texte::Mot.new(self, mot_str, index_mot, current_offset)
+    @mots << mot
+    Occurences.add(mot)
+  end
+
+
+
   def nombre_total_mots
     @nombre_total_mots ||= mots.count
   end
@@ -34,13 +47,5 @@ class Texte
     @liste_mots ||= segment.my_downcase.split(/[^[[:alnum:]]]/)
   end
 
-  # On ajoute le mot du texte à l'instance Texte
-  # En même temps, on gère les instances Occurences
-  def add_mot mot_str, index_mot, current_offset
-    mot = Texte::Mot.new(self, mot_str, index_mot, current_offset)
-    @mots << mot
-    # On ajoute le mot aux occurences de son mot de base
-    Occurences[mot.mot_base].add(mot)
-  end
 
 end#/Texte

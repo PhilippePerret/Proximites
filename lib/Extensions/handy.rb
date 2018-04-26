@@ -18,10 +18,9 @@ def marque_temps operation
   else
     ' '*20
   end + msg
-  # On l'écrit en console et dans le fichier log
-  CLI.verbose? && begin
-    puts(msg)
-    STDOUT.flush
-  end
+  # On l'écrit toujours en console et dans le fichier log, même lorsque
+  # l'option verbose n'est pas choisie
+  puts(msg)
+  STDOUT.flush
   log msg
 end

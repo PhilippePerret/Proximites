@@ -27,7 +27,7 @@ class Occurences
         #    pour voir s'il ne s'agit pas d'une locution répétitive. Pour ce
         #    faire, on doit prendre le mot avant, le mot juste après le mot
         #    avant et le mot après.
-        Mot.locution_repetitive?(last_imot, imot) || begin
+        Texte::Mot.locution_repetitive?(last_imot, imot) || begin
           # => Il faut créer une proximité
           # puts "Le mot #{imot.mot_base.inspect} à #{last_imot.offset} est trop proche de celui à #{imot.offset} (distance = #{distance})"
           prox = Proximity.new(last_imot, imot, distance)
@@ -40,9 +40,9 @@ class Occurences
 
 end #/Occurences
 class Texte
-  class Mot
-    def trop_proche_de? imot, distance
-      (imot.offset - self.offset) < distance
-    end
-  end#/Mot
+class Mot
+  def trop_proche_de? imot, distance
+    (imot.offset - self.offset) < distance
+  end
+end#/Mot
 end #/Texte

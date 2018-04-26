@@ -8,6 +8,9 @@ class Proximity
 
 class << self
 
+  # Mis à true lorsque des changements ont été opérés sur les données des
+  # proximités (par exemple pour les marquer traitées ou supprimées) et qu'il
+  # faudrait donc les enregistrer.
   attr_accessor :changements_operes
 
   # Méthode principale appelée quand on fait `prox show proximites [path]`
@@ -21,10 +24,18 @@ class << self
     show_all        = !!CLI.options[:all]
 
 
+    # Ne prendre que les proximités qui n'ont pas été marquées traitées ou
+    # supprimées (sauf si options --all, traitée dans displayable?)
     liste_proximites = table.values.select{ |prox| prox.displayable? }
     nombre_proximites = liste_proximites.count
 
-    nombre_displayed = "total : #{table.count} / non traitées : #{nombre_proximites}"
+    CLI.options[:only] && begin
+      jusque = CLI.options[:only].to_i - 1
+      liste_proximites = liste_proximites[0..jusque]
+      nombre_affichees = liste_proximites.count
+    end
+
+    nombre_displayed = "total : #{table.count} / non traitées : #{nombre_proximites} / affichées : #{nombre_affichees}"
 
     entete = "=== AFFICHAGE DES PROXIMITÉS (#{nombre_displayed}) ==="
     puts "#{RET3}#{entete}#{RET3}"

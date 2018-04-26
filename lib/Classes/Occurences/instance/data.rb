@@ -39,7 +39,9 @@ class Occurences
   def distance_min
     @distance_min ||= begin
       d = (Proximity::DISTANCE_MAX_NORMALE / presence).to_i
-      d < Proximity::DISTANCE_MIN_NORMALE ? Proximity::DISTANCE_MIN_NORMALE : d
+      d > Proximity::DISTANCE_MIN_POSSIBLE || d = Proximity::DISTANCE_MIN_POSSIBLE
+      d < Proximity::DISTANCE_MAX_POSSIBLE || d = Proximity::DISTANCE_MAX_POSSIBLE
+      d
     end
   end
 

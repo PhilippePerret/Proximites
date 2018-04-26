@@ -9,8 +9,10 @@ class << self
     suivi '-> Occurences::display_table_occurences'
     # La liste à prendre en fonction des options
     self.key_sorted = CLI.options[:ksort] || 'count'
-    puts ENTETE_DISPLAY_TABLE
-    send("table_sorted_by_#{key_sorted}".to_sym).each do |occurence|
+    liste_occurences = send("table_sorted_by_#{key_sorted}".to_sym)
+    entete = ENTETE_DISPLAY_TABLE.sub(/#{' MOT'.ljust(20)}/," MOT (#{liste_occurences.count}/#{count})".ljust(20))
+    puts entete
+    liste_occurences.each do |occurence|
       occurence.mot != '' || next
       occurence.display_table
     end

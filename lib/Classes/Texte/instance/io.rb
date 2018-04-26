@@ -6,6 +6,7 @@
 class Texte
 
   def save_all
+    marque_temps 'Enregistrement des informations…'
     `mkdir -p "#{Prox.folder}"`
     save_mots
     Occurences.save

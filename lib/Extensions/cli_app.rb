@@ -12,6 +12,7 @@ class CLI
     'o'               => 'output',
     'prog'            => 'programmation',
     't'               => 'texte',
+    'tr'              => 'traited',
     'vb'              => 'verbose',
 
     'cur'             => 'current',
