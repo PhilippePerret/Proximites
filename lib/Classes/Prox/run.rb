@@ -26,13 +26,15 @@ class << self
   ensure
     # Ce qu'il faut faire dans tous les cas, en cas d'erreur ou non
     # ---------------------------------------------------------------------
+    # Enregistrer les configurations
+    save_config
     # Fermer le fichier log
     Log.reflog.close
   end
 
   # @retourne TRUE si le programme peut être lancé
   def runable?
-    self.path || main_command == 'help' || begin
+    self.path || main_command == 'help' || main_command == 'aide' || begin
       raise "Le path du fichier ou le texte doivent impérativement être définis, sauf pour la commande `help`."
     end
     self.respond_to?(main_command.to_sym) || begin
@@ -41,6 +43,7 @@ class << self
     return true
   rescue Exception => e
     error e.message
+    puts RET + e.backtrace.join("\n").rouge
     return false
   end
 

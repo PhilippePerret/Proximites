@@ -13,6 +13,13 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
 = COMMANDES PRINCIPALES =
 
+  La base des commandes est :
+
+      #{'prox[imite] [commande] [arg-commande] [path] [options]'.jaune}
+
+  Le `[path]` peut être omis si c’est le même que pour la commande précédente.
+  Pour le moment, les `[options]` doivent impérativement être mises après.
+
   Options générales
   -----------------
 
@@ -24,23 +31,34 @@ problème de trop grande proximité des mots dans un texte quelconque.
           liste. Par exemple, pour voir les occurences de tous les mots classés
           par ordre alphabétique :
 
-              prox show occurences text/texte_court --ksort=mot
+              #{'prox show occurences test/texte_court.txt --ksort=mot'.jaune}
 
           Par défaut, c'est `count` qui est utilisé, en mettant les plus nom-
           breux en haut (ordre décroissant).
 
+      #{'--all'.gras}
+
+          Pour  tout traiter, suivant les cas. Par exemple, avec les proximités,
+          l’option signifie qu’il faut afficher toutes les proximités, même cel-
+          les qui ont été marquées supprimées ou traitées :
+
+              #{'prox show proximites test/texte_long.txt --all'.jaune}
+
+      #{'-t/--texte'.gras}
+
+          Indique que le dernier paramètre n’est pas le path  du  fichier texte,
+          mais le texte à étudier. Par exemple :
+
+              #{'prox -t check "Le texte à étudier."'.jaune}
 
   Aide
   ----
 
-  #{'prox help'.gras}
+  #{'prox'.gras} #{'prox help'.gras} #{'prox aide'.gras}
 
-      Pour afficher cette aide. Noter qu'elle s'affiche aussi lorsqu'on  ne  met
-      que la commande `proximite`.
+      Pour afficher cette aide.
 
-  #{'prox help --programmation/-prog'.gras}
-
-      Si vous êtes développeur, pour afficher l'aide de programmation.
+      Ajouter l’option `-prog/--programmation` pour obenir l’aide programmateur.
 
   Analyse du texte
   ----------------
@@ -92,7 +110,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
       Sans option, les données sont affichées en console. Pour les  mettre  dans
       un fichier qui sera ouvert :
 
-          prox show [path] --output=[format]/-o=[format] --open
+          #{'prox show [path] --output=[format]/-o=[format] --open'.jaune}
 
       Par défaut, le format est du simple texte (.txt)
 

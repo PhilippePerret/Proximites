@@ -7,35 +7,32 @@ class << self
     @table ||= Hash.new()
   end
 
-  def save_table
+  # Pour obtenir une proximité avec `Proximity[<id>]`
+  def [] idprox
+    table[idprox]
+  end
+
+  def count ; @count ||= table.count end
+
+  # Ajoute l'instance proximité à la table et retourne le nouvel identifiant
+  # donné (on a besoin de l'identifiant car c'est lui qui est conservé dans
+  # l'instance occurences)
+  def add iprox
+    new_id_prox = table.count
+    table.merge!(new_id_prox => iprox)
+    return new_id_prox
+  end
+
+  def save
     File.exist?(path_file_table) && File.unlink(path_file_table)
-    File.open(path_file_table,'wb'){|f| Marshal.dump(Proximities.table,f)}
+    File.open(path_file_table,'wb'){|f| Marshal.dump(table,f)}
   end
-  def load_table with_message = true
-    if File.exist?(path_file_table)
-      self.table = File.open(path_file_table,'rb'){|f| Marshal.load(f)}
-    else
-      Texte.current.define_table_proximites
-      save_table
+  def load with_message = true
+    File.exist?(path_file_table) || begin
+      Texte.current.analyse
+      return
     end
-  end
-
-  # Pour ajouter une proximité {proximity} à la table
-  def add prox
-    table.key?(prox.centaine) || begin
-      table.merge!(
-        prox.centaine => {
-          count: 0,
-          proximities: Array.new()
-        }
-      )
-    end
-    #/ fin d'ajout de la clé centaine si nécessaire
-
-    # On peut ajouter la proximité
-    table[prox.centaine][:count] += 1
-    table[prox.centaine][:proximities] << prox
-
+    @table = File.open(path_file_table,'rb'){|f| Marshal.load(f)}
   end
 
 end #/<< self

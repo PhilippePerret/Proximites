@@ -11,13 +11,13 @@ class Texte
     # Retourne l'extrait du mot dans le texte avec un nombre +autour+ de
     # caractères avant et après.
     #
-    # TODO Plus tard, les +options+ permettront de définir le type de sortie,
-    # pour faire des documents en HTML.
     def extrait autour = 50, options = nil
       @extrait ||= begin
         seg = texte.segment
-        seg[offset-autour..offset-1].gsub(/\n/,'¶').strip +
-          ' [['+mot+']] ' +
+        dep = offset - autour
+        dep > 0 || dep = 0
+        seg[dep..offset-1].gsub(/\n/,'¶').strip +
+          ' ' + mot.rouge + ' ' + # dans un fichier, il faudra que ce soit différent
           seg[(offset+mot.length)..offset+autour+mot.length].gsub(/\n/,'¶').strip
       end
     end

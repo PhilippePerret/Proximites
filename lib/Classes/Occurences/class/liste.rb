@@ -17,6 +17,9 @@ class << self
     @table[mot] ||= new(mot)
   end
 
+  # Le nombre de mots unique aka d'occurences (pour l'affichage surtout)
+  def count ; @count ||= table.count end
+
   # Méthode qui sauve la table des occurences
   #
   # Noter que ça sauve tout d'un coup
@@ -44,6 +47,14 @@ class << self
     else
       # Sortie en console
       display_table_occurences
+    end
+  end
+
+  # Check les proximités de toutes les occurences traitables
+  def check_proximites
+    table.each do |mot, occurence|
+      occurence.traitable? || next
+      occurence.check_proximites
     end
   end
 

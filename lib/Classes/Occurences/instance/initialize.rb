@@ -4,18 +4,12 @@
 =end
 class Occurences
 
-  # {String} Le mot dont c'est l'occurence
-  # ATTENTION : Il s'agit bien d'une class String. Dans la classe Occurences,
-  # les instances Texte::Mot portent le nom `imot`.
-  attr_reader :mot
-
-  # {Array of Fixnum} Tous les décalages de mots de cette occurence
-  attr_reader :offsets
-
 
   def initialize mot
-    @mot      = mot
-    @offsets  = Array.new
+    # Voir le module `data.rb` pour le détail
+    @mot        = mot
+    @indexes    = Array.new
+    @proximites = Array.new
   end
 
   # Ajoute l'instance {Texte::Mot} de +imot+ dans l'occurence courante
@@ -25,13 +19,9 @@ class Occurences
   # @param {Texte::Mot} imot
   #
   def add imot
-    @offsets << imot.offset
+    @indexes << imot.index
   end
 
-  # Nombre d'occurences du mot
-  def count
-    @count ||= offsets.count
-  end
 
   # Ajoute
 end #/Occurences

@@ -33,8 +33,8 @@ class CLI
     end
 
     def analyse_command_line
-      # La commande = le premier mot
-      self.command= ARGV[0]
+      # La commande = le premier mot (pas forcément)
+      self.command= nil
       # log "Commande : #{CLI.command.inspect}"
       self.options  = Hash.new
       self.params   = (a = Array.new ; a << nil ; a)
@@ -46,9 +46,11 @@ class CLI
       # se reconnaissent au fait qu'elles commencent toujours par "-" ou "--"
       # puts "ARGV : #{ARGV.inspect}"
       ARGV.empty? || begin
-        ARGV[1..-1].each do |argv|
+        ARGV.each do |argv|
           if argv.start_with?('-')
             traite_arg_as_option argv
+          elsif self.command.nil?
+            self.command = argv
           else
             traite_arg_as_param argv
           end

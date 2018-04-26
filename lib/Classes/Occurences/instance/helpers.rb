@@ -21,12 +21,6 @@ class Occurences
 
   # Affichage de la table courante des occurences du mot de l'occurence
   def display_table
-    offsets_disp = ''
-    os = offsets.dup
-    while offsets_disp.length < 30 && (o = os.shift)
-      offsets_disp << "#{o} "
-    end
-    os.empty? || offsets_disp << '[…]'
     mot_str       = "*#{mot}*".ljust(20)
     count_str     = " #{count}".ljust(8)
     # offset_str  = "#{offsets_disp.ljust(38)}"

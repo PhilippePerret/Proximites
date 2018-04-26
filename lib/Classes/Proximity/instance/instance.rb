@@ -1,11 +1,15 @@
 # encoding: UTF-8
 class Proximity
 
+  attr_reader :id
   attr_reader :mot_avant, :mot_apres
+  attr_reader :distance_min
 
-  def initialize mot_avant, mot_apres
-    @mot_avant = mot_avant
-    @mot_apres = mot_apres
+  def initialize mot_avant, mot_apres, distance_min
+    @id           = self.class.add(self)
+    @mot_avant    = mot_avant
+    @mot_apres    = mot_apres
+    @distance_min = distance_min
   end
 
   # Distance entre les deux mots, en nombre de signes

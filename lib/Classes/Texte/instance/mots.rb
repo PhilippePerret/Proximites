@@ -24,8 +24,6 @@ class Texte
       add_mot(mot, index_mot, current_offset)
       current_offset += mot.length + 1
     end
-    # Enregistrement des mots et des occurences
-    save_mots_et_occurences
   end
 
   def nombre_total_mots

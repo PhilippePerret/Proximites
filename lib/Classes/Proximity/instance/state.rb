@@ -1,0 +1,11 @@
+# encoding: UTF-8
+class Proximity
+
+  def treated?  ; !!@is_treated end
+  def deleted?  ; !!@is_deleted end
+
+  def set_treated ; @is_treated = true end
+  def set_deleted ; @is_deleted = true end
+
+  
+end #/Proximity

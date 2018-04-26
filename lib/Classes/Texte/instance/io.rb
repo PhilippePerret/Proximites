@@ -5,17 +5,17 @@
 =end
 class Texte
 
-  def save_mots_et_occurences
+  def save_all
     `mkdir -p "#{Prox.folder}"`
-    # Enregistrement des mots
     save_mots
-    # Enregistrement des occurences
     Occurences.save
+    Proximity.save
   end
 
-  def load_mots_et_occurences
+  def load_all
     load_mots
     Occurences.load
+    Proximity.load
   end
 
   # Pour sauver les informations de proximité des mots

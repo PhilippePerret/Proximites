@@ -8,8 +8,10 @@
 
 class CLI
   DIM_OPT_TO_REAL_OPT = {
+    'i'               => 'interactif',
     'o'               => 'output',
     'prog'            => 'programmation',
+    't'               => 'texte',
     'vb'              => 'verbose',
 
     'cur'             => 'current',

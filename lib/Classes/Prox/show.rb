@@ -6,10 +6,6 @@ class << self
   # donné en argument, qui doit obligatoirement exister.
   def show_informations
     suivi '-> Prox#show_informations'
-    texte_courant.has_file? || begin
-      error "Il faut impérativement donner le path d'un texte existant en dernier argument."
-      return
-    end
 
     # Ce qu'il faut afficher
     what = CLI.params[1].strip_nil
@@ -20,12 +16,12 @@ class << self
       return
     end
 
-    # Charger les mots et les occurences
-    texte_courant.load_mots_et_occurences
+    # Charger toutes les données
+    texte_courant.load_all
 
     case what
-    when 'proximites', 'proximité', 'proximités'
-      texte_courant.show_proximites
+    when 'proximites', 'proximite', 'proximité', 'proximités'
+      Proximity.show
     when 'occurences', 'occurence'
       Occurences.show
     when 'stats', 'statistiques'

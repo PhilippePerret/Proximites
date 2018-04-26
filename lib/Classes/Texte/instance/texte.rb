@@ -12,7 +12,7 @@ class Texte
   # dans le fichier.
   def texte
     @texte ||= begin
-      has_file? && exist? && File.read(path).force_encoding('utf-8')
+      exist? && File.read(path).force_encoding('utf-8')
     end
   end
 

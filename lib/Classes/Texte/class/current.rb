@@ -5,18 +5,9 @@
 class Texte
 class << self
 
-  attr_reader :current
-
-  # Définir le texte courant
-  def current= texte_or_path
-    t = new()
-    t.has_a_file= File.exist?(File.expand_path(texte_or_path))
-    if t.has_file?
-      Prox.path= t.path = File.expand_path(texte_or_path)
-    else
-      t.texte = texte_or_path
-    end
-    @current = t
+  # Le texte courant
+  def current
+    @current ||= new(Prox.path)
   end
 
 end #/self
