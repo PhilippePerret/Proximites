@@ -3,7 +3,7 @@ class Proximity
 class << self
 
   def path_file_table
-    @path_file_table ||= File.join(Prox.folder, "#{Prox.today_mark}-proximites.msh")
+    @path_file_table ||= File.join(Prox.folder, 'proximites.msh')
   end
 
 end #/<< self

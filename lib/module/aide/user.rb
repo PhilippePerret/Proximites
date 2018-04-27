@@ -83,16 +83,13 @@ problème de trop grande proximité des mots dans un texte quelconque.
   Analyse du texte
   ----------------
 
-  #{'prox check [path ou texte] [options]'.gras}
+  #{'prox c[heck] <path> [options]'.gras}
+  #{'prox -t c[heck] <texte> [options]'.gras}
 
-      Méthode principale pour checker le texte qui se trouve au path  +path+. Le
-      mieux est de se trouver dans ce dossier pour lancer la commande sur le fi-
-      chier visé.
-      On peut donner aussi explicitement le texte, entre guillemets, en  paramè-
-      tre :
-          `prox check "Un petit texte en paramètre."`
-      Mais dans ce cas le retour sera beaucoup moins précis  car il n'y aura pas
-      de dossier dans lequel mettre le résultat. Tout sera affiché à l'écran.
+
+      Méthode principale pour checker le texte qui se trouve au path  +path+ ou
+      le texte fourni. Le mieux est de se trouver dans ce dossier pour lancer la
+      commande sur le fichier visé.
 
       Options
       -------
@@ -118,7 +115,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
   Affichage des résultats
   -----------------------
 
-  #{'prox show [what] [path] [options]'.gras}
+  #{'prox s[how] <what> [path] [options]'.gras}
 
       Permet d'afficher les résultats de test de proximité  et  d'occurence.  On
       peut les afficher en console ou  dans un fichier séparés  ne contenant que
@@ -130,13 +127,32 @@ problème de trop grande proximité des mots dans un texte quelconque.
       Sans option, les données sont affichées en console. Pour les  mettre  dans
       un fichier qui sera ouvert :
 
-          #{'prox show [path] --output=[format]/-o=[format] --open'.jaune}
+          #{'prox s[how] [path] --output=[format]/-o=[format] --open'.jaune}
 
       Par défaut, le format est du simple texte (.txt)
 
+  #{'prox s[how] stats [path]'.jaune}
+
+      Pour afficher les statistiques concernant le texte, c’est-à-dire le nombre de
+      mots, de proxmités, la longueur du texte, etc.
+
 
   Affichage des proximités pour corrections
-  ------------------------------------------
+  =========================================
+
+      Résumé de toutes les commandes
+      ------------------------------
+
+          #{'prox s[how] proximites [path] [options]'.jaune}
+            # Affiche toutes les proximités les unes au-dessus des autres.
+          #{'prox -i s[how] proximites [path] [options]'.jaune}
+            # Passe en revue toutes les proximités en mode interactif
+          #{'prox s[how] proximite <mot> [path] [options]'.jaune}
+            # Noter le singulier.
+            # Proximités du mot <mot>. Avec l’option `-i`, en mode interactif.
+
+      Détail/explications
+      -------------------
 
   C’est cette fonction qui a présidé à la construction de ce petit programme.
   Pouvoir faire une analyse des proximités de mots et pouvoir les corriger, sa-
@@ -145,7 +161,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
   Après avoir lancé le check du texte (`#{'prox check mon/fichier.txt'.jaune}`), on
   peut lancer la commande suivante pour voir s’afficher toutes les proximités :
 
-      #{'prox show proximites'.jaune}
+      #{'prox s[how] proximites'.jaune}
 
   (noter que le path a été mémorisé, inutile de le remettre)
   Cette méthode affiche toutes les proximités de mots trouvés.
@@ -154,7 +170,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
   et il est beaucoup plus pratique d’afficher les proximités les unes après les
   autres grâce à l’option `interactif` :
 
-      #{'prox -i show proximites'.jaune}
+      #{'prox -i s[how] proximites'.jaune}
 
   Les avantages sont les suivants :
 

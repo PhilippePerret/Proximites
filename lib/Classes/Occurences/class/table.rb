@@ -10,12 +10,18 @@ class << self
 
   def table ; @table ||= Hash.new  end
 
-  # Retourne l'instance {Occurences} du mot +mot+ en la créant si elle n'existe
-  # pas.
+  # Retourne l'instance {Occurences} du mot +mot+.
+  # Ou retourne NIL.
+  # AVANT : elle créait dans tous les cas l'instance, mais ça posait des
+  # problèmes dès qu'on voulait checker l'existence d'un mot par
+  # Occurences[mot]. C'était toujours vrai puisque ça créait l'instance.
+  #
+  # @param {String|Texte::Mot} Le mot de base ou le mot string.
+  # @return {Occurences} Instance occurence du mot.
+  #
   def [] mot
-    # @table      ||= Hash.new
-    # @table[mot] ||= new(mot)
-    table[mot] ||= new(mot)
+    mot.is_a?(String) || mot = mot.mot_base
+    table[mot]
   end
 
   # Le nombre de mots unique aka d'occurences (pour l'affichage surtout)
@@ -52,7 +58,7 @@ class << self
   end
 
   def path_occurences
-    @path_occurences ||= File.join(Prox.folder,"#{Prox.today_mark}-occurences.msh")
+    @path_occurences ||= File.join(Prox.folder,'occurences.msh')
   end
 end #/<< self
 end #/ Occurences

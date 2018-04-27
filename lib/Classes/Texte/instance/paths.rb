@@ -12,7 +12,7 @@ class Texte
   # Fichier Marshal contenant les proximités (ATTENTION : ici, il s'agit plutôt
   # des mots, avec, c'est vrai, l'indication des proximités)
   def path_file_mots
-    @path_file_mots ||= File.join(Prox.folder, "#{Prox.today_mark}-mots.msh")
+    @path_file_mots ||= File.join(Prox.folder, 'mots.msh')
   end
 
   def path_file_infos

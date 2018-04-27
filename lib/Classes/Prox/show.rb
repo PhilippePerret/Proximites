@@ -20,8 +20,10 @@ class << self
     texte_courant.load_all
 
     case what
-    when 'proximites', 'proximite', 'proximité', 'proximités'
+    when 'proximites', 'proximités'
       Proximity.show
+    when 'proximite', 'proximité'
+      Proximity.show(CLI.params[2].strip)
     when 'occurences', 'occurence'
       Occurences.show
     when 'stats', 'statistiques'

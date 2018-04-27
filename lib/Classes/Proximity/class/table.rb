@@ -16,7 +16,7 @@ class << self
 
   # Ajoute l'instance proximité à la table et retourne le nouvel identifiant
   # donné (on a besoin de l'identifiant car c'est lui qui est conservé dans
-  # l'instance occurences)
+  # l'instance occurences, sous l'appellation ``)
   def add iprox
     new_id_prox = table.count
     table.merge!(new_id_prox => iprox)

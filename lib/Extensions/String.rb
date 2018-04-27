@@ -3,7 +3,7 @@ class String
 
   # Le texte en bleu gras pour le terminal
   def bleu_gras
-    "\033[1;94m#{self}\033[0m"
+    "\033[1;96m#{self}\033[0m"
   end
   # Le texte en bleu gras pour le terminal
   def bleu

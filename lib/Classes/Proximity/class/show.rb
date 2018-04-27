@@ -19,25 +19,59 @@ class << self
   #   * on relève la liste des proximités à afficher (sauf si --all)
   #   * on affiche les proximités (de façon interactive si nécessaire)
   #
-  def show
+  # Si +mot+ est défini, on affiche seulement les proximités de ce mot.
+  #
+  def show mot = nil
     mode_interactif = CLI.options[:interactif]
     show_all        = !!CLI.options[:all]
 
 
+    if mot.nil?
+      liste_proximites = table.values
+    else
+      if Occurences[mot] && !Occurences[mot].proximites.empty?
+        # C'est bien un mot qui a pas des proximité
+        liste_proximites = Occurences[mot].proximites.collect { |prox_id| Proximity[prox_id] }
+      elsif Occurences[mot]
+        notice "Le mot #{mot.inspect} existe bien, mais il ne possède aucune proximité."
+        return
+      else
+        error "Le mot #{mot.inspect} n’existe pas dans ce texte."
+        return
+      end
+    end
+
+    mark_nombres_header = Array.new
+    mark_nombres_footer = Array.new
+    len_libelle_footer  = 26
+
+    # Le nombre total
+    nbtotal = liste_proximites.count
+    mark_nombres_header << "total : #{nbtotal}"
+    mark_nombres_footer << "#{'Nombre total de proximités'.ljust(len_libelle_footer)} : #{nbtotal}"
+
     # Ne prendre que les proximités qui n'ont pas été marquées traitées ou
     # supprimées (sauf si options --all, traitée dans displayable?)
-    liste_proximites = table.values.select{ |prox| prox.displayable? }
+    liste_proximites  = liste_proximites.select{ |prox| prox.displayable? }
     nombre_proximites = liste_proximites.count
+
+    CLI.options[:all] || begin
+      mark_nombres_header << "non traitées : #{nombre_proximites}"
+      mark_nombres_footer << "#{'Proximités non traitées'.ljust(len_libelle_footer)} : #{nombre_proximites}"
+    end
 
     CLI.options[:only] && begin
       jusque = CLI.options[:only].to_i - 1
       liste_proximites = liste_proximites[0..jusque]
       nombre_affichees = liste_proximites.count
+      mark_nombres_header << "affichées : #{nombre_affichees}"
+      mark_nombres_footer << "#{'Proximités affichées'.ljust(len_libelle_footer)} : #{nombre_affichees}"
     end
 
-    nombre_displayed = "total : #{table.count} / non traitées : #{nombre_proximites} / affichées : #{nombre_affichees}"
+    mark_nombres_header = mark_nombres_header.join(' / ')
 
-    entete = "=== AFFICHAGE DES PROXIMITÉS (#{nombre_displayed}) ==="
+    ajoutmot = mot.nil? ? '' : " DU MOT #{mot.upcase.inspect}"
+    entete = "=== AFFICHAGE DES PROXIMITÉS#{ajoutmot} (#{mark_nombres_header}) ==="
     puts "#{RET3}#{entete}#{RET3}"
 
     proced =
@@ -59,6 +93,8 @@ class << self
     liste_proximites.each_with_index do |prox, index_prox|
       proced.call(prox, 1 + index_prox)
     end
+    puts RET2
+    puts "\t" + mark_nombres_footer.join("\n\t")
     puts RET3
     # =========================================================
 

@@ -15,15 +15,16 @@ class << self
   def add imot
     # Si le mot-base du mot existe déjà en temps que l'occurence, c'est
     # simple : il suffit d'ajouter cette occurence
-    if Occurences.table.key?(imot.mot_base)
-      Occurences[imot.mot_base].add(imot)
+    if table.key?(imot.mot_base)
+      add_finaly(imot)
     else
       # Sinon, il faut voir si le mot est similaire à un mot existant
       # Si ça n'est pas le cas, il faut créer l'instance
       similarite_trouvee = false
-      Occurences.table.keys.each do |comp|
+      table.keys.each do |comp|
         Texte::Mot.similaires?(imot.mot, comp) && begin
           Occurences[comp].add(imot, true) # true => similaire
+          add_finaly(imot, comp)
           similarite_trouvee = true
           break
         end
@@ -31,10 +32,16 @@ class << self
       # /fin de boucle sur tous les mots
       similarite_trouvee || begin
         suivi "Création de l’occurence #{imot.mot_base.inspect}"
-        Occurences[imot.mot_base].add(imot)
+        table[imot.mot_base] = new(imot)
+        add_finaly(imot)
       end
     end
+  end
 
+  # Ajoute vraiment l'occurence de {Texte::Mot} mota ou du mot similaire
+  # {String} +comp+
+  def add_finaly mota, comp = nil
+    Occurences[comp||mota.mot_base].add(mota)
   end
 
 end #/<< self
