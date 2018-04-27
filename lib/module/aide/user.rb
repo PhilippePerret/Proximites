@@ -32,6 +32,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
           par ordre alphabétique :
 
               #{'prox show occurences test/texte_court.txt --ksort=mot'.jaune}
+              #{'prox proximites --ksort=count'.jaune}
 
           Par défaut, c'est `count` qui est utilisé, en mettant les plus nom-
           breux en haut (ordre décroissant).
@@ -131,6 +132,11 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
       Par défaut, le format est du simple texte (.txt)
 
+  #{'prox[imite] proximites [--ksort=count]'.jaune}
+
+      Permet d’afficher seulement les mots qu'on trouve en proximités, sans
+      répétition, mais sans détail de ces proximités.
+
   #{'prox s[how] stats [path]'.jaune}
 
       Pour afficher les statistiques concernant le texte, c’est-à-dire le nombre de
@@ -150,6 +156,10 @@ problème de trop grande proximité des mots dans un texte quelconque.
           #{'prox s[how] proximite <mot> [path] [options]'.jaune}
             # Noter le singulier.
             # Proximités du mot <mot>. Avec l’option `-i`, en mode interactif.
+          #{'prox[imite] proximites [--ksort=count]'.jaune}
+            # Affiche la liste simple des mots en proximité, classés soit par
+            # order alphabétique (défaut) soit suivant le nombre de proximités
+            # trouvées (--ksort=count)
 
       Détail/explications
       -------------------

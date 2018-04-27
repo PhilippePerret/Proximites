@@ -2,33 +2,36 @@ class Texte
 class Mot
 
   ARR_MOTS_FIN_S = [
-    'après',
+    'accès', 'alors', 'après', 'assis',
     'bras',
-    'cas',
-    'corps',
-    'dans', 'depuis', 'dès',
+    'cas', 'corps', 'cours',
+    'dans', 'depuis', 'dès', 'dessous', 'dessus',
     'extremis',
     'fois',
     'jamais',
-    'mais',
+    'mais', 'moins',
     'nous',
-    'pas', 'plus', 'plusieurs', 'puis',
+    'pas', 'plus', 'plusieurs', 'propos', 'puis',
     'sans', 'sous',
-    'temps', 'toujours', 'trois',
+    'temps', 'toujours', 'tous', 'très', 'trois',
     'vers', 'vous'
   ]
   ARR_MOTS_FIN_X = [
     'box',
-    'ceux',
+    'ceux', 'choix',
     'deux',
     'eux',
+    'heureux',
     'mieux',
     'voix',
     'yeux'
   ]
 
   ARR_MOTS_FEMININS_E = [ # => MOTS_FEMININS
+    'clandestine',
+    'différente',
     'grand',
+    'mauvaise',
     'petit',
     'un'
   ]

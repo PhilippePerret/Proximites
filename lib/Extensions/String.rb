@@ -79,7 +79,11 @@ class String
   end
   # ou def normalized
   def normalize
-    self.force_encoding('utf-8').tr(DATA_NORMALIZE[:from], DATA_NORMALIZE[:to])
+    self
+      .force_encoding('utf-8')
+      .gsub(/[œŒæÆ]/,{'œ'=>'oe', 'Œ' => 'Oe', 'æ'=> 'ae', 'Æ' => 'Ae'})
+      .tr(DATA_NORMALIZE[:from], DATA_NORMALIZE[:to])
   end
+  alias :normalized :normalize
 
 end
