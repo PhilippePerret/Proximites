@@ -11,7 +11,7 @@ class Proximity
   # permet de les "annoter"
   def as_block index = nil, nombre_total
     # "\n\n\t#{DIVISEUR}"
-    "\t" + as_line(index = nil, nombre_total = nil) + "\n"
+    "\t" + as_line(index = nil, nombre_total = nil) + "\n" +
     extraits +
     "#{RET2}\t#{DIVISEUR}"
   end
@@ -24,7 +24,17 @@ class Proximity
     mindist = "(min: #{distance_min})".ljust(14).gris
     nomb = "#{index}/#{nombre_total || Proximity.count}".ljust(25)
     offs = "#{mot_avant.offset}/#{mot_apres.offset}".ljust(20)
-    "#{id_str}#{mots}#{mindist}offsets: #{offs}#{nomb}"
+    mod  = case
+    when deleted? then 'DEL'
+    when treated? then 'COR'
+    else ' '
+    end.rjust(4)
+    mod = case
+    when deleted? then mod.rouge
+    when treated? then mod.vert
+    else mod
+    end
+    "#{id_str}#{mots}#{mindist}offsets: #{offs}#{nomb}#{mod}"
   end
 
   # Extraits à afficher
@@ -36,10 +46,16 @@ class Proximity
       off_avant = mot_avant.offset
       off_apres = mot_apres.offset
       off_fin = off_apres + mot_apres.length
-      motX = 'X'*mot_avant.length
-      motZ = 'Z'*mot_apres.length
+      motX = 'X' * mot_avant.length
+      motZ = 'Z' * mot_apres.length
+
+      debut_seg = off_avant - 180
+      debut_seg >= 0 || debut_seg = 0
+      set_up_to_motx = off_avant - 1
+      seg_avant_le_mot = set_up_to_motx > 0 ? seg[debut_seg..set_up_to_motx] : ''
+
       "\n\n" +
-      (seg[(off_avant - 180)..(off_avant - 1)] +
+      ( seg_avant_le_mot +
         motX +
         seg[(off_avant + mot_avant.length)..(off_apres-1)] +
         motZ +

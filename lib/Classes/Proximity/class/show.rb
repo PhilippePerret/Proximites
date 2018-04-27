@@ -68,6 +68,11 @@ class << self
       mark_nombres_footer << "#{'Proximités affichées'.ljust(len_libelle_footer)} : #{nombre_affichees}"
     end
 
+    # Estimation de la durée pour faire les corrections
+    duree_corrections = estimation_duree_corrections(nombre_proximites)
+    mark_nombres_footer << "#{'Durée estimée'.ljust(len_libelle_footer)} : #{duree_corrections}"
+    mark_nombres_header  << "durée : #{duree_corrections}"
+
     mark_nombres_header = mark_nombres_header.join(' / ')
 
     ajoutmot = mot.nil? ? '' : " DU MOT #{mot.upcase.inspect}"
@@ -101,6 +106,12 @@ class << self
     if mode_interactif && changements_operes
       yesOrNo("Faut-il enregistrer les changements opérés ?") && save
     end
+  end
+
+  def estimation_duree_corrections nombre_corrections
+    duree_moyenne = texte.info(:duree_moy_correction_prox)
+    duree_moyenne || (return '- - -')
+    (duree_moyenne * nombre_corrections).to_i.as_workdays
   end
 
   # Enregistre la nouvelle durée de correction en calculant la

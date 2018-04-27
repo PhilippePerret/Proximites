@@ -15,6 +15,10 @@ class String
     "\033[0;93m#{self}\033[0m"
   end
 
+  def vert
+    "\033[0;92m#{self}\033[0m"
+  end
+
   # Le texte en rouge gras pour le terminal
   def rouge_gras
     "\033[1;31m#{self}\033[0m"
@@ -51,7 +55,7 @@ class String
   def underlined with = '-', heading = ''
     return "#{self}\n#{heading}#{with * self.length}"
   end
-  
+
   # truncate le texte
   def segmente longueur, heading = ''
     li  = Array.new
