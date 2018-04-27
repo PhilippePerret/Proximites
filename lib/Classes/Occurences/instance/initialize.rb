@@ -24,7 +24,7 @@ class Occurences
   def add imot, similarite = nil
     suivi "Ajout d’une occurence de #{imot.mot_base.inspect}"
     @indexes << imot.index
-    similarite.nil? || @similarites << imot.index
+    similarite.nil?           || @similarites << imot.index
     imot.mot == imot.mot_base || @derives << imot.index
   end
 

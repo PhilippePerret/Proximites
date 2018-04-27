@@ -22,8 +22,6 @@ class Texte
   Nombre total de mots      : #{mots.count.mille}
   Nombre de mots différents : #{Occurences.count.mille}
   Nombre de proximités      : #{Proximity.count.mille}
-  Nombre de similarités     : #{Occurences.similarites.count}
-  Nombre de dérivés         : #{Occurences.derives.count}
   --------------------------
   Durée correction estimée  : #{Proximity.estimation_duree_corrections(Proximity.count)}
 

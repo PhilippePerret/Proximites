@@ -10,9 +10,15 @@ class << self
   # Check les proximités de toutes les occurences traitables
   def check_proximites
     marque_temps 'Calcul des proximités…'
+    texte_courant.mots || texte_courant.load_all
     table.each do |mot, occurence|
+      # puts "*** #{mot.inspect}"
+      STDOUT.flush
       occurence.traitable? || next
       occurence.check_proximites
+
+      # break # pour tester
+
     end
   end
 

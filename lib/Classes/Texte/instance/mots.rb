@@ -17,7 +17,7 @@ class Texte
   # La méthode demande aussi d'enregistrer le résultat
   #
   def decompose_en_mots
-    marque_temps 'Décomposition du texte en mot (occurences)…'
+    marque_temps 'Décomposition du texte en mots (occurences)…'
     @mots = Array.new
     # Pour connaitre le décalage du mot.
     current_offset = 0

@@ -21,7 +21,13 @@ class << self
   # Check d'un fichier dont le path doit être défini en argument.
   #
   def check
-    texte_courant.analyse
+    case CLI.params[1]
+    when 'proximites'
+      puts '-> proximites'
+      Occurences.check_proximites
+    else
+      texte_courant.analyse
+    end
     texte_courant.set_info(:last_command, ARGV.join(' '))
   end
   alias :analyse :check

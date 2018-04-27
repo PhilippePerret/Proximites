@@ -10,6 +10,8 @@ class Proximity
     @mot_avant    = mot_avant
     @mot_apres    = mot_apres
     @distance_min = distance_min
+    # puts "Ajout d'une proximité #{mot_avant.mot}:#{mot_avant.offset} <-> #{mot_apres.mot}:#{mot_apres.offset}"
+    STDOUT.flush
   end
 
   # Distance entre les deux mots, en nombre de signes

@@ -23,7 +23,6 @@ class << self
       similarite_trouvee = false
       table.keys.each do |comp|
         Texte::Mot.similaires?(imot.mot, comp) && begin
-          Occurences[comp].add(imot, true) # true => similaire
           add_finaly(imot, comp)
           similarite_trouvee = true
           break

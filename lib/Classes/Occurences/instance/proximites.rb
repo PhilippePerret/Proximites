@@ -13,12 +13,14 @@ class Occurences
 
   # Recherche les proximités qui peuvent exister dans un texte.
   def check_proximites
-
     distance = distance_min
-
     # Le mot précédent
     last_imot = nil
 
+    puts "indexes: #{indexes.inspect}"
+    STDOUT.flush
+
+    # Boucle sur tous les indexs de mots
     indexes.each do |index_mot|
       imot = texte.mots[index_mot]
       last_imot && last_imot.trop_proche_de?(imot, distance) && begin
@@ -30,6 +32,8 @@ class Occurences
         Texte::Mot.locution_repetitive?(last_imot, imot) || begin
           # => Il faut créer une proximité
           # puts "Le mot #{imot.mot_base.inspect} à #{last_imot.offset} est trop proche de celui à #{imot.offset} (distance = #{distance})"
+          # puts "last_imot = #{last_imot.mot}:#{last_imot.offset} / imot = #{imot.mot}:#{imot.offset}"
+          # STDOUT.flush
           prox = Proximity.new(last_imot, imot, distance)
           self.proximites << prox.id
         end
