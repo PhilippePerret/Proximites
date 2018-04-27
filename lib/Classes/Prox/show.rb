@@ -12,12 +12,12 @@ class << self
 
     what || begin
       error "Il faut indiquer ce qu'il faut montrer, parmi :" +
-        "#{RETDT}\t* show occurences#{RETDT}\t* show proximites#{RETDT}\t* show stats"
+        "#{RETDT}\t* show occurences#{RETDT}\t* show proximites#{RETDT}\t* show stats#{RETDT}\t* show <mot>"
       return
     end
 
     # Charger toutes les données
-    texte_courant.load_all
+    texte_courant.mots || texte_courant.load_all
 
     case what
     when 'proximites', 'proximités'
@@ -29,7 +29,15 @@ class << self
     when 'stats', 'statistiques'
       Texte.current.show_statistiques
     else
-      error "Je ne connais pas #{what.inspect}… Impossible de l'afficher…"
+      # C'est soit un mot dont on veut voir les informations, soit une erreur
+      # Il faut créer une instance du mot pour pouvoir obtenir son mot de base
+      imot = Texte::Mot.new(texte_courant, what)
+      if Occurences[imot.mot_base]
+        # Texte::Mot.show_info(what)
+        Occurences[imot.mot_base].show_infos
+      else
+        error "Je ne connais pas #{what.inspect}… Impossible de l'afficher…"
+      end
     end
 
   end

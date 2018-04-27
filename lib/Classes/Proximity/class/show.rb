@@ -78,13 +78,13 @@ class << self
       if mode_interactif
         Proc.new do |prox, numero|
           prox.displayable? || next
-          puts RET2 + prox.as_line(numero, nombre_proximites) + RET2
+          puts RET2 + prox.as_block(numero, nombre_proximites) + RET2
           traite_proximite_mode_interactif(prox) && break
         end
       else
         Proc.new do |prox, numero|
           prox.displayable? || next
-          puts prox.as_line(numero, nombre_proximites)
+          puts prox.as_block(numero, nombre_proximites)
         end
       end
 

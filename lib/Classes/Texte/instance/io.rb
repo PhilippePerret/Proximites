@@ -14,6 +14,7 @@ class Texte
   end
 
   def load_all
+    suivi '-> Texte#load_all'
     load_mots
     Occurences.load
     Proximity.load

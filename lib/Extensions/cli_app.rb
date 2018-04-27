@@ -12,6 +12,8 @@ class CLI
     'i'               => 'interactif',
     'o'               => 'output',
     'prog'            => 'programmation',
+    'prox'            => 'proximite',
+    'proxs'           => 'proximites',
     's'               => 'show',
     't'               => 'texte',
     'tr'              => 'traited',

@@ -18,8 +18,15 @@ class << self
   #
   def run
     # marque_temps 'Démarrage du programme…'
-    runable? || return
-    send(main_command.to_sym)
+    while true
+      runable? || return
+      send(main_command.to_sym)
+      print 'Commande suivante (q pour terminer, rien pour la même) : proximite '
+      next_command = STDIN.gets.strip
+      next_command != 'q' || break
+      next_command != ''  || next_command = CLI.last_command
+      CLI.analyse_command_line(next_command.split(' '))
+    end
   rescue Exception => e
     error e.message
     error e.backtrace.join("\n")
@@ -34,7 +41,7 @@ class << self
 
   # @retourne TRUE si le programme peut être lancé
   def runable?
-    self.path || main_command == 'help' || main_command == 'aide' || begin
+    self.path || main_command == 'help' || begin
       raise "Le path du fichier ou le texte doivent impérativement être définis, sauf pour la commande `help`."
     end
     self.respond_to?(main_command.to_sym) || begin
@@ -47,7 +54,13 @@ class << self
     return false
   end
 
-  def main_command ; @main_command ||= (CLI.command || 'help') end
+  def main_command
+    @main_command ||= begin
+      mc = (CLI.command || 'help')
+      mc == 'aide' && mc == 'help'
+      mc
+    end
+  end
 
 end #/<< self
 end #/Prox

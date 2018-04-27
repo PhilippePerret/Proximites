@@ -57,6 +57,8 @@ class << self
           * `indexes`     : tous les indexs des occurences (index dans
                             `Texte.current.mots`)
           * `proximites`  : liste des identifiants des proximités
+          * `similarites` : liste des index des mots similaires
+          * `derives`     : liste des index des mots dérivés
 
     Proximiy
     --------

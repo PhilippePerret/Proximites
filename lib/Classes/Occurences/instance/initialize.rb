@@ -7,9 +7,11 @@ class Occurences
 
   def initialize mot
     # Voir le module `data.rb` pour le détail
+    mot.is_a?(String) || mot = mot.mot_base
     @mot          = mot
     @indexes      = Array.new
     @proximites   = Array.new
+    @derives      = Array.new # les mots dérivés (mot != mot_base)
     @similarites  = Array.new # les mots similaires
   end
 
@@ -23,6 +25,7 @@ class Occurences
     suivi "Ajout d’une occurence de #{imot.mot_base.inspect}"
     @indexes << imot.index
     similarite.nil? || @similarites << imot.index
+    imot.mot == imot.mot_base || @derives << imot.index
   end
 
 

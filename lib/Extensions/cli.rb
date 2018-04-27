@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 #
-# CLI 1.0.6
+# CLI 1.1.0
 #
 # Note : l'application doit définir :
 #   class CLI
@@ -16,6 +16,8 @@ class CLI
   class << self
 
     attr_accessor :command, :params, :options
+
+    attr_accessor :last_command # sans l'application
 
     # Pour savoir si c'est la ligne de commande qui est utilisée
     def command_line?
@@ -32,7 +34,12 @@ class CLI
       self.options && self.options[:quiet]
     end
 
-    def analyse_command_line
+    def analyse_command_line arguments_v = nil
+      arguments_v ||= ARGV
+
+      # On mémorise la dernière commande
+      self.last_command = (arguments_v||[]).join(' ')
+
       # La commande = le premier mot (pas forcément)
       self.command= nil
       # log "Commande : #{CLI.command.inspect}"
@@ -45,12 +52,12 @@ class CLI
       # Ensuite, on peut trouver des paramètres ou des options. Les options
       # se reconnaissent au fait qu'elles commencent toujours par "-" ou "--"
       # puts "ARGV : #{ARGV.inspect}"
-      ARGV.empty? || begin
-        ARGV.each do |argv|
+      arguments_v.empty? || begin
+        arguments_v.each do |argv|
           if argv.start_with?('-')
             traite_arg_as_option argv
           elsif self.command.nil?
-            self.command = argv
+            self.command = DIM_OPT_TO_REAL_OPT[argv] || argv
           else
             traite_arg_as_param argv
           end

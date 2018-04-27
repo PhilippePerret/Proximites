@@ -22,5 +22,10 @@ class Texte
       end
     end
 
+    def show_infos
+      # OBSOLETE
+      # @note CF. méthode show_infos dans Occurences/instance/helpers.rb
+    end
+
   end#/Mot
 end#/Texte

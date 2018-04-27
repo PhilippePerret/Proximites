@@ -183,9 +183,20 @@ problème de trop grande proximité des mots dans un texte quelconque.
       nécessaire pour corriger tout le texte. Ce temps est bien sûr enregistré
       d’une session à l’autre, ce qui permet d’affiner grandement le calcul.
 
+  Information sur un mot
+  ======================
+
+      #{'prox[imite] s[how] <mot> [--deep]'.jaune}
+
+          Affiche toutes les informations sur le mot <mot>, c’est-à-dire son
+          nombre d’occurences, de proximités.
+
+          Si l’option #{'--deep'.gras} est utilisée, on affiche les infos en
+          profondeur, c’est-à-dire par exemple qu’on va donner les offsets de
+          chacune des occurences, le détail des proximités, etc.
 
   Informations sur le texte
-  -------------------------
+  =========================
 
   #{'prox[imite] infos'.gras}
 

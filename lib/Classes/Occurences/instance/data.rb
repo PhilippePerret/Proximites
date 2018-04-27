@@ -16,6 +16,12 @@ class Occurences
   # {Array of ID de proximités} Toutes les proximités relevées
   attr_reader :proximites
 
+  # {Array d'indexs} Mots dérivés (mot != mot_base)
+  attr_reader :derives
+
+  # {Array des index des mots en similarités}
+  attr_reader :similarites
+
   # Raison du non traitement de l'occurence courante (peut être parce que le
   # mot est trop court, peut-être parce que mot est unique, etc.)
   attr_accessor :raison_non_traitable
@@ -30,7 +36,7 @@ class Occurences
   def mot_length ; @mot_length ||= mot.length end
 
   # Présence du mot, ne fonction de son occurence et du nombre total de
-  # mot.
+  # mot. En nombre pour mille.
   def presence
     @presence ||= (1000.0 * count / Texte.current.nombre_total_mots).round(2)
   end

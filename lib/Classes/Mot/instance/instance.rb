@@ -24,7 +24,7 @@ class Texte
 
     # On initialise un mot avec son index dans le texte et le mot
     # qu'il est ainsi que son offset dans le texte.
-    def initialize texte, real_mot, index, offset
+    def initialize texte, real_mot, index = nil, offset = nil
       @texte    = texte
       @real_mot = real_mot
       @index    = index

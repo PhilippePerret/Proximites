@@ -48,6 +48,10 @@ class String
   end
   alias :to_seconds :as_seconds
 
+  def underlined with = '-', heading = ''
+    return "#{self}\n#{heading}#{with * self.length}"
+  end
+  
   # truncate le texte
   def segmente longueur, heading = ''
     li  = Array.new

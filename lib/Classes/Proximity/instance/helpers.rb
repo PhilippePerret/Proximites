@@ -9,16 +9,22 @@ class Proximity
   # On peut faire soit un affichage complet de toutes les occurences, soit,
   # avec l'option -i/-interactif, afficher proximité après proximité, ce qui
   # permet de les "annoter"
-  def as_line index = nil, nombre_total
-    index ||= (1 + id).to_s
-    mots = "#{"##{id}".to_s.gris} #{mot_avant.mot.jaune} - #{mot_apres.mot.jaune}".ljust(60)
-    dist = "à #{distance} signes (min: #{distance_min})".ljust(40).gris
-    nomb = "#{index} / #{nombre_total || Proximity.count}".ljust(30)
-    offs = "#{mot_avant.offset} / #{mot_apres.offset}".ljust(24)
-    "\n\n\t#{DIVISEUR}"
-    "\t#{mots}#{dist}offset : #{offs}#{nomb}\n" +
+  def as_block index = nil, nombre_total
+    # "\n\n\t#{DIVISEUR}"
+    "\t" + as_line(index = nil, nombre_total = nil) + "\n"
     extraits +
     "#{RET2}\t#{DIVISEUR}"
+  end
+
+  def as_line index = nil, nombre_total = nil
+    index ||= (1 + id).to_s
+    id_str = "#{"##{id}".to_s.ljust(9)}".gris
+    dist = "<- #{distance} ->".gris
+    mots = "#{mot_avant.mot.jaune} #{dist} #{mot_apres.mot.jaune}".ljust(70)
+    mindist = "(min: #{distance_min})".ljust(14).gris
+    nomb = "#{index}/#{nombre_total || Proximity.count}".ljust(25)
+    offs = "#{mot_avant.offset}/#{mot_apres.offset}".ljust(20)
+    "#{id_str}#{mots}#{mindist}offsets: #{offs}#{nomb}"
   end
 
   # Extraits à afficher
