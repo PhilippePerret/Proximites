@@ -24,78 +24,64 @@ class Texte
 
     self.mots.each do |imot|
 
-      disp_mot  = imot.mot
+      arr_mots    = Array.new
+      arr_colors  = Array.new
+
       disp_mark = ' ' * imot.length
       color_avant = color_apres = nil
 
       if imot.prox_ids.nil?# || imot.mot != 'texte'
         # Aucune proximité
+        arr_mots << imot.mot
       else
         # Des proximités sont définies
         marka = nil
         markb = nil
+
+
+        if imot.prox_ids[:avant]
+          # <= Il y a un mot avant en proximité
+          # => On ajoute la marque vers la gauche
+          id_prox_avant = imot.prox_ids[:avant]
+          marka = "<-".ljust(imot.length,'-')
+          color_avant = Proximity[id_prox_avant].color
+
+          arr_mots    << imot.mot
+          arr_colors  << color_avant
+
+        end
 
         if imot.prox_ids[:apres]
           # <= Il y a un mot après en proximité
           # => On ajoute la marque vers la droite
           id_prox_apres = imot.prox_ids[:apres]
           # markb = "_#{id_prox_apres.to_s(36)}->"
-          markb = "->"
+          markb = "->".rjust(imot.length,'-')
           color_apres = next_color()
-          # puts "color_apres : #{color_apres.inspect}"
           Proximity[id_prox_apres].color = color_apres
-        end
-        if imot.prox_ids[:avant]
-          # <= Il y a un mot avant en proximité
-          # => On ajoute la marque vers la gauche
-          id_prox_avant = imot.prox_ids[:avant]
-          # marka = "<-#{id_prox_avant.to_s(36)}_"
-          marka = "<-"
-          color_avant = Proximity[id_prox_avant].color
+
+          arr_mots    << imot.mot
+          arr_colors  << color_apres
+
         end
 
-        mot_len  = imot.length
-        mark_len = "#{marka}#{markb}".length
+        mot_len   = arr_mots.join('|').length
+        marks     = [marka, markb].compact.join('|')
+        mark_len  = "#{marks}".length
 
-        if mot_len == mark_len
-          # rien à faire
-        else
-          if mot_len > mark_len
-            # => Il faut allonger la marque
-            if marka.nil?
-              markb = markb.rjust(mot_len, '-')
-            elsif markb.nil?
-              marka = marka.ljust(mot_len, '-')
-            else
-              len_a = mot_len / 2
-              marka = marka.ljust(len_a,'-')
-              markb = markb.rjust(mot_len - len_a, '-')
-            end
-            # On pose les couleurs avant de compacter
-          else
-            # <= le mot est plus court que les deux marques
-            # => Il faut allonger le mot affiché
-            disp_mot  = imot.mot.ljust(mark_len)
-          end
-        end
         color_avant && marka && marka = marka.send(color_avant)
         color_apres && markb && markb = markb.send(color_apres)
-        disp_mark = "#{marka}#{markb}"
+        disp_mark = "#{[marka, markb].compact.join('|')}"
       end
 
-      self.longueur_segment += disp_mot.length
+      self.longueur_segment += arr_mots.join('|').length
 
-      if color_avant && color_apres
-        disp_mot_len = disp_mot.length
-        moitie = imot.length / 2
-        av = imot.mot[0..(moitie-1)].send(color_avant)
-        ap = imot.mot[moitie..-1].send(color_apres)
-        disp_mot = "#{av}#{ap}".ljust(disp_mot_len)
-      elsif color_avant
-        disp_mot = disp_mot.send(color_avant)
-      elsif color_apres
-        disp_mot = disp_mot.send(color_apres)
+      # On ajoute la couleur aux mots qui en ont besoin
+      arr_colors.each_with_index do |meth_color, index|
+        arr_mots[index] = arr_mots[index].send(meth_color)
       end
+
+      disp_mot = arr_mots.join('|')
 
       segment_up << disp_mot  + ' '
       segment_do << disp_mark + ' '
