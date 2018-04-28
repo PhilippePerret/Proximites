@@ -20,12 +20,12 @@ class << self
     # marque_temps 'Démarrage du programme…'
     while true
       runable? || return
+      # Exécution de la commande demandée
       send(main_command.to_sym)
-      print 'Commande suivante (q pour terminer, rien pour la même) : proximite '
-      next_command = STDIN.gets.strip
-      next_command != 'q' || break
-      next_command != ''  || next_command = CLI.last_command
-      CLI.analyse_command_line(next_command.split(' '))
+      # Si l'option --test a été placée, on ne boucle pas
+      CLI.options[:test] && break
+      # On attend la prochaine commande
+      wait_for_next_command || break
     end
   rescue Exception => e
     error e.message
@@ -37,6 +37,17 @@ class << self
     save_config
     # Fermer le fichier log
     Log.reflog.close
+  end
+
+  def wait_for_next_command
+    print 'Commande suivante (q pour terminer, rien pour la même) : proximite '
+    next_command = STDIN.gets.strip
+    require './lib/required'
+    next_command != 'q' || return
+    @main_command = nil
+    next_command != ''  || next_command = CLI.last_command
+    CLI.analyse_command_line(next_command.split(' '))
+    return true
   end
 
   # @retourne TRUE si le programme peut être lancé

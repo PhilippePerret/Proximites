@@ -23,7 +23,6 @@ class << self
   def check
     case CLI.params[1]
     when 'proximites'
-      puts '-> proximites'
       Occurences.check_proximites
     else
       texte_courant.analyse

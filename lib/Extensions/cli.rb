@@ -34,20 +34,22 @@ class CLI
       self.options && self.options[:quiet]
     end
 
-    def analyse_command_line arguments_v = nil
-      arguments_v ||= ARGV
-
-      # On mémorise la dernière commande
-      self.last_command = (arguments_v||[]).join(' ')
-
+    # Initialisation de CLI
+    def init
       # La commande = le premier mot (pas forcément)
       self.command= nil
       # log "Commande : #{CLI.command.inspect}"
       self.options  = Hash.new
       self.params   = (a = Array.new ; a << nil ; a)
-      self.command.nil? || begin
-        self.command= self.command.gsub(/\-/,'_')
-      end
+    end
+
+    # Analyse de la ligne de commande
+    def analyse_command_line arguments_v = nil
+      arguments_v ||= ARGV
+      init
+      # On mémorise la dernière commande, c'est-à-dire la ligne complète fournie
+      # à cette méthode.
+      self.last_command = (arguments_v||[]).join(' ')
 
       # Ensuite, on peut trouver des paramètres ou des options. Les options
       # se reconnaissent au fait qu'elles commencent toujours par "-" ou "--"
@@ -57,7 +59,7 @@ class CLI
           if argv.start_with?('-')
             traite_arg_as_option argv
           elsif self.command.nil?
-            self.command = DIM_OPT_TO_REAL_OPT[argv] || argv
+            self.command = (DIM_OPT_TO_REAL_OPT[argv] || argv).gsub(/\-/,'_')
           else
             traite_arg_as_param argv
           end

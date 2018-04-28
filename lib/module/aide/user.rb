@@ -114,7 +114,25 @@ problème de trop grande proximité des mots dans un texte quelconque.
             Valeur distance fixe : (#{Texte::Mot::DISTANCE_DEFAUT})
 
   Affichage des résultats
-  -----------------------
+  =======================
+
+    Résumé des commandes
+    --------------------
+
+          #{'prox[imite] show proximites [-i][--all]'.jaune}
+          #{'prox[imite] show proximite <mot> [-i]'.jaune}
+          #{'prox[imite] show proximite <ID> [-i]'.jaune}
+          #{'prox[imite] proximites [--all]'.jaune}
+
+          #{'prox[imite] show occurences'.jaune}
+          #{'prox[imite] show occurence <mot>'.jaune}
+          #{'prox[imite] occurences'.jaune}
+
+          #{'prox[imite] show text[e]'.jaune}
+
+          #{'prox[imite] infos'.jaune}
+          #{'prox[imite] stats'.jaune}
+
 
   #{'prox s[how] <what> [path] [options]'.gras}
 
@@ -137,6 +155,10 @@ problème de trop grande proximité des mots dans un texte quelconque.
       Permet d’afficher seulement les mots qu'on trouve en proximités, sans
       répétition, mais sans détail de ces proximités.
 
+  #{'prox[imite] show text[e]'.jaune}
+
+      Affiche le texte en indiquant les proximités qui ont été relevées.
+
   #{'prox s[how] stats [path]'.jaune}
 
       Pour afficher les statistiques concernant le texte, c’est-à-dire le nombre de
@@ -156,6 +178,9 @@ problème de trop grande proximité des mots dans un texte quelconque.
           #{'prox s[how] proximite <mot> [path] [options]'.jaune}
             # Noter le singulier.
             # Proximités du mot <mot>. Avec l’option `-i`, en mode interactif.
+          #{'prox s[how] proximite <ID> [path] [options]'.jaune}
+            # Noter le singulier.
+            # Proximité d'identifiant <ID> en mode interactif avec l’option -i.
           #{'prox[imite] proximites [--ksort=count]'.jaune}
             # Affiche la liste simple des mots en proximité, classés soit par
             # order alphabétique (défaut) soit suivant le nombre de proximités

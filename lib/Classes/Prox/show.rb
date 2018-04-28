@@ -20,23 +20,36 @@ class << self
     texte_courant.mots || texte_courant.load_all
 
     case what
+    when 'texte', 'text'
+      texte_courant.show
     when 'proximites', 'proximités'
       Proximity.show
     when 'proximite', 'proximité'
-      Proximity.show(CLI.params[2].strip)
+      if CLI.params[2].match(/^[0-9]+$/)
+        Proximity.show_proximite_by_id(CLI.params[2].to_i)
+      else
+        Proximity.show(CLI.params[2])
+      end
     when 'occurences', 'occurence'
       Occurences.show
     when 'stats', 'statistiques'
       Texte.current.show_statistiques
     else
-      # C'est soit un mot dont on veut voir les informations, soit une erreur
-      # Il faut créer une instance du mot pour pouvoir obtenir son mot de base
-      imot = Texte::Mot.new(texte_courant, what)
-      if Occurences[imot.mot_base]
-        # Texte::Mot.show_info(what)
-        Occurences[imot.mot_base].show_infos
+      # Arrivé ici, le what peut être :
+      #   * un mot dont on veut voir les informations
+      #   * un ID de proximité qu'on veut voir en détail et corriger
+      #   * une erreur
+      if what.match(/^[0-9]+$/)
+        Proximity.show_proximite_by_id(what.to_i)
       else
-        error "Je ne connais pas #{what.inspect}… Impossible de l'afficher…"
+        # Il faut créer une instance du mot pour pouvoir obtenir son mot de base
+        imot = Texte::Mot.new(texte_courant, what)
+        if Occurences[imot.mot_base]
+          # Texte::Mot.show_info(what)
+          Occurences[imot.mot_base].show_infos
+        else
+          error "Je ne connais pas #{what.inspect}… Impossible de l'afficher…"
+        end
       end
     end
 

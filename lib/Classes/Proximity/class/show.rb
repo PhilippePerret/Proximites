@@ -13,6 +13,11 @@ class << self
   # faudrait donc les enregistrer.
   attr_accessor :changements_operes
 
+  # Méthode affichant une proximité par son Identifiant
+  def show_proximite_by_id prox_id
+    show(prox_id.to_i)
+  end
+
   # Méthode principale appelée quand on fait `prox show proximites [path]`
   #
   # On procède en deux temps :
@@ -20,6 +25,7 @@ class << self
   #   * on affiche les proximités (de façon interactive si nécessaire)
   #
   # Si +mot+ est défini, on affiche seulement les proximités de ce mot.
+  # Ça peut être aussi l'identifiant de la proximité.
   #
   def show mot = nil
     mode_interactif = CLI.options[:interactif]
@@ -28,6 +34,9 @@ class << self
 
     if mot.nil?
       liste_proximites = table.values
+    elsif mot.is_a?(Fixnum)
+      liste_proximites = [Proximity[mot]]
+      mot = liste_proximites.first.mot_avant.mot
     else
       if Occurences[mot] && !Occurences[mot].proximites.empty?
         # C'est bien un mot qui a pas des proximité
@@ -70,10 +79,13 @@ class << self
 
     # Estimation de la durée pour faire les corrections
     duree_corrections = estimation_duree_corrections(nombre_proximites)
-    mark_nombres_footer << "#{'Durée estimée'.ljust(len_libelle_footer)} : #{duree_corrections}"
+    mark_nombres_footer << "#{'Durée corrections estimée'.ljust(len_libelle_footer)} : #{duree_corrections}"
     mark_nombres_header  << "durée : #{duree_corrections}"
 
     mark_nombres_header = mark_nombres_header.join(' / ')
+
+    mode_interactif || mark_nombres_footer << "\n\t(ajouter l’option `-i` pour passer en mode interactif)"
+
 
     ajoutmot = mot.nil? ? '' : " DU MOT #{mot.upcase.inspect}"
     entete = "=== AFFICHAGE DES PROXIMITÉS#{ajoutmot} (#{mark_nombres_header}) ==="
@@ -134,16 +146,6 @@ class << self
       duree_moy_correction_prox:  duree_moy
       })
   end
-
-  # TODO : implémenter
-  def temps_moyen_correction_proximite
-
-  end
-  # TODO : implémenter
-  def display_temps_correction_prevu
-
-  end
-
 
   def traite_proximite_mode_interactif iprox
     while true

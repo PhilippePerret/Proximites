@@ -25,7 +25,7 @@ class Fixnum
     jrs  = rest / (hours_a_day * 3600)
     rest = rest - (jrs * hours_a_day * 3600)
     hrs  = rest / 3600
-    "#{jrs} jr#{jrs > 1 ? 's' : ''} #{hrs} hr#{hrs > 1 ? 's' : ''} (à raison de #{hours_a_day} hrs/jour)"
+    "#{jrs} jr#{jrs > 1 ? 's' : ''} #{hrs} hr#{hrs > 1 ? 's' : ''} à raison de #{hours_a_day} hrs/jour"
   end
 
   # Retourne la durée d'après le nombre de secondes
