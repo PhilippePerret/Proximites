@@ -5,6 +5,10 @@ class Proximity
   attr_reader :mot_avant, :mot_apres
   attr_reader :distance_min
 
+  # Méthode couleur pour afficher la proximité dans le texte
+  # Par exemple :vert, ou :rouge, ou :gris
+  attr_accessor :color
+
   def initialize mot_avant, mot_apres, distance_min
     @id           = self.class.add(self)
     @mot_avant    = mot_avant

@@ -13,12 +13,9 @@ class << self
     texte_courant.mots || texte_courant.load_all
     table.each do |mot, occurence|
       # puts "*** #{mot.inspect}"
-      STDOUT.flush
+      # STDOUT.flush
       occurence.traitable? || next
       occurence.check_proximites
-
-      # break # pour tester
-
     end
   end
 

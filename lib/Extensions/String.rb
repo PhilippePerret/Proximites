@@ -11,6 +11,26 @@ class String
     # 96=bleu clair, 93 = jaune, 94/95=mauve, 92=vert
   end
 
+  def mauve
+    "\033[1;94m#{self}\033[0m"
+  end
+
+  def fond1
+    "\033[38;5;8;48;5;45m#{self}\033[0m"
+  end
+  def fond2
+    "\033[38;5;8;48;5;40m#{self}\033[0m"
+  end
+  def fond3
+    "\033[38;5;0;48;5;183m#{self}\033[0m"
+  end
+  def fond4
+    "\033[38;5;15;48;5;197m#{self}\033[0m"
+  end
+  def fond5
+    "\033[38;5;15;48;5;172m#{self}\033[0m"
+  end
+
   def jaune
     "\033[0;93m#{self}\033[0m"
   end

@@ -17,9 +17,6 @@ class Occurences
     # Le mot précédent
     last_imot = nil
 
-    puts "indexes: #{indexes.inspect}"
-    STDOUT.flush
-
     # Boucle sur tous les indexs de mots
     indexes.each do |index_mot|
       imot = texte.mots[index_mot]
@@ -35,7 +32,12 @@ class Occurences
           # puts "last_imot = #{last_imot.mot}:#{last_imot.offset} / imot = #{imot.mot}:#{imot.offset}"
           # STDOUT.flush
           prox = Proximity.new(last_imot, imot, distance)
+          # On ajoute l'ID de la nouvelle proximité à la liste des proximités
+          # de l'occurence de mot.
           self.proximites << prox.id
+          # On ajoute cet ID également au mot avant et au mot après
+          last_imot.add_proximite(prox, apres = true)
+          imot.add_proximite(prox, apres = false)
         end
       end
       last_imot = imot
