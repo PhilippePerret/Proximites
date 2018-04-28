@@ -23,6 +23,7 @@ class Mot
     'eux',
     'heureux',
     'mieux',
+    'paix',
     'voix',
     'yeux'
   ]
@@ -30,6 +31,7 @@ class Mot
   ARR_MOTS_FEMININS_E = [ # => MOTS_FEMININS
     'clandestine',
     'différente',
+    'fin',
     'grand',
     'mauvaise',
     'petit',

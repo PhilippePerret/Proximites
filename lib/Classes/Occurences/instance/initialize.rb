@@ -9,6 +9,7 @@ class Occurences
     # Voir le module `data.rb` pour le détail
     mot.is_a?(String) || mot = mot.mot_base
     @mot          = mot
+    @offsets      = Array.new
     @indexes      = Array.new
     @proximites   = Array.new
     @derives      = Array.new # les mots dérivés (mot != mot_base)
@@ -23,6 +24,7 @@ class Occurences
   #
   def add imot, similarite = nil
     suivi "Ajout d’une occurence de #{imot.mot_base.inspect}"
+    @offsets << imot.offset
     @indexes << imot.index
     similarite.nil?           || @similarites << imot.index
     imot.mot == imot.mot_base || @derives << imot.index

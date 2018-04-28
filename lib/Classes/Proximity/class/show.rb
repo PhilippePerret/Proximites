@@ -20,6 +20,10 @@ class << self
 
   # Méthode principale appelée quand on fait `prox show proximites [path]`
   #
+  # C'est la méthode qui permet dans tous les cas de corriger les proximités
+  # soit en les regardant dans une liste affichée à l'écran, soit proximité
+  # par proximité, avec une aide interactive.
+  #
   # On procède en deux temps :
   #   * on relève la liste des proximités à afficher (sauf si --all)
   #   * on affiche les proximités (de façon interactive si nécessaire)
@@ -147,14 +151,29 @@ class << self
       })
   end
 
+  # En mode interactif, on passe ici pour traiter la proximité
+  #
+  # On peut déterminer si la proximité est corrigée, s'il faut la supprimer,
+  # on peut faire une proposition de mot que le programme va vérifier (pour voir
+  # s'il ne crée par une nouvelle proximité), etc.
   def traite_proximite_mode_interactif iprox
     while true
-      print "Opération (n=suivante, o=marquer traitée, s=supprimer, z=tout arrêter) : "
+      puts <<-EOT
+      #{'o'.jaune} = marquer cette proximité comme traitée/corrigée"
+      #{'p'.jaune} = essayer une proposition de mot (#{'pp'.jaune} pour le premier mot, #{'ps'.jaune} pour le second)
+      #{'s'.jaune} = supprimer cette proximité de la liste (on pourra la revoir avec --all)
+      #{'n'.jaune} = passer à la proximité suivante
+      #{'z'.jaune} = arrêter les corrections.
+
+      EOT
+
+      print "Opération choisie : "
       debut_op = Time.now.to_f # utile pour compter le temps d'une correction
       c = STDIN.gets.strip_nil
       case c
       when NilClass, 'n' then return false # pour poursuivre
-      when 'z'     then return true
+      when 'z'              then return true
+      when 'p', 'pp', 'ps'  then proposer_et_tester_un_mot(iprox, (c == 'p' ? nil : (c == 'pp' ? true : false)))
       when 'o', 'ok', 'oui'
         # => marquer cette proximité traitée
         yesOrNo('Cette proximité a-t-elle vraiment été traitée ?') && begin
@@ -176,5 +195,73 @@ class << self
     end
     return false
   end
+  # /traite_proximite_mode_interactif
+
+  # Pour pouvoir proposer un mot et checker pour voir s'il ne va pas créer
+  # une nouvelle proximité
+  #
+  # @param {Proximity} iprox  La proximité courante
+  #
+  def proposer_et_tester_un_mot iprox, pour_premier
+    if pour_premier === nil
+      rep = askFor(RET2+'Est-ce une proposition pour le premier mot ? (premier: o, p ou 1, second: n, s, 2)')
+      pour_premier =
+        case rep
+        when 'o', 'p', '1' then true
+        when 'n', 's', '2' then false
+        else
+          error "Je ne comprends pas ce choix."
+          return
+        end
+    end
+    nouveau_mot  = askFor(RET2+"Remplacer le #{pour_premier ? 'premier' : 'second'} mot par le mot")
+    nouveau_mot || return
+    puts "= Test de la validité du mot #{nouveau_mot.inspect} ="
+    # On peut avoir fourni plusieurs mots,
+    mots = nouveau_mot.strip.my_downcase.split(/[^[[:alnum:]]]/)
+    # Le mot de référence en fonction du fait qu'on veut remplacer le premier
+    # ou le second mot.
+    imot_reference = iprox.send(pour_premier ? :mot_avant : :mot_apres)
+    offset_mot_ref = imot_reference.offset
+    # On teste pour chaque mot en en faisant des instances
+    mots.each do |mot|
+      # On fait juste une instance pour obtenir le mot de base.
+      imot_test = Texte::Mot.new(nil, mot, imot_reference.index, offset_mot_ref)
+      mot_base = imot_test.mot_base
+      ioccurences = Occurences[mot_base]
+      if ioccurences
+        puts "\tUne instance occurences de #{mot_base.inspect} existe."
+        nombre_occurences = ioccurences.count
+        distance_min = ioccurences.distance_min
+        # On passe en revue chaque offset des occurences pour voir s'il y en
+        # a une à une distance inférieure de la distance min
+        ioccurences.offsets.each do |offset|
+          distance = offset - offset_mot_ref
+          trop_proche = distance.abs <= distance_min
+          # puts "distance : #{distance} (min : #{distance_min})"
+          if distance < 0 && trop_proche
+            # Trop proche d'un mot avant
+            sens = "avant"
+          elsif distance > 0 && trop_proche
+            # Trop proche d'un mot après
+            sens = "après"
+          elsif distance > distance_min
+            # On est trop loin, on peut s'arrêter là
+            puts "#{RET2}\tCe mot peut être utilisé sans risque (à titre informatif, il est répété #{nombre_occurences} fois dans ce texte).#{RET2}".bleu
+            return
+          end
+          # Ce mot est trop proche
+          puts "#{RET2}\tCe mot #{mot_base.inspect} (utilisé #{nombre_occurences} fois dans ce texte) se trouve à "+"#{distance.abs} signes #{sens} le #{pour_premier ? 'premier' : 'second'} mot".rouge + ". Il est inutilisable.#{RET2}"
+          return false
+        end
+      else
+        puts "\tAucune occurence de #{mot_base.inspect} n'existe dans ce texte, donc le mot est forcément bon.#{RET2}".bleu
+        return true
+      end
+    end
+    # /loop sur chaque mot proposé
+    return true
+  end
+
 end #/<< self
 end #/Proximity
