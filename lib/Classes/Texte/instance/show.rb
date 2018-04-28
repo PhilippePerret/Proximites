@@ -16,16 +16,50 @@ class Texte
 
   # Méthode principale répondant à la commande `proximite show texte` pour
   # afficher le texte avec les proximités
+  #
+  # Les options --from_page, --to_page, --from et/ou -to permettent de
+  # définir une portion de texte particulière.
   def show
 
     init_line_up_and_down
+
+    # Faut-il réduire le segment à afficher à une certaine longueur ?
+    start_offset =
+      if CLI.options[:from_page]
+        CLI.options[:from_page].to_i * LONGUEUR_PAGE
+      elsif CLI.options[:from]
+        CLI.options[:from].to_i
+      else
+        0
+      end
+
+    end_offset =
+      if CLI.options[:to_page]
+        CLI.options[:to_page].to_i * LONGUEUR_PAGE
+      elsif CLI.options[:to]
+        CLI.options[:to].to_i
+      else
+        nil
+      end
 
     puts RET3
 
     self.mots.each do |imot|
 
+      if imot.offset < start_offset
+        next
+      elsif end_offset && imot.offset > end_offset
+        break
+      end
+
       arr_mots    = Array.new
       arr_colors  = Array.new
+
+      imot.length > 0 || begin
+        next
+      end
+
+      # puts "Mot traité : #{imot.mot}:#{imot.offset}"
 
       disp_mark = ' ' * imot.length
       color_avant = color_apres = nil
@@ -78,6 +112,10 @@ class Texte
 
       # On ajoute la couleur aux mots qui en ont besoin
       arr_colors.each_with_index do |meth_color, index|
+        # Il peut arriver, lorsque l'on ne prend qu'une portion du texte,
+        # qu'un couleur ne soit pas définie. Il faut donc traiter la couleur
+        # seulement lorsqu'elle est vraiment définie.
+        meth_color || next
         arr_mots[index] = arr_mots[index].send(meth_color)
       end
 

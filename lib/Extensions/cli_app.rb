@@ -9,6 +9,7 @@
 class CLI
   DIM_OPT_TO_REAL_OPT = {
     'c'               => 'check',
+    'fp'              => 'from_page',
     'i'               => 'interactif',
     'o'               => 'output',
     'prog'            => 'programmation',
@@ -16,6 +17,7 @@ class CLI
     'proxs'           => 'proximites',
     's'               => 'show',
     't'               => 'texte',
+    'tp'              => 'to_page',
     'tr'              => 'traited',
     'vb'              => 'verbose',
 

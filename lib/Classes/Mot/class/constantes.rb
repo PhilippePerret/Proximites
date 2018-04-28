@@ -2,7 +2,7 @@
 class Texte
 class Mot
 
-  DISTANCE_DEFAUT = 1500
+  DISTANCE_DEFAUT = Texte::LONGUEUR_PAGE
 
 end# Mot
 end# Texte

@@ -128,7 +128,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
           #{'prox[imite] show occurence <mot>'.jaune}
           #{'prox[imite] occurences'.jaune}
 
-          #{'prox[imite] show text[e]'.jaune}
+          #{'prox[imite] show text[e] [-fp/--from_page=X] [-tp/--to_page=Z]'.jaune}
 
           #{'prox[imite] infos'.jaune}
           #{'prox[imite] stats'.jaune}
@@ -157,7 +157,21 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
   #{'prox[imite] show text[e]'.jaune}
 
-      Affiche le texte en indiquant les proximités qui ont été relevées.
+      Affiche le texte en indiquant les proximités qui ont été relevées, de fa-
+      çon très visuel.
+
+      Avec les options --from_page (-fp) et/ou --to_page, on peut limiter l'af-
+      ficchage à une portion de texte (une page fait 1500 signes par défaut).
+      Exemple :
+
+          #{'prox show texte --from_page=1O0 -tp=120'.jaune}
+          # Affiche le texte, des pages 100 à 120
+
+      On peut aussi le faire avec --from et --to en indiquand le décalage. Par
+      exemple :
+
+          #{'prox show text --from=12566 --to=12800'.jaune}
+          # Affiche le texte, du signe 12566 au signe 12800
 
   #{'prox s[how] stats [path]'.jaune}
 
