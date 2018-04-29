@@ -73,4 +73,38 @@ class Texte
     saving_required && save_infos
   end
 
+
+  # Méthode répondant à la commande `prox get infos <path/to>` qui permet de
+  # récupérer des informations d'un autre fichier, d'une autre analyse.
+  def get_infos_from_file(from_path)
+    File.exist?(from_path) || raise("Le fichier #{from_path.inspect} n'existe pas.")
+    # Si c'est le dossier qui a été transmis, on cherche le fichier infos.
+    if File.directory?(from_path)
+      from_path = File.join(from_path, 'infos.msh')
+      File.exist?(from_path) || raise("Impossible de trouver le fichier `infos.msh` dans le dossier.")
+    else
+      # C'est le fichier texte qui a été transmis
+      dossier = File.dirname(from_path)
+      affixe  = File.basename(from_path, File.extname(from_path))
+      from_path = File.join(dossier, "proximites-#{affixe}", 'infos.msh')
+      File.exist?(from_path) || raise("Le fichier #{from_path.inspect} n'existe pas.")
+    end
+    # On peut charger les infos
+    new_infos = File.open(from_path,'rb'){|f|Marshal.load(f)}
+
+    # On définit les nouvelles informations en supprimant les clés inutiles
+    [:file_path, :last_analyse, :last_command].each { |k| new_infos.delete(k) }
+
+    if new_infos.empty?
+      notice "Aucune information récupérée de l'analyse spécifiée."
+    else
+      infos.merge!(new_infos)
+      save_infos
+      notice "Informations récupérées avec succès."
+      show_infos
+    end
+  rescue Exception => e
+    error "#{e.message} Impossible de charger les informations voulues."
+  end
+
 end #/Texte

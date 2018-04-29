@@ -339,6 +339,18 @@ Trouvez ci-dessous les commandes les plus usitées.
   affiche des statistiques sur le nombre de mots, de signes, de proximités,
   etc.
 
+  Récupérer les informations d'un autre fichier
+  ---------------------------------------------
+
+  On peut récupérer des informations générales (comme la durée des corrections)
+  d'un autre fichier à l'aide de la commande #{'get'.jaune} :
+
+      #{'prox[imité] get infos <path/to/file>'.jaune}
+
+  Les informations récupérées sont :
+
+      * la durée des corrections.
+      
     EOT
   end
   #/tableau_help

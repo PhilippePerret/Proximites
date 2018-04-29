@@ -38,7 +38,6 @@ class << self
         # On essaie de prendre le dernier fichier défini
         last_path
       elsif CLI.options[:texte]
-        puts "-> texte fourni"
         # Sinon, si c'est un texte qui est fourni, on l'enregistre dans un
         # fichier provisoire.
         save_texte_in_prov_file

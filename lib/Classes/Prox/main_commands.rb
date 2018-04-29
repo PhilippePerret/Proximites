@@ -51,5 +51,13 @@ class << self
     texte_courant.show_infos
   end
 
+  def get
+    case CLI.params[1]
+    when 'infos'
+      # Récupération des informations d'un autre fichier
+      Texte.current.get_infos_from_file(CLI.params.pop)
+    end
+  end
+
 end #/<< self
 end #/Prox
