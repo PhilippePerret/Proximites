@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 #
-# CLI 1.1.1
+# CLI 1.1.2
 #
 # Note : l'application doit définir :
 #   class CLI
@@ -39,6 +39,22 @@ class CLI
       @i_histo -= 1
       @i_histo > 0 || @i_histo = 0
       return @historique[@i_histo]
+    end
+
+    # Affiche l'historique des commandes et permet d'en choisir une
+    def choose_from_historique
+      @historique || (return error('Aucune commande n’a encore été entrée. Pas d’historique des commandes.'))
+      msg = Array.new
+      msg << "\n"
+      msg << "Choisir la commande :"
+      @historique.each_with_index{|c,i| msg << "\t#{(i+1).to_s.ljust(4)} #{c}"}
+      msg << "\n"
+      puts msg.join("\n")
+      choix = getc("Commande à rejouer")
+      case choix
+      when /^([0-9]+)$/
+        return @historique[choix.to_i - 1]
+      end
     end
 
     # Utiliser CLI.verbose? pour savoir si c'est le mode verbeux ?

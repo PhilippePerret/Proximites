@@ -46,11 +46,13 @@ class << self
     next_command = nil
     command_in_histo = nil
     while true
-      print "Commande suivante (#{'q'.jaune} = terminer, #{'b'.jaune} = previous command, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
+      print "Commande suivante (#{'q'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
       next_command = STDIN.gets.strip
       case next_command
       when 'q' then return
-      when 'b' then command_in_histo = CLI.back_historique
+      when 'h'
+        next_command = CLI.choose_from_historique
+        next_command && break
       when ''
         next_command = command_in_histo ? command_in_histo : CLI.last_command
         break

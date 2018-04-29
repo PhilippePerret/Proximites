@@ -4,6 +4,16 @@
 # v. 1.0
 #
 
+def getc message
+  print "#{message} : "
+  begin
+    system("stty raw -echo")
+    str = STDIN.getc
+  ensure
+    system("stty -raw echo")
+  end
+  return str
+end
 
 # Pose la +question+ est retourne TRUE si la réponse est oui (dans tous les
 # formats possible) ou FALSE dans le cas contraire.
