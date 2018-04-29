@@ -12,6 +12,7 @@ class CLI
     'fp'              => 'from_page',
     'i'               => 'interactif',
     'o'               => 'output',
+    'pp'              => 'per_page',
     'prog'            => 'programmation',
     'prox'            => 'proximite',
     'proxs'           => 'proximites',

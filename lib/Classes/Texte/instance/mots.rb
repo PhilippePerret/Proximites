@@ -45,8 +45,6 @@ class Texte
     return imot
   end
 
-
-
   def nombre_total_mots
     @nombre_total_mots ||= mots.count
   end

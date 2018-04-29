@@ -13,6 +13,32 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
 = COMMANDES PRINCIPALES =
 
+Trouvez ci-dessous les commandes les plus usitées.
+
+  #{'prox[imite] check mon/fichier.txt'.jaune}
+
+      Incontournable, elle lance le check du texte contenu dans le fichier
+      `mon/fichier.txt`
+
+  #{'prox[imite] show proximites [-i]'.jaune}
+
+      Si c'est un texte court, on peut afficher la liste des proximités de cette
+      façon, sans l'option `-i`. Si c'est un texte long, l'option `-i` (pour in-
+      teractif) permettra d'afficher les proximités l'une après l'autre.
+
+  #{'prox[imite] show texte'.jaune}
+
+      Permet d'afficher le texte avec l'indication des proximités. Si le texte
+      est long, on peut demander l'affichage de pages en pages avec :
+
+  #{'prox[imite] show texte -pp'.jaune}
+  #{'prox[imite] show texte --per_page'.jaune}
+
+      Affiche le texte avec l'indication des proximités de page en page.
+
+
+= BASE DES COMMANDES =
+
   La base des commandes est :
 
       #{'prox[imite] [commande] [arg-commande] [path] [options]'.jaune}

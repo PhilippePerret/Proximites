@@ -19,6 +19,7 @@ class Texte
 
   Fichier                   : #{path}
   Longueur du texte         : #{segment.length.mille} signes
+  Nombre de pages           : #{nombre_pages}
   Nombre total de mots      : #{mots.count.mille}
   Nombre de mots différents : #{Occurences.count.mille}
   Nombre de proximités      : #{Proximity.count.mille}
@@ -29,6 +30,12 @@ class Texte
 
 
     EOT
+  end
+
+  def nombre_pages
+    @nombre_pages ||= begin
+      (segment.length / LONGUEUR_PAGE) + 1
+    end
   end
 
 end#/Texte
