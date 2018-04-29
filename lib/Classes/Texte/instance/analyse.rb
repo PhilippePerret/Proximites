@@ -4,22 +4,32 @@ class Texte
 
   # Méthode principale procédant au check complet du texte
   def analyse
+
+    # Clearer la fenêtre
+    puts "\033c"
+
+    texte_long? && begin
+      print "\033[2;1H" # 2e ligne
+      print("*** Analyse du texte…")
+    end
     suivi '-> Texte#check (grand check complet avec sauvegarde)'
     Prox.log_check? && Prox.log_check("Début de l'analyse du texte", is_op = true)
 
     # Certaines options peuvent redéfinir des valeurs de configuration, comme
     # par exemple la distance maximale de proximité (cf. dans le module infos.rb)
+    texte_long? && print("*** Configuration… ")
     define_configuration
+    texte_long? && puts("OK")
 
-    # Le fait d'appeler la méthode-propriété `mots` va calculer toutes les
-    # occurences des mots et créer des instances Texte::Mot de ces mots
     decompose_en_mots
 
     # Recherche des proximités dans les occurences formées
     Occurences.check_proximites
 
     # Sauvegarde de toutes les tables (mots, proximités, occurences)
+    texte_long? && print("*** Enregistrement des données… ")
     save_all
+    texte_long? && puts("OK")
 
     # On affiche à la fin un message explicatif.
     puts explication_fin_analyse.jaune

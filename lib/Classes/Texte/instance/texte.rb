@@ -8,6 +8,11 @@ class Texte
   # déterminera les paths des fichiers produits.
   attr_writer :from_offset, :to_offset
 
+  def texte_long?
+    @is_texte_long === nil || (return @is_texte_long)
+    @is_texte_long = segment.length > 50000
+  end
+
   # Le texte complet et initial, tel que fourni en ligne de commande ou
   # dans le fichier.
   def texte

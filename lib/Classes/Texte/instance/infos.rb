@@ -35,6 +35,7 @@ class Texte
 
   def save_infos
     File.exist?(path_file_infos) && File.unlink(path_file_infos)
+    `mkdir -p "#{File.dirname(path_file_infos)}"` # pour la première fois
     File.open(path_file_infos,'wb'){|f|Marshal.dump(infos,f)}
   end
 
