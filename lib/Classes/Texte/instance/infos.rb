@@ -90,10 +90,19 @@ class Texte
       File.exist?(from_path) || raise("Le fichier #{from_path.inspect} n'existe pas.")
     end
     # On peut charger les infos
-    new_infos = File.open(from_path,'rb'){|f|Marshal.load(f)}
+    get_infos = File.open(from_path,'rb'){|f|Marshal.load(f)}
 
     # On définit les nouvelles informations en supprimant les clés inutiles
-    [:file_path, :last_analyse, :last_command].each { |k| new_infos.delete(k) }
+    new_infos = infos
+    # PROPRIÉTÉS QUI PEUVENT ÊTRE COPIÉES
+    [
+      :duree_moy_correction_prox, # surtout pour celle-ci
+      :dmax_normale,
+      :dmax_possible
+    ].each do |k|
+      get_infos[k] || next
+      new_infos.merge!(k => get_infos[k])
+    end
 
     if new_infos.empty?
       notice "Aucune information récupérée de l'analyse spécifiée."
