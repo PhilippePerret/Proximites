@@ -20,14 +20,17 @@ class Occurences
     # Boucle sur tous les indexs de mots
     indexes.each do |index_mot|
       imot = texte.mots[index_mot]
+      Prox.log_check? && Prox.log_check("\t\t\tOccurence d’index #{index_mot} (offset: #{imot.offset})")
       last_imot && last_imot.trop_proche_de?(imot, distance) && begin
         # <= Une proximité a été détectée
         # => C'est peut-être un mauvaise proximité, mais il faut déjà vérifier
+        Prox.log_check? && Prox.log_check("\t\t\t\tProximité détectée avec le mot précédent (à tester)")
         #    pour voir s'il ne s'agit pas d'une locution répétitive. Pour ce
         #    faire, on doit prendre le mot avant, le mot juste après le mot
         #    avant et le mot après.
         Texte::Mot.locution_repetitive?(last_imot, imot) || begin
           # => Il faut créer une proximité
+          Prox.log_check? && Prox.log_check("\t\t\t\tPROXIMITÉ CONFIRMÉE")
           # puts "Le mot #{imot.mot_base.inspect} à #{last_imot.offset} est trop proche de celui à #{imot.offset} (distance = #{distance})"
           # puts "last_imot = #{last_imot.mot}:#{last_imot.offset} / imot = #{imot.mot}:#{imot.offset}"
           # STDOUT.flush

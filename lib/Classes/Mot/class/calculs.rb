@@ -38,7 +38,8 @@ class << self
         return false
       end
     end
-    suivi "=?= #{mota.inspect} | #{motb.inspect} sont jugés similaires sur #{check_len + 1} caractères #{res ? '' : ' (non)'}"
+    Prox.log_check? && Prox.log_check("\t\t#{mota.inspect} | #{motb.inspect} sont jugés similaires sur #{check_len + 1} caractères.")
+
     return true
   end
 
@@ -60,7 +61,7 @@ class << self
     motentre = Texte.current.mots[mota.index + 1]
     ['de','en','que'].include?(motentre.mot) || return
 
-    suivi "“#{mota.mot} #{motentre.mot} #{motb.mot}” forment une locution répétitive (pas de problème de proximité)."
+    Prox.log_check? && Prox.log_check("\t\t\t\tLocution répétitive “#{mota.mot} #{motentre.mot} #{motb.mot}” => PROXIMITÉ ANNULÉE")
 
     return true
   end

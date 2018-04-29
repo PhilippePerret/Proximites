@@ -1,57 +1,177 @@
 
 
 
-LOG CHECK DU 2018-04-29 09:28:54 +0300
+LOG CHECK DU 2018-04-29 10:05:17 +0300
 
-0:00:00    -0.04      Début de l'analyse du texte
-0:00:00    0:00:00    *** Décomposition en mots…
-0          0.045      	Traitement du mot "un"
-0          0.009      	Traitement du mot "petit"
-0          0.005      	Traitement du mot "texte"
-0          0.007      	Traitement du mot "ou"
-0          0.003      	Traitement du mot "une"
-0          0.002      	Traitement du mot "petite"
-0          0.002      	Traitement du mot "boite"
-0          0.005      	Traitement du mot "qui"
-0          0.003      	Traitement du mot "doivent"
-0          0.003      	Traitement du mot "faire"
-0          0.003      	Traitement du mot "les"
-0          0.003      	Traitement du mot "tests"
-0          0.005      	Traitement du mot ""
-0          0.003      	Traitement du mot "il"
-0          0.003      	Traitement du mot "est"
-0          0.003      	Traitement du mot "sur"
-0          0.003      	Traitement du mot "plusieurs"
-0          0.005      	Traitement du mot "lignes"
-0          0.004      	Traitement du mot ""
-0          0.002      	Traitement du mot "ils"
-0          0.002      	Traitement du mot "sont"
-0          0.002      	Traitement du mot "dus"
-0          0.002      	Traitement du mot "dans"
-0          0.004      	Traitement du mot "un"
-0          0.003      	Traitement du mot "box"
-0          0.004      	Traitement du mot "et"
-0          0.007      	Traitement du mot "des"
-0          0.007      	Traitement du mot "genoux"
-0:00:00    0:00:00    === Fin de la décomposition en mots
-0:00:00    0:00:00    *** Recherche des proximités…
-0:00:00    0:00:00    === Fin de la recherche des proximités
-                        = Occurences analysées (21 mots uniques)
-                        = Proximités trouvées (2)
-0:00:00    0:00:00    *** Sauvegarde de tous les éléments…
-0          0.796        * Sauvegarde des mots…
-0          0.102        * Sauvegarde des occurences…
-0          0.085        * Sauvegarde des proximités…
-0:00:00    0:00:00    === Fin de la sauvegarde
+0:00:00  -0.014   Début de l'analyse du texte
+0:00:00  0:00:00  *** Décomposition en mots…
+         0.027    	Traitement du mot [0;93m"un"[0m
+         0.01     	Traitement du mot [0;93m"petit"[0m
+         0.004    	Traitement du mot [0;93m"texte"[0m
+         0.005    	Traitement du mot [0;93m"ou"[0m
+         0.003    	Traitement du mot [0;93m"une"[0m
+         0.002    		Mot de base : "un"
+         0.001    	Traitement du mot [0;93m"petite"[0m
+         0.002    		Mot de base : "petit"
+         0.001    	Traitement du mot [0;93m"boite"[0m
+         0.003    	Traitement du mot [0;93m"qui"[0m
+         0.005    	Traitement du mot [0;93m"doivent"[0m
+         0.003    		Mot de base : "devoir"
+         0.001    	Traitement du mot [0;93m"faire"[0m
+         0.006    	Traitement du mot [0;93m"les"[0m
+         0.006    		Mot de base : "le"
+         0.001    	Traitement du mot [0;93m"tests"[0m
+         0.013    		Mot de base : "test"
+         0.001    	Traitement du mot [0;93m""[0m
+         0.005    	Traitement du mot [0;93m"il"[0m
+         0.004    	Traitement du mot [0;93m"est"[0m
+         0.005    		Mot de base : "être"
+         0.001    	Traitement du mot [0;93m"sur"[0m
+         0.004    	Traitement du mot [0;93m"plusieurs"[0m
+         0.01     	Traitement du mot [0;93m"lignes"[0m
+         0.005    		Mot de base : "ligne"
+         0.001    	Traitement du mot [0;93m""[0m
+         0.002    	Traitement du mot [0;93m"ils"[0m
+         0.003    		Mot de base : "il"
+         0.001    	Traitement du mot [0;93m"sont"[0m
+         0.002    		Mot de base : "être"
+         0.001    	Traitement du mot [0;93m"dus"[0m
+         0.002    		Mot de base : "devoir"
+         0.002    	Traitement du mot [0;93m"dans"[0m
+         0.004    	Traitement du mot [0;93m"un"[0m
+         0.001    	Traitement du mot [0;93m"box"[0m
+         0.01     	Traitement du mot [0;93m"et"[0m
+         0.008    	Traitement du mot [0;93m"des"[0m
+         0.006    		Mot de base : "de"
+         0.001    	Traitement du mot [0;93m"genoux"[0m
+         0.005    		Mot de base : "genou"
+         0.001    	Traitement du mot [0;93m""[0m
+         0.003    	Traitement du mot [0;93m"mais"[0m
+         0.004    	Traitement du mot [0;93m"de"[0m
+         0.004    	Traitement du mot [0;93m"temps"[0m
+         0.004    	Traitement du mot [0;93m"en"[0m
+         0.006    	Traitement du mot [0;93m"temps"[0m
+         0.003    	Traitement du mot [0;93m"il"[0m
+         0.002    	Traitement du mot [0;93m"faut"[0m
+         0.007    		Mot de base : "falloir"
+         0.001    	Traitement du mot [0;93m"des"[0m
+         0.006    		Mot de base : "de"
+         0.001    	Traitement du mot [0;93m"locutions"[0m
+         0.005    		Mot de base : "locution"
+         0.006    	Traitement du mot [0;93m"répétitives"[0m
+         0.005    		Mot de base : "répétitive"
+         0.001    	Traitement du mot [0;93m""[0m
+         0.002    	Traitement du mot [0;93m"s"[0m
+         0.002    		Mot de base : ""
+         0.001    	Traitement du mot [0;93m"approcher"[0m
+         0.008    	Traitement du mot [0;93m"et"[0m
+         0.003    	Traitement du mot [0;93m"s"[0m
+         0.002    		Mot de base : ""
+         0.001    	Traitement du mot [0;93m"approchera"[0m
+         0.003    		"approchera" | "approcher" sont jugés similaires sur 7 caractères.
+         0.003    	Traitement du mot [0;93m"sont"[0m
+         0.002    		Mot de base : "être"
+         0.001    	Traitement du mot [0;93m"des"[0m
+         0.006    		Mot de base : "de"
+         0.001    	Traitement du mot [0;93m"mots"[0m
+         0.01     		Mot de base : "mot"
+         0.001    	Traitement du mot [0;93m"similaires"[0m
+         0.005    		Mot de base : "similaire"
+0:00:00  0:00:00  === Fin de la décomposition en mots
+0:00:00  0:00:00  *** Recherche des proximités…
+         0.001    	* Traitement de l’occurence du mot [0;93m"un"[0m
+         0.009    		Défini comme non traitable (mot trop court)
+         0.001    	* Traitement de l’occurence du mot [0;93m"petit"[0m
+         0.041    		Défini comme traitable
+         0.003    			Occurence d’index 1 (offset: 3)
+         0.001    			Occurence d’index 5 (offset: 22)
+         0.001    				Proximité détectée avec le mot précédent (à tester)
+         0.001    				PROXIMITÉ CONFIRMÉE
+         0.003    	* Traitement de l’occurence du mot [0;93m"texte"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"ou"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"boite"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"qui"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"devoir"[0m
+         0.001    		Défini comme traitable
+         0.001    			Occurence d’index 8 (offset: 39)
+         0.001    			Occurence d’index 21 (offset: 102)
+         0.001    				Proximité détectée avec le mot précédent (à tester)
+         0.0      				PROXIMITÉ CONFIRMÉE
+         0.001    	* Traitement de l’occurence du mot [0;93m"faire"[0m
+         0.002    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"le"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"test"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m""[0m
+         0.004    		Défini comme non traitable (vide)
+         0.001    	* Traitement de l’occurence du mot [0;93m"il"[0m
+         0.001    		Défini comme non traitable (mot trop court)
+         0.001    	* Traitement de l’occurence du mot [0;93m"être"[0m
+         0.001    		Défini comme non traitable (mot long à éviter)
+         0.001    	* Traitement de l’occurence du mot [0;93m"sur"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.004    	* Traitement de l’occurence du mot [0;93m"plusieurs"[0m
+         0.002    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"ligne"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"dans"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"box"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"et"[0m
+         0.001    		Défini comme non traitable (mot trop court)
+         0.001    	* Traitement de l’occurence du mot [0;93m"de"[0m
+         0.001    		Défini comme non traitable (mot trop court)
+         0.001    	* Traitement de l’occurence du mot [0;93m"genou"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"mais"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"temps"[0m
+         0.001    		Défini comme traitable
+         0.001    			Occurence d’index 31 (offset: 141)
+         0.001    			Occurence d’index 33 (offset: 150)
+         0.0      				Proximité détectée avec le mot précédent (à tester)
+         0.002    				Locution répétitive “temps en temps” => PROXIMITÉ ANNULÉE
+         0.005    	* Traitement de l’occurence du mot [0;93m"en"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"falloir"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"locution"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"répétitive"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.013    	* Traitement de l’occurence du mot [0;93m"approcher"[0m
+         0.003    		Défini comme traitable
+         0.001    			Occurence d’index 41 (offset: 193)
+         0.001    			Occurence d’index 44 (offset: 208)
+         0.001    				Proximité détectée avec le mot précédent (à tester)
+         0.001    				PROXIMITÉ CONFIRMÉE
+         0.002    	* Traitement de l’occurence du mot [0;93m"mot"[0m
+         0.001    		Défini comme non traitable (unique)
+         0.001    	* Traitement de l’occurence du mot [0;93m"similaire"[0m
+         0.001    		Défini comme non traitable (unique)
+0:00:00  0:00:00  === Fin de la recherche des proximités
+                    = Occurences analysées (30 mots uniques)
+                    = Proximités trouvées (3)
+0:00:00  0:00:00  *** Sauvegarde de tous les éléments…
+         1.014      * Sauvegarde des mots…
+         0.143      * Sauvegarde des occurences…
+         0.211      * Sauvegarde des proximités…
+0:00:00  0:00:00  === Fin de la sauvegarde
 
 
 
-LOG CHECK DU 2018-04-29 09:28:58 +0300
+LOG CHECK DU 2018-04-29 10:05:22 +0300
 
-0:00:00    0:00:00    === Fin de la sauvegarde
+0:00:00  0:00:00  === Fin de la sauvegarde
 
 
 
-LOG CHECK DU 2018-04-29 09:29:47 +0300
+LOG CHECK DU 2018-04-29 10:05:41 +0300
 
-0:00:00    0:00:00    === Fin de la sauvegarde
+0:00:00  0:00:00  === Fin de la sauvegarde

@@ -22,8 +22,11 @@ class Texte
     # Pour connaitre le décalage du mot.
     current_offset = 0
     liste_mots.each_with_index do |mot, index_mot|
-      Prox.log_check? && Prox.log_check("\tTraitement du mot #{mot.inspect}")
-      add_mot(mot, index_mot, current_offset)
+      Prox.log_check? && Prox.log_check("\tTraitement du mot #{mot.inspect.jaune}")
+      imot = add_mot(mot, index_mot, current_offset)
+      Prox.log_check? && begin
+        imot.mot == imot.mot_base || Prox.log_check("\t\tMot de base : #{imot.mot_base.inspect}")
+      end
       current_offset += mot.length + 1
     end
     Prox.log_check? && Prox.log_check("=== Fin de la décomposition en mots", is_op = true)
@@ -33,10 +36,13 @@ class Texte
   # En même temps, on gère les instances Occurences
   #
   # C'est la grande méthode qui permet ensuite de traiter les proximités.
+  #
+  # Retourne l'instance Texte::Mot du mot créé
   def add_mot mot_str, index_mot, current_offset
-    mot = Texte::Mot.new(self, mot_str, index_mot, current_offset)
-    @mots << mot
-    Occurences.add(mot)
+    imot = Texte::Mot.new(self, mot_str, index_mot, current_offset)
+    @mots << imot
+    Occurences.add(imot)
+    return imot
   end
 
 

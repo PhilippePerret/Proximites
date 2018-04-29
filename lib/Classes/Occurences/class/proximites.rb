@@ -12,8 +12,7 @@ class << self
     Prox.log_check? && Prox.log_check("*** Recherche des proximités…", is_op = true)
     texte_courant.mots || texte_courant.load_all
     table.each do |mot, occurence|
-      # puts "*** #{mot.inspect}"
-      # STDOUT.flush
+      Prox.log_check? && Prox.log_check("\t* Traitement de l’occurence du mot #{mot.inspect.jaune}")
       occurence.traitable? || next
       occurence.check_proximites
     end
