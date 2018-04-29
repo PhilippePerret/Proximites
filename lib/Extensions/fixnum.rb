@@ -46,4 +46,11 @@ class Fixnum
     return "#{jrs} j#{jrs > 1 ? 's' : ''} #{str}"
   end
 
+  # Retourne le floatant sous forme de pourcentage ou de pourmillage
+  # Note : la méthode existe aussi pour les flottants (plus précise)
+  # Rappel : pour obtenir le pourcentage, on fait <nombre>/<nombre total>
+  def pourcentage pour_mille = false
+    "#{self * 100} #{pour_mille ? '‰' : '%'}"
+  end
+
 end #/Fixnum
