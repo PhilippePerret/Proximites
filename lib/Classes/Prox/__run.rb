@@ -77,7 +77,8 @@ class << self
   rescue Exception => e
     CLI.delete_last_in_historique
     error e.message
-    puts RET + e.backtrace.join("\n").rouge
+    # Quand on travaille le programme, pour voir le détail :
+    # puts RET + e.backtrace.join("\n").rouge
     return false
   end
 
