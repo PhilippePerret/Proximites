@@ -95,6 +95,10 @@ class << self
     entete = "=== AFFICHAGE DES PROXIMITÉS#{ajoutmot} (#{mark_nombres_header}) ==="
     puts "#{RET3}#{entete}#{RET3}"
 
+    # Façon de traiter la proximité :
+    #   * soit on l'affiche simplement (à la suite les 1 des autres)
+    #   * soit de façon interactive, l'1 après l'autre
+    #
     proced =
       if mode_interactif
         Proc.new do |prox, numero|
@@ -108,6 +112,13 @@ class << self
           puts prox.as_block(numero, nombre_proximites)
         end
       end
+
+    # En mode interactif, on affiche les proximités dans l'ordre d'apparition
+    # dans le texte plutôt que par groupe d'occurences. Il faut donc classer
+    # la liste finale.
+    if mode_interactif
+      liste_proximites = liste_proximites.sort_by{|prox| prox.mot_avant.offset}
+    end
 
     # =========================================================
     # On boucle sur chaque proximité à afficher
