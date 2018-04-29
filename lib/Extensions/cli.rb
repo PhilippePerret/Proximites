@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 #
-# CLI 1.1.0
+# CLI 1.1.1
 #
 # Note : l'application doit définir :
 #   class CLI
@@ -19,9 +19,26 @@ class CLI
 
     attr_accessor :last_command # sans l'application
 
+    # Historique des commandes
+    attr_reader :historique, :i_histo
+
     # Pour savoir si c'est la ligne de commande qui est utilisée
     def command_line?
       true
+    end
+
+    def add_historique cmd
+      @historique ||= Array.new
+      @historique << cmd
+      @i_histo = @historique.count - 1
+    end
+
+    # Pour revenir en arrière dans l'historique
+    def back_historique
+      @historique || (return error('Aucune commande n’a encore été entrée. Pas d’historique des commandes.'))
+      @i_histo -= 1
+      @i_histo > 0 || @i_histo = 0
+      return @historique[@i_histo]
     end
 
     # Utiliser CLI.verbose? pour savoir si c'est le mode verbeux ?
@@ -50,6 +67,8 @@ class CLI
       # On mémorise la dernière commande, c'est-à-dire la ligne complète fournie
       # à cette méthode.
       self.last_command = (arguments_v||[]).join(' ')
+      # On ajoute cette commande à l'historique courant
+      add_historique(self.last_command)
 
       # Ensuite, on peut trouver des paramètres ou des options. Les options
       # se reconnaissent au fait qu'elles commencent toujours par "-" ou "--"

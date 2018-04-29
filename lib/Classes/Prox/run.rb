@@ -43,12 +43,22 @@ class << self
   end
 
   def wait_for_next_command
-    print 'Commande suivante (q pour terminer, rien pour la même) : proximite '
-    next_command = STDIN.gets.strip
+    next_command = nil
+    command_in_histo = nil
+    while true
+      print "Commande suivante (#{'q'.jaune} = terminer, #{'b'.jaune} = previous command, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
+      next_command = STDIN.gets.strip
+      case next_command
+      when 'q' then return
+      when 'b' then command_in_histo = CLI.back_historique
+      when ''
+        next_command = command_in_histo ? command_in_histo : CLI.last_command
+        break
+      else break
+      end
+    end
     require './lib/required'
-    next_command != 'q' || return
     @main_command = nil
-    next_command != ''  || next_command = CLI.last_command
     CLI.analyse_command_line(next_command.split(' '))
     return true
   end
