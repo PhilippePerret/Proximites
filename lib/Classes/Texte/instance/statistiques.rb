@@ -13,6 +13,7 @@ class Texte
     puts tableau_statistiques
   end
   def tableau_statistiques
+    load_module 'proximity/show'
     <<-EOT
 
 === STATISTIQUES DE L'ANALYSE DE PROXIMITÉS ===
@@ -23,7 +24,8 @@ class Texte
   Nombre total de mots      : #{mots.count.mille}
   Nombre de mots différents : #{Occurences.count.mille}
   Nombre de proximités      : #{Proximity.count.mille}
-  --------------------------
+  #{'-'*70}
+  Durée d'une correction    : #{info(:duree_moy_correction_prox).round(2).to_s.gsub(/\./,',')} secs.
   Durée correction estimée  : #{Proximity.estimation_duree_corrections(Proximity.count)}
 
 ================================================
