@@ -13,6 +13,7 @@ class << self
     what || begin
       error "Il faut indiquer ce qu'il faut montrer, parmi :" +
         "#{RETDT}\t* show occurences#{RETDT}\t* show proximites#{RETDT}\t* show stats#{RETDT}\t* show <mot>"
+      CLI.delete_last_in_historique
       return
     end
 
@@ -52,6 +53,7 @@ class << self
           Occurences[imot.mot_base].show_infos
         else
           error "Je ne connais pas #{what.inspect}… Impossible de l'afficher…"
+          CLI.delete_last_in_historique
         end
       end
     end

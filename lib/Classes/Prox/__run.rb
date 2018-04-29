@@ -75,6 +75,7 @@ class << self
     end
     return true
   rescue Exception => e
+    CLI.delete_last_in_historique
     error e.message
     puts RET + e.backtrace.join("\n").rouge
     return false

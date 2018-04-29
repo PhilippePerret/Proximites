@@ -56,6 +56,9 @@ class << self
     when 'infos'
       # Récupération des informations d'un autre fichier
       Texte.current.get_infos_from_file(CLI.params.pop)
+    else
+      error "Impossible de “getter” ça."
+      CLI.delete_last_in_historique
     end
   end
 

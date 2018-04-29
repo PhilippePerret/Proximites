@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # encoding: UTF-8
 #
-# CLI 1.1.2
+# CLI 1.1.3
 #
 # Note : l'application doit définir :
 #   class CLI
@@ -33,12 +33,12 @@ class CLI
       @i_histo = @historique.count - 1
     end
 
-    # Pour revenir en arrière dans l'historique
-    def back_historique
+    # Effacer le dernier élément de l'historique.
+    # On peut le faire lorsque la dernière commande n'était pas valide, et qu'on
+    # ne veut pas l'enregistrer.
+    def delete_last_in_historique
       @historique || (return error('Aucune commande n’a encore été entrée. Pas d’historique des commandes.'))
-      @i_histo -= 1
-      @i_histo > 0 || @i_histo = 0
-      return @historique[@i_histo]
+      @historique.pop
     end
 
     # Affiche l'historique des commandes et permet d'en choisir une
