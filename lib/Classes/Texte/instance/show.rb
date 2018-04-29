@@ -64,7 +64,32 @@ class Texte
       disp_mark = ' ' * imot.length
       color_avant = color_apres = nil
 
-      if imot.prox_ids.nil?# || imot.mot != 'texte'
+      # Pour savoir s'il faut traiter ce mot.
+      # Le mot doit être traité si :
+      #   * Il est en proximité avec un autre mot
+      #   * Cette proximité n'a été ni supprimée ni corrigée.
+      dont_treate = false
+      has_proximities = imot.prox_ids != nil
+      if has_proximities
+        id_prox_avant = imot.prox_ids[:avant]
+        id_prox_avant && begin
+          iprox_avant = Proximity[id_prox_avant]
+          treate_prox_avant = !(iprox_avant.treated? || iprox_avant.deleted?)
+          dont_treate = !treate_prox_avant
+        end
+        id_prox_apres = imot.prox_ids[:apres]
+        id_prox_apres && begin
+          iprox_apres = Proximity[id_prox_apres]
+          treate_prox_apres = !(iprox_apres.treated? || iprox_apres.deleted?)
+          dont_treate = dont_treate || !treate_prox_apres
+        end
+      else
+        dont_treate = true
+      end
+
+
+      # On traite véritablement
+      if dont_treate
         # Aucune proximité
         arr_mots << imot.mot
       else
@@ -72,27 +97,24 @@ class Texte
         marka = nil
         markb = nil
 
-
-        if imot.prox_ids[:avant]
+        if id_prox_avant && treate_prox_avant
           # <= Il y a un mot avant en proximité
           # => On ajoute la marque vers la gauche
-          id_prox_avant = imot.prox_ids[:avant]
           marka = "<-".ljust(imot.length,'-')
-          color_avant = Proximity[id_prox_avant].color
+          color_avant = iprox_avant.color
 
           arr_mots    << imot.mot
           arr_colors  << color_avant
 
         end
 
-        if imot.prox_ids[:apres]
+        if id_prox_apres && treate_prox_apres
           # <= Il y a un mot après en proximité
           # => On ajoute la marque vers la droite
-          id_prox_apres = imot.prox_ids[:apres]
           # markb = "_#{id_prox_apres.to_s(36)}->"
           markb = "->".rjust(imot.length,'-')
           color_apres = next_color()
-          Proximity[id_prox_apres].color = color_apres
+          iprox_apres.color = color_apres
 
           arr_mots    << imot.mot
           arr_colors  << color_apres
