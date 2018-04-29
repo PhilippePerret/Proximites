@@ -6,6 +6,10 @@ class Texte
   def analyse
     suivi '-> Texte#check (grand check complet avec sauvegarde)'
 
+    # Certaines options peuvent redéfinir des valeurs de configuration, comme
+    # par exemple la distance maximale de proximité (cf. dans le module infos.rb)
+    define_configuration
+
     # Le fait d'appeler la méthode-propriété `mots` va calculer toutes les
     # occurences des mots et créer des instances Texte::Mot de ces mots
     decompose_en_mots

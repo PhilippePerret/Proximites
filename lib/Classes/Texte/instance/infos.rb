@@ -46,4 +46,31 @@ class Texte
     end
   end
 
+  # Configuration (infos) qui peuvent être définies par les configurations
+  # Cette méthode fonctionne dans les deux sens : lorsque les options sont
+  # définies ou lorsque le fichier information est lu.
+  def define_configuration
+    saving_required = false
+
+    # Définition des infos si nécessaire
+    if CLI.options[:dmax_normale]
+      d = CLI.options[:dmax_normale].to_i
+      d > 50 || d = d * LONGUEUR_PAGE # valeur donnée en pages
+      infos.merge!(dmax_normale: d)
+      saving_required = true
+    end
+    if CLI.options[:dmax_possible]
+      d = CLI.options[:dmax_possible].to_i
+      d > 50 || d = d * LONGUEUR_PAGE # valeur fournie en pages
+      infos.merge!(dmax_possible: d)
+      saving_required = true
+    end
+
+    # "Chargement" des configurations si nécessaire
+    info(:dmax_normale)  && Proximity.distance_max_normale  = info(:dmax_normale)
+    info(:dmax_possible) && Proximity.distance_max_possible = info(:dmax_possible)
+
+    saving_required && save_infos
+  end
+
 end #/Texte

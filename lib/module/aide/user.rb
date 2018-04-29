@@ -72,6 +72,12 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
               #{'prox -t check "Le texte à étudier."'.jaune}
 
+  Configuration
+  -------------
+
+  On peut définir certaines propriétés à l'aide des options.
+
+
   Aide
   ----
 
@@ -103,6 +109,44 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
             Pour n'analyser le texte que jusqu'au caractère d'offset X.
 
+        #{'--dmax_possible=<nombre signes|pages>'.gras}
+
+            Définit la distance de proximité maximale.
+            Rappel : la distance maximale de proximité entre deux occurences du
+            même mot (ou de deux mots similaires) dépend de sa densité dans le
+            texte, i.e. son nombre d'occurences. Plus un mot est rare, plus sa
+            distance de proximité est grande (car on le remarquera plus).
+            Mais avec des mots qui n'apparaitrait que 2 ou 3 fois sur 400 pages,
+            la distance de proximité pourrait être de 200 pages, ce qui est trop
+            grand et ne veut plus rien dire.
+            On utilise donc cette #{'distance maximale possible'.gras} pour limiter la
+            distance à quelque chose de raisonnable : 3 pages par défaut.
+            Rappel : une page fait 1500 signes.
+            Exemple pour limiter la distance max à 2 pages, donc 3000 signes.
+
+              #{'prox check mon/texte.txt --dmax_possible=3000'}
+
+            ou (le programme détecte si ce sont des pages ou des signes à partir
+            du moment où le nombre est inférieur ou supérieur à 50)
+
+              #{'prox check mon/texte.txt --dmax_possible=2'}
+
+
+        #{'--dmax_normale=<nombre signes|pages>'.gras}
+
+            Par défaut, la distance normale de proximité — c'est-à-dire la distan-
+            ce sous laquelle on considère qu'un mot quelconque est en proximité –
+            est une page, soit 1500 signes.
+            On peut modifier cette valeur avec cette option. Elle sera enregistrée
+            dans les données du texte (fichier .config.rb)
+            Par exemple :
+
+              #{'prox check -t "Mon texte est un texte." --dmax_normale=10'.jaune}
+
+            … définira que la distance normale est de 10 signes. Si deux occuren-
+            ces du même mot sont à moins de 10 signes, ils sont considérés comme
+            proches.
+
         #{'--brut'.gras}
 
             Pour utiliser la distance fixe (cf. ci-dessous) pour chaque mot,
@@ -111,7 +155,7 @@ problème de trop grande proximité des mots dans un texte quelconque.
             de l'occurence du mot. Plus il est rare et plus cette distance est
             élevée.
 
-            Valeur distance fixe : (#{Texte::Mot::DISTANCE_DEFAUT})
+            Valeur distance fixe : (#{Proximity::DISTANCE_MAX_NORMALE})
 
   Affichage des résultats
   =======================

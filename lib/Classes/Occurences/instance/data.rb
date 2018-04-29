@@ -49,9 +49,9 @@ class Occurences
   # lorsque l'option --brut n'est pas utilisée
   def distance_min
     @distance_min ||= begin
-      d = (Proximity::DISTANCE_MAX_NORMALE / presence).to_i
+      d = (Proximity.distance_max_normale / presence).to_i
       d > Proximity::DISTANCE_MIN_POSSIBLE || d = Proximity::DISTANCE_MIN_POSSIBLE
-      d < Proximity::DISTANCE_MAX_POSSIBLE || d = Proximity::DISTANCE_MAX_POSSIBLE
+      d < Proximity.distance_max_possible || d = Proximity.distance_max_possible
       d
     end
   end
