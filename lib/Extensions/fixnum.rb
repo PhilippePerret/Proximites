@@ -1,6 +1,15 @@
 # encoding: UTF-8
 class Fixnum
 
+  # Reçoit un nombre de secondes et retourne un string de la forme "h:mm:ss"
+  def as_horloge
+    hrs = self / 3600
+    rest = self % 3600
+    mns = (rest / 60).to_s.rjust(2,'0')
+    scs = (rest % 60).to_s.rjust(2,'0')
+    "#{hrs}:#{mns}:#{scs}"
+  end
+
   # Formate le nombre en bons milliers
   def mille
     self > 9999 || (return self)

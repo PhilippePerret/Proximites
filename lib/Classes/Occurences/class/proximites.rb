@@ -9,13 +9,19 @@ class << self
 
   # Check les proximités de toutes les occurences traitables
   def check_proximites
-    marque_temps 'Calcul des proximités…'
+    Prox.log_check? && Prox.log_check("*** Recherche des proximités…", is_op = true)
     texte_courant.mots || texte_courant.load_all
     table.each do |mot, occurence|
       # puts "*** #{mot.inspect}"
       # STDOUT.flush
       occurence.traitable? || next
       occurence.check_proximites
+    end
+    Prox.log_check? && begin
+      Prox.log_check(["=== Fin de la recherche des proximités#{RET}",
+        "  = Occurences analysées (#{Occurences.count.mille} mots uniques)#{RET}",
+        "  = Proximités trouvées (#{Proximity.count.mille})"], is_op = true
+      )
     end
   end
 

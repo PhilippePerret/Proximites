@@ -157,6 +157,17 @@ problème de trop grande proximité des mots dans un texte quelconque.
 
             Valeur distance fixe : (#{Proximity::DISTANCE_MAX_NORMALE})
 
+        #{'--log'.gras}
+
+            Pour enregistrer dans un fichier tous les choix qui ont permis de
+            faire les choix de proximité. Ce fichier doit permettre de s'assurer
+            que le check du texte est valide de façon manuelle mais aussi pour
+            les tests.
+
+            Pour lire le log, utiliser la commande :
+
+                #{'prox[imite] show log'.jaune}
+
   Affichage des résultats
   =======================
 

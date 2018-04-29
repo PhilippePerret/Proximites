@@ -6,11 +6,15 @@
 class Texte
 
   def save_all
-    marque_temps 'Enregistrement des informations…'
+    Prox.log_check? && Prox.log_check("*** Sauvegarde de tous les éléments…", is_op = true)
     `mkdir -p "#{Prox.folder}"`
+    Prox.log_check? && Prox.log_check("  * Sauvegarde des mots…")
     save_mots
+    Prox.log_check? && Prox.log_check("  * Sauvegarde des occurences…")
     Occurences.save
+    Prox.log_check? && Prox.log_check("  * Sauvegarde des proximités…")
     Proximity.save
+    Prox.log_check? && Prox.log_check("=== Fin de la sauvegarde", is_op = true)
   end
 
   def load_all

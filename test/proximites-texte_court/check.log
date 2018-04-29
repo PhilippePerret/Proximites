@@ -1,0 +1,57 @@
+
+
+
+LOG CHECK DU 2018-04-29 09:28:54 +0300
+
+0:00:00    -0.04      Début de l'analyse du texte
+0:00:00    0:00:00    *** Décomposition en mots…
+0          0.045      	Traitement du mot "un"
+0          0.009      	Traitement du mot "petit"
+0          0.005      	Traitement du mot "texte"
+0          0.007      	Traitement du mot "ou"
+0          0.003      	Traitement du mot "une"
+0          0.002      	Traitement du mot "petite"
+0          0.002      	Traitement du mot "boite"
+0          0.005      	Traitement du mot "qui"
+0          0.003      	Traitement du mot "doivent"
+0          0.003      	Traitement du mot "faire"
+0          0.003      	Traitement du mot "les"
+0          0.003      	Traitement du mot "tests"
+0          0.005      	Traitement du mot ""
+0          0.003      	Traitement du mot "il"
+0          0.003      	Traitement du mot "est"
+0          0.003      	Traitement du mot "sur"
+0          0.003      	Traitement du mot "plusieurs"
+0          0.005      	Traitement du mot "lignes"
+0          0.004      	Traitement du mot ""
+0          0.002      	Traitement du mot "ils"
+0          0.002      	Traitement du mot "sont"
+0          0.002      	Traitement du mot "dus"
+0          0.002      	Traitement du mot "dans"
+0          0.004      	Traitement du mot "un"
+0          0.003      	Traitement du mot "box"
+0          0.004      	Traitement du mot "et"
+0          0.007      	Traitement du mot "des"
+0          0.007      	Traitement du mot "genoux"
+0:00:00    0:00:00    === Fin de la décomposition en mots
+0:00:00    0:00:00    *** Recherche des proximités…
+0:00:00    0:00:00    === Fin de la recherche des proximités
+                        = Occurences analysées (21 mots uniques)
+                        = Proximités trouvées (2)
+0:00:00    0:00:00    *** Sauvegarde de tous les éléments…
+0          0.796        * Sauvegarde des mots…
+0          0.102        * Sauvegarde des occurences…
+0          0.085        * Sauvegarde des proximités…
+0:00:00    0:00:00    === Fin de la sauvegarde
+
+
+
+LOG CHECK DU 2018-04-29 09:28:58 +0300
+
+0:00:00    0:00:00    === Fin de la sauvegarde
+
+
+
+LOG CHECK DU 2018-04-29 09:29:47 +0300
+
+0:00:00    0:00:00    === Fin de la sauvegarde

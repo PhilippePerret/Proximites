@@ -17,13 +17,14 @@ class << self
   # dans le module class/Prox/commands
   #
   def run
-    # marque_temps 'Démarrage du programme…'
     while true
       runable? || return
       # Exécution de la commande demandée
       send(main_command.to_sym)
+      # On referme le log de check si nécessaire
+      Prox.log_check?     && Prox::LogCheck.close
       # Si l'option --test a été placée, on ne boucle pas
-      CLI.options[:test] && break
+      CLI.options[:test]  && break
       # On attend la prochaine commande
       wait_for_next_command || break
     end
@@ -37,6 +38,8 @@ class << self
     save_config
     # Fermer le fichier log
     Log.reflog.close
+    # Fermer le log check s'il est actif
+    Prox.log_check? && Prox::LogCheck.close
   end
 
   def wait_for_next_command

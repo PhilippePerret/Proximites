@@ -20,6 +20,9 @@ class << self
     texte_courant.mots || texte_courant.load_all
 
     case what
+    when 'log', 'log_check'
+      load_module 'log_check'
+      Prox.show_log_check
     when 'texte', 'text'
       texte_courant.show
     when 'proximites', 'proximités'

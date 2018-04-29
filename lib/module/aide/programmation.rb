@@ -71,6 +71,20 @@ class << self
 
             #{'Occurences[<mot>].proximites # => IDs proximités'.jaune}
 
+  OPTIONS
+  -------
+
+    #{'--log'.gras}
+
+        Quand on utilise l'option --log pour le check du texte, cela enregistre
+        toute la démarche de check dans le fichier check.log dans le dossier du
+        texte. Il permet de s'assurer que tout a bien fonctionné.
+
+        On teste `Prox.log_check?` pour savoir s'il faut enregistrer et on
+        utilise la méthode `Prox.log_check <message>` pour enregistrer un
+        message.
+
+
     EOT
   end
 

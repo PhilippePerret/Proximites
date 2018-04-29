@@ -67,8 +67,6 @@ POUR_BASE_MOTS = {
 
 # On peut construire la table qui va vraiment servir à retrouver le mot de
 # base de façon rapide.
-# TODO Voir si à la longue ça ne risque pas de devenir lourd de faire ça.
-# marque_temps 'Construction de la table BASES_MOTS…'
 BASES_MOTS = Hash.new()
 POUR_BASE_MOTS.each do |motbase, liste_real_mots|
   liste_real_mots.each do |real_mot|

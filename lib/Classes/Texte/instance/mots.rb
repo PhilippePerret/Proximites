@@ -17,14 +17,16 @@ class Texte
   # La méthode demande aussi d'enregistrer le résultat
   #
   def decompose_en_mots
-    marque_temps 'Décomposition du texte en mots (occurences)…'
+    Prox.log_check? && Prox.log_check("*** Décomposition en mots…", is_op = true)
     @mots = Array.new
     # Pour connaitre le décalage du mot.
     current_offset = 0
     liste_mots.each_with_index do |mot, index_mot|
+      Prox.log_check? && Prox.log_check("\tTraitement du mot #{mot.inspect}")
       add_mot(mot, index_mot, current_offset)
       current_offset += mot.length + 1
     end
+    Prox.log_check? && Prox.log_check("=== Fin de la décomposition en mots", is_op = true)
   end
 
   # On ajoute le mot du texte à l'instance Texte

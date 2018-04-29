@@ -23,6 +23,7 @@ class << self
       (p && File.exist?(p)) ? p : nil
     end
   end
+
   # Path du fichier texte étudié.
   # -----------------------------
   # Il est défini même lorsque c'est un texte qui est fourni en argument, car

@@ -42,7 +42,6 @@ class Mot
   ]
 
 
-  # marque_temps 'Construction tables de mots divers (fin "s", "x", etc.)…'
   MOTS_FIN_S = Hash.new
   ARR_MOTS_FIN_S.each{|m|MOTS_FIN_S.merge!(m => true)}
   MOTS_FIN_X = Hash.new
