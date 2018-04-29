@@ -24,6 +24,8 @@ class << self
     when 'log', 'log_check'
       load_module 'log_check'
       Prox.show_log_check
+    when 'infos'
+      self.infos # c'est une commande "directe", normalement
     when 'texte', 'text'
       texte_courant.show
     when 'proximites', 'proximités'
