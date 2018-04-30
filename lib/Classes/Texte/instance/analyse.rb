@@ -5,6 +5,22 @@ class Texte
   # Méthode principale procédant au check complet du texte
   def analyse
 
+    # Si le texte a déjà été analysé et que des mots ont été remplacé, on ne
+    # peut pas relancer une analyse complète, ce qui aurait pour effet de tout
+    # supprimer.
+    if info(:locked)
+      if CLI.options[:force]
+        set_info(locked: false)
+      else
+        error "Des proximités ont été modifiés dans ce texte, il est donc#{RETDT}"+
+              "impossible de l’analyser à nouveau, ce qui perdrait toutes les#{RETDT}"+
+              "corrections. Au lieu de ça, copier le texte et lancer une nouvelle#{RETDT}"+
+              "analyse."
+        notice "Vous pouvez néanmoins décider de toute perdre en ajoutant l'option --force…#{RET3}"
+        return
+      end
+    end
+
     # Clearer la fenêtre
     puts "\033c"
 
