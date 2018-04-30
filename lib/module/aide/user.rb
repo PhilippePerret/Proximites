@@ -29,7 +29,8 @@ Trouvez ci-dessous les commandes les plus usitées.
 
       Noter que la commande `correct` sous-entend l'option `-i` par défaut.
 
-  #{'prox[imite] show texte'.jaune}
+  #{'prox[imite] show texte [--from_page=C][--to_page=X]'.jaune}
+  #{'prox[imite] texte [--from_page=C][--to_page=X]'.jaune}
 
       Permet d'afficher le texte avec l'indication des proximités. Si le texte
       est long, on peut demander l'affichage de pages en pages avec :

@@ -45,6 +45,13 @@ class << self
     CLI.options[:interactif] = true
     show
   end
+  # raccourci 'prox[imite] texte'
+  def texte
+    ARGV[0] = 'show'
+    ARGV.insert(1, 'texte')
+    CLI.params.insert(1,'texte')
+    show
+  end
 
   # Affiches la liste des mots (uniques) en proximité, dans l'ordre alphabétique
   # et autres informations comme l'écart, etc.
