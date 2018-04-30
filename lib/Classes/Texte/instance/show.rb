@@ -60,6 +60,9 @@ class Texte
 
       self.mots.each do |imot|
 
+        # D E B U G
+        # puts "imot traité : mot:#{imot.mot.inspect}, index:#{imot.index}, offset:#{imot.offset.inspect}, length:#{imot.length.inspect}"
+
         if imot.offset < start_offset
           next
         elsif end_offset && imot.offset > end_offset
@@ -83,9 +86,9 @@ class Texte
         #   * Il est en proximité avec un autre mot
         #   * Cette proximité n'a été ni supprimée ni corrigée.
         dont_treate = false
-        has_proximities = imot.prox_ids != nil
+        has_proximities = imot.prox_ids!= nil && (imot.prox_ids[:avant]!=nil||imot.prox_ids[:apres]!=nil)
+        # puts "has_proximities = #{has_proximities.inspect}"
         if has_proximities
-          # puts "Le mot #{imot.mot} a des proximités"
           id_prox_avant = imot.prox_ids[:avant]
           id_prox_avant && begin
             # puts "proximité avant"

@@ -42,6 +42,8 @@ class << self
     # L'autre mot
     autre_imot = iprox.send(pour_premier ? :mot_apres : :mot_avant)
 
+    # puts "Avant destruction iprox : imot.prox_ids = #{imot.prox_ids.inspect}"
+
     # Il faut détruire la proximité (et réinitialiser les valeurs)
     # Cela :
     #   * Détruit la proximité (instance) dans la table Proximity
@@ -50,8 +52,12 @@ class << self
     #     occurences des deux mots.
     destroy(iprox)
 
+    # puts "Après destruction iprox : imot.prox_ids = #{imot.prox_ids.inspect}"
+
     # On modifie le mot
     imot.set_mot(nouveau_mot)
+
+    # puts "Après redéfinition du mot lui-même : imot.prox_ids = #{imot.prox_ids.inspect}"
 
     # On regarde si le nouveau mot est en proximité avec un autre
     # Attention : le `imot.mot_base`, ici, n'est pas le même que celui juste au-
@@ -60,6 +66,8 @@ class << self
     # un autre
     Occurences[imot.mot_base].check_proximite_vers(imot, vers_avant = pour_premier)
     Occurences[autre_imot.mot_base].check_proximite_vers(autre_imot, vers_avant = !pour_premier)
+
+    # puts "Après check des proximités à la fin fin : imot.prox_ids = #{imot.prox_ids.inspect}"
 
     # Verrouiller le texte pour ne pas relancer une analyse sur les
     # anciens mots mais sur les nouveaux.
