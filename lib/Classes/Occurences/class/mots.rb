@@ -13,6 +13,7 @@ class << self
   # Le mot peut être semblable (même mot base) ou similaire (mot base non
   # traité par exemple)
   def add imot
+    puts "-> Occurences::add(#{imot.mot.inspect}:Texte::Mot)"
     # Si le mot-base du mot existe déjà en temps que l'occurence, c'est
     # simple : il suffit d'ajouter cette occurence
     if table.key?(imot.mot_base)
@@ -30,8 +31,9 @@ class << self
       end
       # /fin de boucle sur tous les mots
       similarite_trouvee || begin
+        puts "CRÉATION DE L'OCCURENCE #{imot.mot_base} nécessaire"
         suivi "Création de l’occurence #{imot.mot_base.inspect}"
-        table[imot.mot_base] = new(imot)
+        table.merge!(imot.mot_base => new(imot))
         add_finaly(imot)
       end
     end
@@ -39,8 +41,8 @@ class << self
 
   # Ajoute vraiment l'occurence de {Texte::Mot} mota ou du mot similaire
   # {String} +comp+
-  def add_finaly mota, comp = nil
-    Occurences[comp||mota.mot_base].add(mota)
+  def add_finaly imot, comp = nil
+    Occurences[comp||imot.mot_base].add(imot)
   end
 
 end #/<< self

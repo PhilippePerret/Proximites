@@ -27,8 +27,14 @@ class << self
   # Noter que ça ne correspond pas à la "suppression" d'une proximité en mode
   # interactif qui ne fait que marquer la proximité comme 'deleted'. Ici, la
   # proximité est vraiment détruite, ce qui se produit quand on change un mot.
+  #
+  # Il faut aussi désolidariser les deux mots associés à cette proxmité.
   def destroy iprox
-    table.delete(iprox.id)
+    Occurences[iprox.mot_avant.mot_base].retire_proximite(iprox.mot_avant.prox_ids[:apres])
+    Occurences[iprox.mot_apres.mot_base].retire_proximite(iprox.mot_apres.prox_ids[:avant])
+    iprox.mot_avant.prox_ids[:apres] = nil
+    iprox.mot_apres.prox_ids[:avant] = nil
+    @table.delete(iprox.id)
     @count = nil
   end
 

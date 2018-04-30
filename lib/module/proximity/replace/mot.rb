@@ -17,10 +17,10 @@ class Mot
     end
 
     # On peut véritablement modifier le mot.
-    @mot        = new_mot
-    @mot_base   = new_mot_base
-    @length     = new_mot.length
-    @offset_correction = diff_len
+    @mot = @real_mot    = new_mot
+    @mot_base           = new_mot_base
+    @length             = new_mot.length
+    @offset_correction  = diff_len
 
     # Il faut ajouter le mot à sa nouvelle instance d'occurences
     # On ajoute le mot à cette occurence, comme les autres. La méthode +add+

@@ -124,8 +124,10 @@ class << self
     puts "\t" + mark_nombres_footer.join("\n\t")
     puts RET3
 
+    # Si des modifications ont été opérées, on doit enregistrer toutes les
+    # informations.
     if mode_interactif && changements_operes
-      yesOrNo("Faut-il enregistrer les changements opérés ?") && save
+      yesOrNo("Faut-il enregistrer les changements opérés ?") && texte_courant.save_all
     end
   end
 

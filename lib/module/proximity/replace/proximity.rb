@@ -27,6 +27,9 @@ class << self
   #  * Noter qu'il est inutile de modifier le mot dans la liste des mots du
   #    texte puisque cette liste contient des instances Texte::Mot, pas vraiment
   #    le mot-string.
+  #  * Le mot avant ou après (l'autre que celui remplacé) ne doit plus avoir de
+  #    proximité, mais il faut vérifier quand même s'il ne rentre pas en
+  #    proximité avec un autre mot.
   #
   # Note : pour un texte court, ne serait-il pas intéressant de refaire
   #        simplement le check ?…
@@ -36,24 +39,27 @@ class << self
 
     # Le mot à modifier
     imot = iprox.send(pour_premier ? :mot_avant : :mot_apres)
+    # L'autre mot
+    autre_imot = iprox.send(pour_premier ? :mot_apres : :mot_avant)
 
-    # Il faut retirer la proximité des prox_ids du mot.
-    # Noter que :
-    #   1. Il faut le mémoriser pour pouvoir le retirer des proximites de
-    #      l'occurence du mot.
-    #   2. Cette valeur sera peut-être remise par +set_mot+ si une nouvelle
-    #      proximité est trouvée.
-    last_prox_id = imot.prox_ids[pour_premier ? :apres : :avant]
-    imot.prox_ids[pour_premier ? :apres : :avant] = nil
-
-    # On retire la proximité de la liste des proximités de l'occurence
-    Occurences[imot.mot_base].retire_proximite(last_prox_id)
+    # Il faut détruire la proximité (et réinitialiser les valeurs)
+    # Cela :
+    #   * Détruit la proximité (instance) dans la table Proximity
+    #   * Reset les prox_ids des instances de mots
+    #   * Retire les ID de ces proximités dans la propriété @proximites des
+    #     occurences des deux mots.
+    destroy(iprox)
 
     # On modifie le mot
     imot.set_mot(nouveau_mot)
 
-    # Il faut détruire la proximité (et réinitialiser les valeurs)
-    destroy(iprox)
+    # On regarde si le nouveau mot est en proximité avec un autre
+    # Attention : le `imot.mot_base`, ici, n'est pas le même que celui juste au-
+    # dessus, donc l'occurence aussi n'est pas la même.
+    # On regarde si l'autre mot que le mot modifié entre en proximité avec
+    # un autre
+    Occurences[imot.mot_base].check_proximite_vers(imot, vers_avant = pour_premier)
+    Occurences[autre_imot.mot_base].check_proximite_vers(autre_imot, vers_avant = !pour_premier)
 
     # Verrouiller le texte pour ne pas relancer une analyse sur les
     # anciens mots mais sur les nouveaux.

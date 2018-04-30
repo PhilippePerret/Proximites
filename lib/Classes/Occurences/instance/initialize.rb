@@ -52,7 +52,7 @@ class Occurences
     # peu importe.
     similarite.nil?           || @similarites << imot.index
     imot.mot == imot.mot_base || @derives     << imot.index
-    # ATTENTION : Si des listes sont ajoutées, il faut les traiter dans la
+    # ATTENTION : Si des listes sont ajoutées, il faut aussi les traiter dans la
     # méthode `Occurences#retire_mot`
   end
 

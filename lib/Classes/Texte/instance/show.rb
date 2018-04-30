@@ -85,17 +85,17 @@ class Texte
         dont_treate = false
         has_proximities = imot.prox_ids != nil
         if has_proximities
-          puts "Le mot #{imot.mot} a des proximités"
+          # puts "Le mot #{imot.mot} a des proximités"
           id_prox_avant = imot.prox_ids[:avant]
           id_prox_avant && begin
-            puts "proximité avant"
+            # puts "proximité avant"
             iprox_avant = Proximity[id_prox_avant]
             treate_prox_avant = !(iprox_avant.treated? || iprox_avant.deleted?)
             dont_treate = !treate_prox_avant
           end
           id_prox_apres = imot.prox_ids[:apres]
           id_prox_apres && begin
-            puts "proximité après"
+            # puts "proximité après"
             iprox_apres = Proximity[id_prox_apres]
             treate_prox_apres = !(iprox_apres.treated? || iprox_apres.deleted?)
             dont_treate = dont_treate || !treate_prox_apres
