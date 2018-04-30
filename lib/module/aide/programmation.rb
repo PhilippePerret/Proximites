@@ -7,6 +7,20 @@ class << self
 
 === AIDE À LA PROGRAMMATION DE LA COMMANDE proximite (alias prox) ===
 
+  PRÉAMBULE
+  ---------
+
+    Pour faire jouer du code dans le programme, il suffit d'utiliser la
+    commande `debug` :
+
+        #{'prox[imity] debug "<code à exécuter"'.jaune}
+
+    Par exemple :
+
+        #{'prox debug "puts(texte_courant.info(:file_name))"'.jaune}
+
+        Noter que les parenthèses sont indispensables, ici.
+
   PRINCIPES
   ---------
 

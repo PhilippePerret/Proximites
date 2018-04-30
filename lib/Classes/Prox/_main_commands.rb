@@ -62,5 +62,18 @@ class << self
     end
   end
 
+  # Pour exécuter n'importe quel code
+  def debug
+    code = CLI.params[1]
+    begin
+      eval(code)
+    rescue Exception => e
+      puts "#{RET2}=== ERREUR EN ÉVALUANT LE CODE ==="
+      puts e.message.rouge
+      puts e.backtrace.join("\n").rouge
+      puts "==========================================#{RET3}"
+    end
+  end
+
 end #/<< self
 end #/Prox
