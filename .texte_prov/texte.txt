@@ -1,1 +1,1 @@
-Un texte à checker pour voir le texte et encore une fois le texte pour voir.
+Un texte pour voir le texte et voir un autre texte pour voir.

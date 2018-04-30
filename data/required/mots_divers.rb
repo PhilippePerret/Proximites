@@ -5,7 +5,7 @@ class Mot
     'accès', 'alors', 'après', 'assis',
     'bras',
     'cas', 'corps', 'cours',
-    'dans', 'depuis', 'dès', 'dessous', 'dessus',
+    'dans', 'dehors', 'depuis', 'dès', 'dessous', 'dessus',
     'extremis',
     'fois',
     'jamais',
@@ -41,6 +41,10 @@ class Mot
     'brun'
   ]
 
+  ARR_MOTS_FEMININS_TE = [ # => MOTS_FEMININS
+    'cet'
+  ]
+
 
   MOTS_FIN_S = Hash.new
   ARR_MOTS_FIN_S.each{|m|MOTS_FIN_S.merge!(m => true)}
@@ -49,6 +53,7 @@ class Mot
   MOTS_FEMININS = Hash.new
   ARR_MOTS_FEMININS_E.each{|m|MOTS_FEMININS.merge!("#{m}e" => m)}
   ARR_MOTS_FEMININS_NE.each{|m|MOTS_FEMININS.merge!("#{m}ne" => m)}
+  ARR_MOTS_FEMININS_TE.each{|m|MOTS_FEMININS.merge!("#{m}te" => m)}
 
 end #/Mot
 end #/Texte

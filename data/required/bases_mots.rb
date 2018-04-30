@@ -6,13 +6,13 @@ POUR_BASE_MOTS = {
   # Base      => [déclinaisons]
   # -----------------------------
   'agir'      => ['agissait'],
-  'aller'     => ['allait', 'allez', 'va', 'vais', 'vas'],
+  'aller'     => ['allait', 'allaient', 'allez', 'va', 'vais', 'vas'],
   'apercevoir'  => ['aperçut'],
   'appuyer'   => ['appuyé'],
   'arrêter'   => ['arrêta'],
   'arriver'   => ['arriva', 'arrivait', 'arrive', 'arrivé'],
   'attendre'  => ['attendez', 'attendit'],
-  'avoir'     => ['a', 'aurait', 'auraient', 'avait', 'avaient', 'avez', 'eut', 'ont'],
+  'avoir'     => ['a', 'aurait', 'auraient', 'avait', 'avaient', 'avez', 'eurent', 'eut', 'ont'],
   'chercher'  => ['chercha', 'cherchant'],
   'choisir'   => ['choisi'],
   'commencer' => ['commençait'],

@@ -23,6 +23,15 @@ class << self
     return new_id_prox
   end
 
+  # Pour détruire une proximité
+  # Noter que ça ne correspond pas à la "suppression" d'une proximité en mode
+  # interactif qui ne fait que marquer la proximité comme 'deleted'. Ici, la
+  # proximité est vraiment détruite, ce qui se produit quand on change un mot.
+  def destroy iprox
+    table.delete(iprox.id)
+    @count = nil
+  end
+
   def save
     File.exist?(path_file_table) && File.unlink(path_file_table)
     File.open(path_file_table,'wb'){|f| Marshal.dump(table,f)}

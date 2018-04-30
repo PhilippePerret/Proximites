@@ -16,6 +16,13 @@ class Texte
     # Décalage exact du mot dans le texte.
     attr_reader :offset
 
+    # Décalage d'offset, lorsque le mot original, qui a permet de créer l'ins-
+    # tance, a été remplacé par un autre mot de longueur différente. Dans ce
+    # cas, +offset_correction+ contient la différence, qu'il faut ajouter pour
+    # connaitre la différence, ajouter de l'offset au mot suivant si le mot est
+    # plus long ou retirer de l'offset si le mot est plus court.
+    attr_reader :offset_correction
+
     # Table des Identifiants des proximités du mot, if any,
     # Contient {:apres, :avant} et un ID en valeur.
     attr_accessor :prox_ids
@@ -33,6 +40,11 @@ class Texte
     # La longueur, pour ne pas avoir à la calculer tout le temps
     def length ; @length ||= mot.length end
 
+    # L'occurence du mot ({Occurences})
+    def occurence
+      @occurence ||= Occurences[mot_base]
+    end
+    
     # Les deux premiers caractères, pour accélérer la comparaison
     def two_first_letters
       @two_first_letters ||= self.real_mot[0..1]

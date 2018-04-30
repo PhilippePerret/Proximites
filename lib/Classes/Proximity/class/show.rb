@@ -18,6 +18,7 @@ class << self
     show(prox_id.to_i)
   end
 
+  # Affichage des proximités, peut-être en mode interactif
   def show mot = nil
     load_module 'proximity/show'
     _show(mot)

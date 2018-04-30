@@ -1,6 +1,10 @@
 # encoding: UTF-8
 class Texte
 
+  # Valeurs par défaut des informations utiles
+  DEFAULT_INFOS_VALUES = {
+    duree_moy_correction_prox: 60
+  }
 
   # Retourne l'information de clé +key+
   def info key
@@ -20,7 +24,7 @@ class Texte
 
   # Les infos du texte courant
   def infos
-    @infos ||= load_infos
+    @infos ||= DEFAULT_INFOS_VALUES.merge!(load_infos)
   end
 
   # Permet d'afficher les infos avec la commande :
@@ -97,7 +101,7 @@ class Texte
     new_infos = infos
     # PROPRIÉTÉS QUI PEUVENT ÊTRE COPIÉES
     [
-      :duree_moy_correction_prox, # surtout pour celle-ci
+      :duree_moy_correction_prox,
       :dmax_normale,
       :dmax_possible
     ].each do |k|
