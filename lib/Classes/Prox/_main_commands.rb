@@ -37,6 +37,14 @@ class << self
     show_informations
     texte_courant.set_info(:last_command, ARGV.join(' '))
   end
+  # Raccourci pour `show proximites -i`
+  def correct
+    ARGV.each do |e| ARGV.delete(e) end
+    ARGV.insert(0, 'show', 'proximites', '-i')
+    CLI.params = [nil, 'proximites']
+    CLI.options[:interactif] = true
+    show
+  end
 
   # Affiches la liste des mots (uniques) en proximité, dans l'ordre alphabétique
   # et autres informations comme l'écart, etc.

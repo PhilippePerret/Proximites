@@ -21,10 +21,13 @@ Trouvez ci-dessous les commandes les plus usitées.
       `mon/fichier.txt`
 
   #{'prox[imite] show proximites [-i]'.jaune}
+  #{'prox[imite] correct'}
 
       Si c'est un texte court, on peut afficher la liste des proximités de cette
       façon, sans l'option `-i`. Si c'est un texte long, l'option `-i` (pour in-
       teractif) permettra d'afficher les proximités l'une après l'autre.
+
+      Noter que la commande `correct` sous-entend l'option `-i` par défaut.
 
   #{'prox[imite] show texte'.jaune}
 
@@ -350,7 +353,7 @@ Trouvez ci-dessous les commandes les plus usitées.
   Les informations récupérées sont :
 
       * la durée des corrections.
-      
+
     EOT
   end
   #/tableau_help
