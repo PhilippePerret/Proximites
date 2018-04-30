@@ -30,11 +30,13 @@ class Texte
       # Faut-il réduire le segment à afficher à une certaine longueur ?
       start_offset =
         if CLI.options[:per_page]
-          (CLI.options[:from] ||= 0).to_i
+          (CLI.options[:from] ||= 1).to_i - 1
         elsif CLI.options[:from_page]
-          CLI.options[:from_page].to_i * LONGUEUR_PAGE
+          CLI.options[:from_page].to_i > 0 || CLI.options[:from_page] = 1
+          (CLI.options[:from_page].to_i - 1) * LONGUEUR_PAGE
         elsif CLI.options[:from]
-          CLI.options[:from].to_i
+          CLI.options[:from].to_i > 0 || CLI.options[:from] = 1
+          CLI.options[:from].to_i - 1
         else
           0
         end
@@ -45,7 +47,8 @@ class Texte
         elsif CLI.options[:to_page]
           CLI.options[:to_page].to_i * LONGUEUR_PAGE
         elsif CLI.options[:to]
-          CLI.options[:to].to_i
+          CLI.options[:to].to_i > start_offset || CLI.options[:to] = (start_offset + 100)
+          CLI.options[:to].to_i - 1
         else
           nil
         end
