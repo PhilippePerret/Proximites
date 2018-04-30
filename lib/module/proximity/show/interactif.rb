@@ -61,9 +61,12 @@ class << self
 
   # Permet de remplacer un mot du texte par un autre et tenant à jour toutes
   # les proximités, pour corrections futures
-  def remplacer_mot_par_mot iprox, pour_premier, proposition
+  def remplacer_mot_par_mot iprox, pour_premier, new_mot
+    old_mot = iprox.send(pour_premier ? :mot_avant : :mot_apres).mot
+    yesOrNo("Veux-tu vraiment remplacer le mot #{old_mot.inspect} par #{new_mot.inspect}") || return
     load_module 'proximity/replace'
-    if Proximity.replace(iprox, pour_premier, proposition)
+    if Proximity.replace(iprox, pour_premier, new_mot)
+      notice "#{RETT}Le mot #{old_mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction."
       self.changements_operes = true
     end
   end
