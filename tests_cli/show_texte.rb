@@ -4,20 +4,20 @@
   Test d'affichage du texte
 
 =end
-DETAILED = false
+DETAILED = true
+require_relative './lib/required'
 
-require_relative 'required'
+Tests.titre 'Un texte est analysé correctement'
+Tests.reponses = ['q'] # pour finir
+run "prox check -t \"Petit texte, sans répétition, et une exclamation.\" --force"
 
-texte = <<-EOT
-Un petit texte pour voir les
-proximités avec le texte et voir aussi
-ce que ça donne.
-EOT
+ProximityTest.count.should_equal(0, 'Aucune proximité n’a été trouvée.')
 
-# On procède d'abord à l'analyse du texte
-run "proximite check -t \\\"#{texte}\\\""
-run "proximite show texte"
+Tests.reponses = ['q'] # pour finir après l'opération
+res = run 'prox texte'
+res.should_equal('Petit texte, sans répétition, et une exclamation.'+RET+
+                 '                                                  ',
+                 'Le retour est conforme au texte.')
 
-retour_contient('Un petit texte pour voir')
 
 fin_tests

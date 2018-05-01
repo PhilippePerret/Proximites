@@ -5,9 +5,10 @@ class Texte
     # Instance Texte du texte contenant le mot
     attr_reader :texte
 
-    # Le mot "réel", tel qu'il apparait dans le texte
+    # Le mot "réel", tel qu'il apparait dans le texte, par exemple avec la
+    # capitale alors que :mot ne l'aura pas
     attr_reader :real_mot
-    alias :mot :real_mot
+    attr_reader :mot
 
     # Index du mot, dans la liste des mots du texte (où ne sont comptés que les
     # mots réels)
@@ -34,12 +35,12 @@ class Texte
     # On initialise un mot avec son index dans le texte et le mot
     # qu'il est ainsi que son offset dans le texte.
     def initialize texte, real_mot, index = nil, offset = nil, next_char = nil
-      puts "Caractères après #{real_mot.inspect} : #{next_char.inspect}"
       @texte      = texte
+      @mot        = real_mot.my_downcase
       @real_mot   = real_mot
       @index      = index
       @offset     = offset
-      @next_char  = next_char
+      @next_char  = next_char || '' # le dernier mot, par exemple
     end
 
     def init
@@ -48,7 +49,7 @@ class Texte
 
     # Le mot complet, i.e. avec son caractère suivant. Pour un affichage rigou-
     # reusement identique
-    def complet ; @complet ||= mot + next_char end
+    def complet ; @complet ||= real_mot + next_char end
 
     # La longueur, pour ne pas avoir à la calculer tout le temps
     def length ; @length ||= mot.length end

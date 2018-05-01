@@ -128,7 +128,7 @@ class Texte
         # On traite véritablement
         if dont_treate
           # Aucune proximité
-          arr_mots << imot.mot
+          arr_mots << imot.real_mot
         else
           # Des proximités sont définies
           marka = nil
@@ -182,6 +182,11 @@ class Texte
 
         disp_mot = arr_mots.join('|')
 
+        imot.next_char || begin
+          puts "imot: #{imot.real_mot}"
+          puts "disp_mot: #{disp_mot}"
+          puts "imot.next_char : #{imot.next_char.inspect}"
+        end
         segment_up << (disp_mot + imot.next_char)
         segment_do << disp_mark + ' '
 

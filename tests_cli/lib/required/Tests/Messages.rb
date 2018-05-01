@@ -66,10 +66,11 @@ class << self
         end
       end
     end
-
     # À la fin des tests, on lit le fichier Tests::Log et si on trouve des
     # messages d'erreur, on les affiche.
-    Tests::Log.display_errors_messages
+    Tests::Log.errors_messages.each do |err_msg|
+      puts err_msg.rouge
+    end
   end
 end #/<< self
 end #/Messages

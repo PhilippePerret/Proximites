@@ -75,7 +75,7 @@ class Texte
   end
 
   def liste_mots
-    @liste_mots ||= segment.my_downcase.split(/[^[[:alnum:]]]/)
+    @liste_mots ||= segment.split(/[^[[:alnum:]]]/)
   end
 
 

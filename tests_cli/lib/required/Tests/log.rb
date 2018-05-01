@@ -17,29 +17,29 @@ class << self
   def << mess
     open() ; reflog.puts(mess) ; close()
   end
-  alias :write :<<
+  alias :ecrire :<<
 
   # Pour écrire une erreur
   def error err
     err.is_a?(String) || begin
       err = err.message + "\n\n" + err.backtrace.join("\n")
     end
-    write('###ERROR: ' + "#{err}".rouge)
+    ecrire('###ERROR: ' + "#{err}".rouge)
   end
 
   # Méthode appelée à la fin des tests, qui lit le fichier log pour voir
   # s'il y a des messages d'erreur et les affiche le cas échéant
   def display_errors_messages
-    erreur_trouvee = false
-    errors_str = lines.collect do |line|
-      line.start_with?('###ERROR:') || next
-      erreur_trouvee = true
-      line
-    end.compact
-    if erreur_trouvee
+    unless errors_messages.empty?
       puts "\n\nDes erreurs ont été rencontrées :\n\n"
-      puts errors_str
+      puts errors_messages.join(RET)
       puts "\n\nPour voir le détail des erreurs (backtraces), consulter le fichier #{pathlog.inspect}.\n\n"
+    end
+  end
+
+  def errors_messages
+    @errors_messages ||= begin
+      lines.select{|line| line.start_with?('###ERROR:')}
     end
   end
 
