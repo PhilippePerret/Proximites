@@ -1,1 +1,1 @@
-Petit texte, avec une répétition de texte, sans exclamation !
+Analyse d'un petit texte pour voir et voir encore le texte.

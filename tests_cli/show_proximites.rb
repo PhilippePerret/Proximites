@@ -4,26 +4,34 @@
 Test d'affichage des proximites
 
 =end
-DETAILED = false
+DETAILED = true
+require_relative './lib/required'
 
-require_relative 'required'
 
-
+Tests.reponses = ['q'] # pour finir tout de suite
 run "proximite check -t \"Analyse d'un petit texte pour voir et voir encore le texte.\""
+
+Tests.titre 'Affichage de toutes les proximités trouvées (2)'
+Tests.reponses = ['q'] # pour finir tout de suite
 res = run "proximite show proximites"
-retour_contient('texte <- 34 -> texte')
-retour_contient('voir <- 8 -> voir')
+res.should_contain('texte <- 34 -> texte', 'L’affichage des proximités contient "texte" avec l’écartement de 34')
+res.should_contain('voir <- 8 -> voir', 'L’affichage des proximités contient "voir" avec l’écartement de 8')
 
-# On essaie de voir une proximité par son ID
-
+Tests.titre 'Affichage de la proximité par son ID'
 # On demande seulement la proximité #0
+Tests.reponses = ['q'] # pour finir tout de suite
 res = run "proximite show proximite 0"
-retour_contient('texte <- 34 -> texte')
-retour_ne_contient_pas('voir <- 8 -> voir')
+res.should_contain('texte <- 34 -> texte', 'L’affichage des proximités contient "texte" avec l’écartement de 34')
+res.should_not_contain('voir <- 8 -> voir', 'L’affichage des proximités NE contient PAS "voir"')
+Tests.reponses = ['q'] # pour finir tout de suite
+res = run "proximite show proximite 1"
+res.should_not_contain('texte <- 34 -> texte', 'L’affichage des proximités NE contient PAS "texte".')
+res.should_contain('voir <- 8 -> voir', 'L’affichage des proximités contient "voir" avec l’écartement 8')
 
-# On demande seulement la proximité #1
-res = run 'proximite show proximite 1'
-retour_contient('voir <- 8 -> voir')
-retour_ne_contient_pas('texte <- 34 -> texte')
+Tests.titre 'Un mauvais ID de proximité produit une erreur'
+Tests.reponses = ['q']
+res = run 'proximites show proximite 2'
+res.should_not_contain('texte <- 34 -> texte', 'L’affichage des proximités NE contient PAS "texte".')
+res.should_not_contain('voir <- 8 -> voir', 'L’affichage des proximités NE contient PAS "voir"')
 
 fin_tests

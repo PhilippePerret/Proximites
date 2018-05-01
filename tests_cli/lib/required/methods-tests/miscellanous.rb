@@ -9,6 +9,10 @@ def run cmd
   res = `bash -c ". /Users/philippeperret/.bash_profile; shopt -s expand_aliases\n#{cmd}"`
   # quiet || puts(res)
 
+  # On supprime toujours les couleurs, pour pouvoir étudier les textes
+  # correctement, entendu que les couleurs sont aléatoires, ou presque
+  # TODO Plus tard, pouvoir demander à tester de façon brute, sans suppression
+  # des couleurs, pour voir si elles sont bien mises.
   # puts "char avant gsub"
   # res.each_char do |b| puts b end
   # puts "Nombre de caractères avant gsub : #{res.length}"
@@ -16,6 +20,10 @@ def run cmd
   # puts "Nombre de caractères APRÈS gsub : #{res.length}"
   # puts "char APRÈS gsub"
   # res.each_char do |b| puts b end
+
+  # On retire les retours chariots vides, mais pas les tabulations et
+  # autres espaces
+  res = res.gsub(/\n\n+/,"\n").gsub(/^\n+/,'').gsub(/\n+$/,'')
 
   self.test_retour = res
   return res

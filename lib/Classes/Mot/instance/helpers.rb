@@ -23,7 +23,7 @@ class Texte
         dep = offset - autour
         dep > 0 || dep = 0
         seg[dep..offset-1].gsub(/\n/,'¶').strip +
-          mot.rouge + mot.next_char + # dans un fichier, il faudra que ce soit différent
+          mot.rouge + next_char + # dans un fichier, il faudra que ce soit différent
           seg[(offset+mot.length+1)..offset+autour+mot.length].gsub(/\n/,'¶').strip
       end
     end
