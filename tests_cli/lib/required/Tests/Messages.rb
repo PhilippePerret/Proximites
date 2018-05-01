@@ -1,8 +1,11 @@
 # encoding: UTF-8
 class Tests
 class << self
+  def grand_titre msg
+    Messages.add_suivi("*** #{msg.my_upcase} ***\n".jaune.gras)
+  end
   def titre msg
-    Messages.add_suivi("*** #{msg}".gras)
+    Messages.add_suivi("\n  * #{msg}".jaune)
   end
 end #/<< self
 class Messages
@@ -35,7 +38,7 @@ class << self
   def success msg
     @success_count += 1
     @success_list << msg
-    @suivi << msg.vert
+    @suivi << "      #{msg.vert}"
     print '*'.vert
     STDOUT.flush # mais ne fonctionne pas sans retour chariot
   end
@@ -44,7 +47,7 @@ class << self
     @failure_count += 1
     err = err % {actual: actual, expected: expected}
     @failure_list << err
-    @suivi << err.rouge
+    @suivi << "      #{err.rouge}"
     print 'F'.rouge
     STDOUT.flush # mais ne fonctionne pas sans retour chariot
   end
@@ -62,7 +65,7 @@ class << self
     if defined?(DETAILED) && DETAILED
       unless suivi.empty?
         suivi.each do |msg|
-          puts "\t#{msg}"
+          puts "#{msg}"
         end
       end
     end

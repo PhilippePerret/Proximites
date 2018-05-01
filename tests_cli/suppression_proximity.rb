@@ -3,47 +3,69 @@
 
   Test de modification des proximites
 
+  En fait, supprimer une proximité consiste simplement à mettre son deleted
+  à true.
+
 =end
 DETAILED = true
 require_relative './lib/required'
 
+Tests.grand_titre 'Test de la suppression interactive de proximités'
+
 # On commence par prendre un texte avec un répétition du mot 'texte' et on
 # l'analyse.
-Tests.titre 'Analyse d’un texte avec deux proximités'
+Tests.titre 'On peut supprimer une unique proximité'
 Tests.reponses = ['q'] # pour finir (toujours le mettre)
-run "proximite check -t \"Analyse d’un petit texte pour voir et voir encore le texte.\""
-# puts "Proximités après le check".jaune
-# ProximityTest.show
-ProximityTest.count.should_equal(2, '2 proximités ont été créées.')
-ProximityTest.get_by_index(0).deleted?.should_equal(false, 'la première proximités n’est pas deleted.')
-
-# AFFICHAGE DU TEXTE
-Tests.titre 'Affichage du texte'
-res = run 'prox texte'
-res.should_equal(
-  'analyse d’un petit texte pour voir et voir encore le texte.'+RET+
-  '                   ---->      --->    <---           <---- ',
-  'Le texte affiché est conforme.')
-# puts res
-fin_tests
-exit 0
-
-
-# TEST DE LA SUPRRESION DE LA PREMIÈRE PROXIMITÉ
-Tests.titre 'Suppression de la première proximité'
+run "proximite check -t \"Un texte avec un autre texte.\""
+ProximityTest.count.should_equal(1, '1 proximité a été créée.')
+ProximityTest.get_by_index(0).deleted?.should_equal(false, 'la proximité n’est pas deleted.')
+# On supprime cette proximité
 Tests.reponses = [
-  'so', # Pour supprimer la première proximité en confirmant
-  'z', # Pour abandonner le travail de modification,
-  true, # Enregistrer les changements opérés
-  'q', # Pour terminer l'application
+  'so', # pour supprimer la première proximité
+  'o',  # Pour confirmer l'enregistrement des informations
+  'q'   # pour terminer le programmme
 ]
-run "prox correct"
-ProximityTest.count.should_equal(2, 'Il y a toujours 2 proximités.')
-ProximityTest.get_by_index(0).deleted?.should_equal(true, 'la première proximité est marquée deleted')
-ProximityTest.get_by_index(1).deleted?.should_equal(false, 'la seconde proximité n’est pas marquée deleted')
+run "proximite correct"
+ProximityTest.count.should_equal(1, 'Il y a toujours 1 proximité.')
+ProximityTest.get_by_index(0).deleted?.should_equal(true, 'la proximité a été deleted.')
 
-# puts "Proximités après la suppression".jaune
-# ProximityTest.show
 
+Tests.titre 'On peut supprimer la bonne proximité parmi trois'
+Tests.reponses = ['q']
+run 'prox check -t "Un texte pour voir un autre avec un texte et un autre voir."'
+ProximityTest.count.should_equal(3, 'Il y a bien 3 proximités')
+(0..2).each do |index_prox|
+  ProximityTest.get_by_index(index_prox).deleted?.should_equal(false, "la proximité #{1+index_prox} n’est pas deleted.")
+end
+# L'affichage du texte est correct
+Tests.reponses = ['q']# Pour terminer le programme
+res = run('proximite texte')
+res.should_equal(
+  "\t"+'Un texte pour voir un autre avec un texte et un autre voir.'+RET+
+  "\t"+'   ---->      --->    ---->         <----       <---- <--- ',
+  'L’affichage du texte montre bien les 3 proximités'
+)
+
+# On supprime interactivement la 2e proximité
+Tests.reponses = [
+  'n',  # pour passer à la proximité suivante sans rien faire
+  's',  # pour supprimer la 2e proximité
+  'o',  # pour confirmer cette suppression
+  'z',  # pour arrêter la correction
+  'o',  # pour enregistrer les changements
+  'q'   # pour terminer le programme
+]
+res = run('proximite correct')
+ProximityTest.get_by_index(0).deleted?.should_equal(false, "la 1ère proximité n’est pas deleted.")
+ProximityTest.get_by_index(1).deleted?.should_equal(true, "la 2e proximité EST DELETED.")
+ProximityTest.get_by_index(2).deleted?.should_equal(false, "la 3e proximité n’est pas deleted.")
+# L'affichage du texte est correct
+Tests.reponses = ['q']# Pour terminer le programme
+res = run('proximite texte')
+res.should_equal(
+  "\t"+'Un texte pour voir un autre avec un texte et un autre voir.'+RET+
+  "\t"+'   ---->              ---->         <----       <----      ',
+  'L’affichage du texte ne montre plus que les 2 proximités restants'
+)
 
 fin_tests

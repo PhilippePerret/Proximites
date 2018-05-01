@@ -8,7 +8,7 @@
 
 
 def getc message
-  return Tests.next_reponse
+  return Tests.next_reponse(from: 'getc')
 end
 
 # Pose la +question+ est retourne TRUE si la réponse est oui (dans tous les
@@ -19,15 +19,18 @@ end
 #
 def yesOrNo question
   # Tests.suivi("-> yesOrNo('#{question}')")
-  val = Tests.next_reponse == 'true' # next_reponse retourne toujours un string
-  val.is_a?(TrueClass) || val.is_a?(FalseClass) || raise("La réponse dans CLI_REPONSES devrait être `true` ou `false`.")
-  return val
+  case Tests.next_reponse(from: "yesOrNo(#{question.inspect})")
+  when 'true', 'o', 'oui', 'y', 'yes' # next_reponse retourne toujours un string
+    true
+  else
+    false
+  end
 end
 
 # Pose la +question+ qui attend forcément une valeur non nulle et raise
 # l'exception +msg_error+ dans le cas contraire.
 def askForOrRaise(question, msg_error = "Cette donnée est obligatoire")
-  val = Tests.next_reponse
+  val = Tests.next_reponse(from: "askForOrRaise(#{question.inspect})")
   val.is_a?(Array) || raise('Pour un askForOrRaise, il faut fournir un Array avec en première valeur la réponse donnée en ligne de commande et en seconde valeur le message de l’erreur générée. Elle sera générée si la première valeur est vide.')
   r, msg_error = val
   r || r != '' || raise(msg_error)
@@ -36,7 +39,7 @@ end
 
 # Pose la +question+ et retourne la réponse, même vide.
 def askFor(question, default = nil)
-  Tests.next_reponse
+  Tests.next_reponse(from: "askFor(#{question.inspect})")
 end
 
 
@@ -45,5 +48,5 @@ end
 #               :default    Valeur par défaut à mettre dans le fichier
 #               Si c'est un string, c'est le message à afficher avant
 def askForText params = Hash.new
-  Tests.next_reponse
+  Tests.next_reponse(from: "askForTest(default: #{params[:default].inspect})")
 end

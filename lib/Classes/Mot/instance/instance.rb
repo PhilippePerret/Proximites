@@ -50,6 +50,7 @@ class Texte
     # Le mot complet, i.e. avec son caractère suivant. Pour un affichage rigou-
     # reusement identique
     def complet ; @complet ||= real_mot + next_char end
+    alias :mot_complet :complet
 
     # La longueur, pour ne pas avoir à la calculer tout le temps
     def length ; @length ||= mot.length end

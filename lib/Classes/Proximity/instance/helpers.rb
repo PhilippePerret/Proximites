@@ -64,7 +64,7 @@ class Proximity
       curindex   = mot_avant.index - 1
       around_len = 0
       while curindex > -1 && around_len < longueur_autour_extrait
-        arr_mots.unshift(texte_courant.mots[curindex].mot_complet)
+        arr_mots.unshift(texte_courant.mots[curindex].complet)
         around_len += texte_courant.mots[curindex].length + 1
         curindex -= 1
       end
@@ -78,7 +78,7 @@ class Proximity
 
       # On ajoute tous les mots jusqu'au mot-après
       while curindex < mot_apres.index
-        arr_mots << (texte_courant.mots[curindex].mot_complet)
+        arr_mots << (texte_courant.mots[curindex].complet)
         curindex += 1
       end
 
@@ -93,7 +93,7 @@ class Proximity
         around_len = 0
         begin
           # puts "curindex = #{curindex.inspect} (< #{texte_courant.nombre_total_mots})"
-          arr_mots << texte_courant.mots[curindex].mot_complet
+          arr_mots << texte_courant.mots[curindex].complet
           around_len += texte_courant.mots[curindex].length + 1
           curindex += 1
         end while  curindex < texte_courant.nombre_total_mots && around_len < longueur_autour_extrait
@@ -103,8 +103,8 @@ class Proximity
       RET2 +
       arr_mots.join('')
         .segmente(LONGUEUR_SEGMENT, "\t\t")
-        .sub(/#{motAvant}/, mot_avant.mot.rouge)
-        .sub(/#{motApres}/, mot_apres.mot.rouge) +
+        .sub(/#{motAvant}/, mot_avant.real_mot.rouge + mot_avant.next_char)
+        .sub(/#{motApres}/, mot_apres.real_mot.rouge + mot_apres.next_char) +
       RET2
 
     else

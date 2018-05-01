@@ -58,6 +58,10 @@ class String
     "\033[1m#{self}\033[0m"
   end
 
+  # Le string dont on a retiré les couleurs
+  def sans_couleur
+    self.gsub(/\e\[(.*?)m/,'').gsub(/\\e\[(.*?)m/,'')
+  end
   # Méthode qui strip la chaine courante mais renvoie NIL si elle est vide.
   def strip_nil
     s = self.strip

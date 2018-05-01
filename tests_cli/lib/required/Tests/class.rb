@@ -17,10 +17,13 @@ class << self
   end
 
   # Retourne la prochaine réponse (toujours en String)
-  def next_reponse
-    File.exist?(path_reponses_file) || raise('reponses-required')
+  def next_reponse options = nil
+    options ||= Hash.new
+    Tests::Log << "-> next_reponse (réponses restantes : #{reponses.inspect})"
     reponses.empty? && raise('no-more-reponse')
-    reponses.shift.to_s
+    rep = reponses.shift.to_s
+    Tests::Log << "Réponse retournée pour #{options[:from].sans_couleur} : #{rep.inspect} (nouvelles réponses restants : #{reponses.inspect})"
+    rep
   rescue Exception => e
     ERRORS.key?(e.message) && Tests::Log.error(ERRORS[e.message])
     Tests::Log.error(e)
@@ -29,7 +32,8 @@ class << self
   # Les réponses définies dans les tests
   def reponses
     @reponses ||= begin
-      File.exist?(path_reponses_file) && File.read(path_reponses_file).force_encoding('utf-8').split("\n")
+      File.exist?(path_reponses_file) || raise('reponses-required')
+      File.read(path_reponses_file).force_encoding('utf-8').split("\n")
     end
   end
   # Pour définir les réponses à simuler
