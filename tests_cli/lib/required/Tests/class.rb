@@ -43,8 +43,22 @@ class << self
     @path_reponses_file ||= File.join(folder, 'reponses')
   end
 
+  # Le dossier des tests
   def folder
     @folder ||= './.tests_cli'
   end
+
+  # Le path du texte courant
+  def current_texte_path
+    config = File.open('./.config.msh','rb'){|f|Marshal.load(f)}
+    config[:last_file_path]
+  end
+  # Le path du dossier de texte courant
+  def current_folder_proximites
+    ctp = current_texte_path
+    File.join(File.dirname(ctp), "proximites-#{File.basename(ctp,File.extname(ctp))}")
+  end
+
+
 end #/<< self
 end #/Tests

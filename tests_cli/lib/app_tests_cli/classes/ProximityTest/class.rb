@@ -28,10 +28,9 @@ class << self
   def count
     proximites.count
   end
-  alias :original_puts :puts
-  def puts
+  def show
     proximites.each do |prox_id, iprox|
-      original_puts iprox.inspect
+      puts iprox.inspect
     end
   end
 end#<< self

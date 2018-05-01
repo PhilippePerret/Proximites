@@ -9,7 +9,7 @@ DETAILED = false
 require_relative 'required'
 
 
-run "proximite check -t \\\"Analyse d'un petit texte pour voir et voir encore le texte.\\\""
+run "proximite check -t \"Analyse d'un petit texte pour voir et voir encore le texte.\""
 res = run "proximite show proximites"
 retour_contient('texte <- 34 -> texte')
 retour_contient('voir <- 8 -> voir')

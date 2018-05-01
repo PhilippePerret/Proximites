@@ -11,9 +11,9 @@ require_relative './lib/required'
 # l'analyse.
 Tests.titre 'Analyse d’un texte avec deux proximités'
 Tests.reponses = ['q'] # pour finir (toujours le mettre)
-run "proximite check -t \\\"Analyse d’un petit texte pour voir et voir encore le texte.\\\""
+run "proximite check -t \"Analyse d’un petit texte pour voir et voir encore le texte.\""
 # puts "Proximités après le check".jaune
-# ProximityTest.puts
+# ProximityTest.show
 ProximityTest.count.should_equal(2, '2 proximités ont été créées.')
 ProximityTest.get_by_index(0).deleted?.should_equal(false, 'la première proximités n’est pas deleted.')
 
@@ -43,7 +43,7 @@ ProximityTest.get_by_index(0).deleted?.should_equal(true, 'la première proximit
 ProximityTest.get_by_index(1).deleted?.should_equal(false, 'la seconde proximité n’est pas marquée deleted')
 
 # puts "Proximités après la suppression".jaune
-# ProximityTest.puts
+# ProximityTest.show
 
 
 fin_tests

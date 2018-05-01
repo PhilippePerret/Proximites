@@ -53,6 +53,14 @@ class Texte
 
     end
 
+    # Si le texte se termine par une ponctuation précédée d'une espace, elle
+    # n'est pas prise en compte. Il faut done artificiellement créer ce mot,
+    # qui sera un mot vide avec pour next_char la ponctuation.
+    if segment.match(/[  \\][?!;:]$/)
+      ponctuation = segment.match(/[  \\]([?!;:])$/).to_a[1]
+      add_mot('', liste_mots.length, segment.length - 2, ponctuation)
+    end
+
     Prox.log_check? && Prox.log_check("=== Fin de la décomposition en mots", is_op = true)
   end
 
@@ -62,8 +70,8 @@ class Texte
   # C'est la grande méthode qui permet ensuite de traiter les proximités.
   #
   # Retourne l'instance Texte::Mot du mot créé
-  def add_mot mot_str, index_mot, current_offset
-    imot = Texte::Mot.new(self, mot_str, index_mot, current_offset, segment[current_offset + mot_str.length])
+  def add_mot mot_str, index_mot, current_offset, next_char = nil
+    imot = Texte::Mot.new(self, mot_str, index_mot, current_offset, next_char || segment[current_offset + mot_str.length])
     #           Le caractère qui suit le mot --------------------------^
     @mots << imot
     Occurences.add(imot)
@@ -75,7 +83,12 @@ class Texte
   end
 
   def liste_mots
-    @liste_mots ||= segment.split(/[^[[:alnum:]]]/)
+    @liste_mots ||= begin
+      lm = segment.split(/[^[[:alnum:]]]/)
+      puts "segment dans liste_mots : #{segment.inspect}"
+      puts "mots : #{lm.inspect}"
+      lm
+    end
   end
 
 
