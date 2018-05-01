@@ -66,6 +66,7 @@ class Texte
         # D E B U G
         # puts "imot traité : mot:#{imot.mot.inspect}, index:#{imot.index}, offset:#{imot.offset.inspect}, length:#{imot.length.inspect}"
 
+        # Jusqu'à ce que l'on commence ou qu'on termine
         if imot.offset < start_offset
           next
         elsif end_offset && imot.offset > end_offset
@@ -75,7 +76,12 @@ class Texte
         arr_mots    = Array.new
         arr_colors  = Array.new
 
+        # Si le texte est vide, on peut quand même avec un caractère suivant
+        # à écrire.
         imot.length > 0 || begin
+          segment_up << imot.next_char
+          segment_do << ' '
+          self.longueur_segment += 1
           next
         end
 
@@ -147,6 +153,8 @@ class Texte
             color_apres = next_color()
             iprox_apres.color = color_apres
 
+            # Attention, ça peut être un deuxième ajout du mot, s'il est
+            # en proximité avant et après.
             arr_mots    << imot.mot
             arr_colors  << color_apres
 
@@ -174,7 +182,7 @@ class Texte
 
         disp_mot = arr_mots.join('|')
 
-        segment_up << disp_mot  + ' '
+        segment_up << (disp_mot + imot.next_char)
         segment_do << disp_mark + ' '
 
         if self.longueur_segment > MAX_LEN_LINE

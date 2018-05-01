@@ -17,9 +17,9 @@ class Mot
     end
 
     # On peut véritablement modifier le mot.
+    init
     @mot = @real_mot    = new_mot
     @mot_base           = new_mot_base
-    @length             = new_mot.length
     @offset_correction  = diff_len
 
     # Il faut ajouter le mot à sa nouvelle instance d'occurences

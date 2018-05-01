@@ -49,7 +49,7 @@ class << self
     next_command = nil
     command_in_histo = nil
     while true
-      q = "Commande suivante (#{'q'.jaune}, #{'z'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
+      q = "Commande suivante sans `proximite ` (#{'q'.jaune}, #{'z'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
       next_command = askFor(q)
       case next_command
       when 'q', 'z' then return

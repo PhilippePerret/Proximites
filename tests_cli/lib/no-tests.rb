@@ -8,6 +8,7 @@ class Tests
   class Log
     class << self
       def <<(mess) ; end
+      def error(msg) ; end
     end #<< self
   end#/Log
 end#/Tests

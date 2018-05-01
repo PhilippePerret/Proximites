@@ -64,7 +64,7 @@ class Proximity
       curindex   = mot_avant.index - 1
       around_len = 0
       while curindex > -1 && around_len < longueur_autour_extrait
-        arr_mots.unshift(texte_courant.mots[curindex].mot)
+        arr_mots.unshift(texte_courant.mots[curindex].mot_complet)
         around_len += texte_courant.mots[curindex].length + 1
         curindex -= 1
       end
@@ -72,18 +72,18 @@ class Proximity
       # On ajoute le mot-avant
       # Mais pour pouvoir le mettre en rouge, on doit mettre d'abord une
       # marque (sinon, la longueur pour le découpage serait mauvaise)
-      motAvant = 'X' * mot_avant.length
+      motAvant = 'X' * (mot_avant.length + 1)
       arr_mots << motAvant
       curindex = 0 + mot_avant.index + 1
 
       # On ajoute tous les mots jusqu'au mot-après
       while curindex < mot_apres.index
-        arr_mots << texte_courant.mots[curindex].mot
+        arr_mots << (texte_courant.mots[curindex].mot_complet)
         curindex += 1
       end
 
       # On ajoute le mot après
-      motApres = 'Z' * mot_apres.length
+      motApres = 'Z' * (mot_apres.length + 1)
       arr_mots << motApres
       curindex == mot_apres.index || raise('L’index du mot après devrait correspondre…')
       curindex += 1
@@ -92,16 +92,16 @@ class Proximity
       if curindex < texte_courant.nombre_total_mots
         around_len = 0
         begin
-          puts "curindex = #{curindex.inspect} (< #{texte_courant.nombre_total_mots})"
-          arr_mots << texte_courant.mots[curindex].mot
+          # puts "curindex = #{curindex.inspect} (< #{texte_courant.nombre_total_mots})"
+          arr_mots << texte_courant.mots[curindex].mot_complet
           around_len += texte_courant.mots[curindex].length + 1
           curindex += 1
         end while  curindex < texte_courant.nombre_total_mots && around_len < longueur_autour_extrait
       end
-      
+
       # Le texte final
       RET2 +
-      arr_mots.join(' ')
+      arr_mots.join('')
         .segmente(LONGUEUR_SEGMENT, "\t\t")
         .sub(/#{motAvant}/, mot_avant.mot.rouge)
         .sub(/#{motApres}/, mot_apres.mot.rouge) +

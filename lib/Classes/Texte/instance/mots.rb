@@ -40,11 +40,17 @@ class Texte
         print "#{(1+index_mot).to_s.rjust(len_nombre_mots)}"
       end
       Prox.log_check? && Prox.log_check("\tTraitement du mot #{mot.inspect.jaune}")
+
+      # ==============================================
       imot = add_mot(mot, index_mot, current_offset)
+      # ==============================================
+
       Prox.log_check? && begin
         imot.mot == imot.mot_base || Prox.log_check("\t\tMot de base : #{imot.mot_base.inspect}")
       end
+
       current_offset += mot.length + 1
+
     end
 
     Prox.log_check? && Prox.log_check("=== Fin de la décomposition en mots", is_op = true)
@@ -57,7 +63,8 @@ class Texte
   #
   # Retourne l'instance Texte::Mot du mot créé
   def add_mot mot_str, index_mot, current_offset
-    imot = Texte::Mot.new(self, mot_str, index_mot, current_offset)
+    imot = Texte::Mot.new(self, mot_str, index_mot, current_offset, segment[current_offset + mot_str.length])
+    #           Le caractère qui suit le mot --------------------------^
     @mots << imot
     Occurences.add(imot)
     return imot

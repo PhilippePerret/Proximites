@@ -1,3 +1,25 @@
-01-05-2018 14:19   -> Prox#show_informations
-01-05-2018 14:19   -> Texte#load_all
-01-05-2018 14:19   -> Texte#load_mots
+01-05-2018 14:50   -> Texte#check (grand check complet avec sauvegarde)
+01-05-2018 14:50   Création de l’occurence "un"
+01-05-2018 14:50   Ajout d’une occurence de "un"
+01-05-2018 14:50   Création de l’occurence "texte"
+01-05-2018 14:50   Ajout d’une occurence de "texte"
+01-05-2018 14:50   Création de l’occurence ""
+01-05-2018 14:50   Ajout d’une occurence de ""
+01-05-2018 14:50   Création de l’occurence "sans"
+01-05-2018 14:50   Ajout d’une occurence de "sans"
+01-05-2018 14:50   Création de l’occurence "répétition"
+01-05-2018 14:50   Ajout d’une occurence de "répétition"
+01-05-2018 14:50   Ajout d’une occurence de ""
+01-05-2018 14:50   Ajout d’une occurence de ""
+01-05-2018 14:50   Création de l’occurence "mais"
+01-05-2018 14:50   Ajout d’une occurence de "mais"
+01-05-2018 14:50   Création de l’occurence "avec"
+01-05-2018 14:50   Ajout d’une occurence de "avec"
+01-05-2018 14:50   Création de l’occurence "de"
+01-05-2018 14:50   Ajout d’une occurence de "de"
+01-05-2018 14:50   Création de l’occurence "caractère"
+01-05-2018 14:50   Ajout d’une occurence de "caractère"
+01-05-2018 14:50   Création de l’occurence "après"
+01-05-2018 14:50   Ajout d’une occurence de "après"
+01-05-2018 14:50   -> Texte#save_mots
+01-05-2018 14:50   -> Prox#show_informations
