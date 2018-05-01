@@ -12,7 +12,8 @@ require_relative './lib/required'
 run "proximite check -t \\\"Analyse d'un petit texte pour voir et voir encore le texte.\\\""
 
 Tests.reponses = [
-  'z', # Pour annnuler 
+  'z', # Pour annnuler le travail de modification,
+  'q', # Pour terminer l'application
 ]
 
 # On lance la correction

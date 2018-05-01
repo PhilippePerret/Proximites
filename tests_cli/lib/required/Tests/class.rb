@@ -1,5 +1,10 @@
 # encoding: UTF-8
 class Tests
+  ERRORS = {
+    'reponses-required' => 'Pour tester les programmes CLI, il faut définir les réponses successives en les définissant par `Tests.reponses=[\'réponse 1\', \'réponse 2\', etc.]` (dans l’ordre de leur utilisation).',
+    'no-more-reponse'   => 'Il ne reste plus de réponse à prendre. Impossible de poursuivre.'
+  }
+
 class << self
 
 
@@ -12,9 +17,12 @@ class << self
 
   # Retourne la prochaine réponse (toujours en String)
   def next_reponse
-    self.reponses || raise('Pour tester les programmes CLI, il faut définir les réponses successives en les définissant par `Tests.reponses=[\'réponse 1\', \'réponse 2\', etc.]` (dans l’ordre de leur utilisation).')
-    reponses.empty? && raise('Il ne reste plus de réponse à prendre. Impossible de continuer.')
+    File.exist?(path_reponses_file) || raise('reponses-required')
+    reponses.empty? && raise('no-more-reponse')
     reponses.shift.to_s
+  rescue Exception => e
+    ERRORS.key?(e.message) && Tests::Log.error(ERRORS[e.message])
+    Tests::Log.error(e)
   end
 
   # Les réponses définies dans les tests

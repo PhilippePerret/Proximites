@@ -1,0 +1,18 @@
+###ERROR: [0;91mPour tester les programmes CLI, il faut définir les réponses successives en les définissant par `Tests.reponses=['réponse 1', 'réponse 2', etc.]` (dans l’ordre de leur utilisation).[0m
+###ERROR: [0;91mreponses-required
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/class.rb:20:in `next_reponse'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:38:in `askFor'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:50:in `wait_for_next_command'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:27:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+###ERROR: [0;91mundefined method `split' for nil:NilClass
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:64:in `wait_for_next_command'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:27:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+On en a fini avec l’application.

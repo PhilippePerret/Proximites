@@ -8,7 +8,6 @@ Utile pour les tests
 # === MÉTHODES DE TEST ===
 
 FOLDERTESTS = File.dirname(File.dirname(File.expand_path(__FILE__)))
-puts "FOLDERTESTS : #{FOLDERTESTS.inspect}"
 
 # On charge la librairie de l'application
 # Il faut le faire absolument avant de charger les modules de tests, qui
