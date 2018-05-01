@@ -1,7 +1,9 @@
 # encoding: utf-8
 #
 # ask
-# v. 1.0
+# v. 1.2
+#
+# Voir aussi le module ask_for_test.rb qui fonctionne en parallèle de celui-ci
 #
 
 def getc message
@@ -17,11 +19,16 @@ end
 
 # Pose la +question+ est retourne TRUE si la réponse est oui (dans tous les
 # formats possible) ou FALSE dans le cas contraire.
+#
+# Attention, en mode test, ces méthodes sont surclassées par les méthodes
+# de test
+#
 def yesOrNo question
-  print "#{question} (y/o/yes/oui ou n/non) : "
+  print "#{question} (y/o/yes/oui ou n/non/rien) : "
   r = STDIN.gets.strip
+  r == '' && r == nil
   case r.upcase
-  when 'N','NO','NON', '' then return false
+  when 'N','NO','NON', NilClass then return false
   else return true
   end
 end
@@ -40,7 +47,8 @@ def askFor(question, default = nil)
   default && question << " (défaut : #{default}) "
   print "#{question} : "
   retour = STDIN.gets.strip
-  retour != '' ? retour : default
+  retour == '' && retour = nil
+  retour ? retour : default
 end
 
 

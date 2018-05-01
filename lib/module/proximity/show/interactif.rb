@@ -11,6 +11,7 @@ class << self
   # on peut faire une proposition de mot que le programme va vérifier (pour voir
   # s'il ne crée par une nouvelle proximité), etc.
   def traite_proximite_mode_interactif iprox
+    Tests::Log << '-> traite_proximite_mode_interactif'
     while true
       puts <<-EOT
       #{'o/oo'.jaune} = marquer cette proximité comme traitée/corrigée ('oo' pour confirmer directement)
@@ -22,9 +23,8 @@ class << self
 
       EOT
 
-      print "Opération choisie : "
       debut_op = Time.now.to_f # utile pour compter le temps d'une correction
-      c = STDIN.gets.strip_nil
+      c = askFor('Opération choisie'.bleu)
       case c
       when NilClass, 'n'      then return
       when 'z'                then return true # POUR INTERROMPRE
@@ -66,7 +66,7 @@ class << self
     yesOrNo("Veux-tu vraiment remplacer le mot #{old_mot.inspect} par #{new_mot.inspect}") || return
     load_module 'proximity/replace'
     if Proximity.replace(iprox, pour_premier, new_mot)
-      notice "#{RETT}Le mot #{old_mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction."
+      notice "#{RETT}Le mot #{old_mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}"
       self.changements_operes = true
     end
   end

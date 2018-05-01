@@ -103,6 +103,14 @@ class Texte
           id_prox_apres && begin
             # puts "proximité après"
             iprox_apres = Proximity[id_prox_apres]
+            iprox_apres || begin
+              raise('Les proximités sont mal définies pour :' +
+              "#{RET}id_prox_apres : #{id_prox_apres}" +
+              "#{RET}imot.index : #{imot.index}" +
+              "#{RET}imot.mot : #{imot.mot}" +
+              "#{RET}imot.prox_ids : #{imot.prox_ids.inspect}"
+              )
+            end
             treate_prox_apres = !(iprox_apres.treated? || iprox_apres.deleted?)
             dont_treate = dont_treate || !treate_prox_apres
           end

@@ -3,12 +3,13 @@ class Texte
 
   # Valeurs par défaut des informations utiles
   DEFAULT_INFOS_VALUES = {
-    duree_moy_correction_prox: 60
+    duree_moy_correction_prox:  60,
+    around_extract_length:      180
   }
 
   # Retourne l'information de clé +key+
   def info key
-    return infos[key]
+    return infos[key] || DEFAULT_INFOS_VALUES[key]
   end
 
   # Définit et enregistre l'information de clé +key+ avec la valeur +value+

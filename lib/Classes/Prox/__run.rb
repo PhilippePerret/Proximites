@@ -29,6 +29,7 @@ class << self
       wait_for_next_command || break
     end
   rescue Exception => e
+    Tests::Log.error(e)
     error e.message
     error e.backtrace.join("\n")
   ensure

@@ -16,9 +16,9 @@ class << self
   # Ça peut être aussi l'identifiant de la proximité.
   #
   def _show mot = nil
+
     mode_interactif = CLI.options[:interactif]
     show_all        = !!CLI.options[:all]
-
 
     if mot.nil?
       liste_proximites = table.values
@@ -127,9 +127,13 @@ class << self
     # Si des modifications ont été opérées, on doit enregistrer toutes les
     # informations.
     if mode_interactif && changements_operes
-      yesOrNo("Faut-il enregistrer les changements opérés ?") && texte_courant.save_all
+      yesOrNo("Faut-il enregistrer les changements opérés ?") || begin
+        yesOrNo('Êtes-vous sûr de ne pas vouloir enregistrer les changements ?'.rouge) || return
+      end
+      texte_courant.save_all
     end
   end
+  # /_show
 
 
   # Enregistre la nouvelle durée de correction en calculant la

@@ -40,32 +40,72 @@ class Proximity
   # Extraits à afficher
   # En mode interactif, on affiche le maximum de texte (si possible tout), alors
   # qu'en mode normal, on affiche seulement une portion.
+  #
+  # Note : avant, on travaillait avec le segment, mais cela ne prenait pas en
+  # compte les modifications des proximités. Maintenant, tous les textes se
+  # servent des mots (instances Texte::Mot) pour faire les textes.
+  #
+  # TODO Utiliser les mots du texte pour reconstituer le segment.
   def extraits
     if CLI.options[:interactif]
-      seg = Texte.current.segment.gsub(/\n/,'¶')
-      off_avant = mot_avant.offset
-      off_apres = mot_apres.offset
-      off_fin = off_apres + mot_apres.length
-      motX = 'X' * mot_avant.length
-      motZ = 'Z' * mot_apres.length
+      # Fonctionnement, maintenant qu'on fonctionne avec les mots
+      # On part du mot-avant
+      # On construit la partie précédente jusqu'à une certaine longueur
+      # qui peut être modifiée par l'utilisateur.
+      # On construit ensuite le texte du mot-avant au mot-après,
+      # Puis on construit jusqu'à une certaine distance après le mot
 
-      debut_seg = off_avant - 180
-      debut_seg >= 0 || debut_seg = 0
-      set_up_to_motx = off_avant - 1
-      seg_avant_le_mot = set_up_to_motx > 0 ? seg[debut_seg..set_up_to_motx] : ''
+      # La longueur attendu avant et après les mots
+      longueur_autour_extrait = texte_courant.info(:around_extract_length)
 
-      "\n\n" +
-      ( seg_avant_le_mot +
-        motX +
-        seg[(off_avant + mot_avant.length)..(off_apres-1)] +
-        motZ +
-        seg[off_fin..(off_fin + 180)])
+      # La liste qui va recevoir tous les mots
+      arr_mots = Array.new
+
+      curindex   = mot_avant.index - 1
+      around_len = 0
+      while curindex > -1 && around_len < longueur_autour_extrait
+        arr_mots.unshift(texte_courant.mots[curindex].mot)
+        around_len += texte_courant.mots[curindex].length + 1
+        curindex -= 1
+      end
+
+      # On ajoute le mot-avant
+      # Mais pour pouvoir le mettre en rouge, on doit mettre d'abord une
+      # marque (sinon, la longueur pour le découpage serait mauvaise)
+      motAvant = 'X' * mot_avant.length
+      arr_mots << motAvant
+      curindex = 0 + mot_avant.index + 1
+
+      # On ajoute tous les mots jusqu'au mot-après
+      while curindex < mot_apres.index
+        arr_mots << texte_courant.mots[curindex].mot
+        curindex += 1
+      end
+
+      # On ajoute le mot après
+      motApres = 'Z' * mot_apres.length
+      arr_mots << motApres
+      curindex == mot_apres.index || raise('L’index du mot après devrait correspondre…')
+      curindex += 1
+
+      # On ajoute les mots jusqu'à la longueur voulue
+      around_len = 0
+      begin
+        puts "curindex = #{curindex.inspect} (< #{texte_courant.nombre_total_mots})"
+        arr_mots << texte_courant.mots[curindex].mot
+        around_len += texte_courant.mots[curindex].length + 1
+        curindex += 1
+      end while  curindex < texte_courant.nombre_total_mots && around_len < longueur_autour_extrait
+      # Le texte final
+      RET2 +
+      arr_mots.join(' ')
         .segmente(LONGUEUR_SEGMENT, "\t\t")
-        .sub(/#{motX}/, mot_avant.mot.rouge)
-        .sub(/#{motZ}/, mot_apres.mot.rouge) +
-      "\n\n"
+        .sub(/#{motAvant}/, mot_avant.mot.rouge)
+        .sub(/#{motApres}/, mot_apres.mot.rouge) +
+      RET2
 
     else
+      # Si on n'est pas en mode interactif
       "#{RETT}\t1. #{mot_avant.extrait}"+
       "#{RETT}\t2. #{mot_apres.extrait}"
     end
