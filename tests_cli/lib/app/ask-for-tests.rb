@@ -18,7 +18,8 @@ end
 # de test
 #
 def yesOrNo question
-  val = Tests.next_reponse
+  # Tests.suivi("-> yesOrNo('#{question}')")
+  val = Tests.next_reponse == 'true' # next_reponse retourne toujours un string
   val.is_a?(TrueClass) || val.is_a?(FalseClass) || raise("La réponse dans CLI_REPONSES devrait être `true` ou `false`.")
   return val
 end

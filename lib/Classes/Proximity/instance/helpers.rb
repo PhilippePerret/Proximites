@@ -89,13 +89,16 @@ class Proximity
       curindex += 1
 
       # On ajoute les mots jusqu'à la longueur voulue
-      around_len = 0
-      begin
-        puts "curindex = #{curindex.inspect} (< #{texte_courant.nombre_total_mots})"
-        arr_mots << texte_courant.mots[curindex].mot
-        around_len += texte_courant.mots[curindex].length + 1
-        curindex += 1
-      end while  curindex < texte_courant.nombre_total_mots && around_len < longueur_autour_extrait
+      if curindex < texte_courant.nombre_total_mots
+        around_len = 0
+        begin
+          puts "curindex = #{curindex.inspect} (< #{texte_courant.nombre_total_mots})"
+          arr_mots << texte_courant.mots[curindex].mot
+          around_len += texte_courant.mots[curindex].length + 1
+          curindex += 1
+        end while  curindex < texte_courant.nombre_total_mots && around_len < longueur_autour_extrait
+      end
+      
       # Le texte final
       RET2 +
       arr_mots.join(' ')

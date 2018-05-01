@@ -17,6 +17,7 @@ class << self
   # dans le module class/Prox/commands
   #
   def run
+    Tests::Log << '-> Début du programme'
     while true
       runable? || return
       # Exécution de la commande demandée
@@ -26,12 +27,14 @@ class << self
       # On attend la prochaine commande
       wait_for_next_command || break
     end
-    Tests::Log << 'On en a fini avec l’application.'
   rescue Exception => e
     Tests::Log.error(e)
     error e.message
     error e.backtrace.join("\n")
   ensure
+
+    Tests::Log << '<- Fin du programme'
+
     # Ce qu'il faut faire dans tous les cas, en cas d'erreur ou non
     # ---------------------------------------------------------------------
     # Enregistrer les configurations

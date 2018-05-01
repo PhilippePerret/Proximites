@@ -13,6 +13,7 @@ class << self
     `mkdir -p "#{folder}"`
     File.exist?(path_reponses_file) && File.unlink(path_reponses_file)
     Log.init
+    Messages.init
   end
 
   # Retourne la prochaine réponse (toujours en String)

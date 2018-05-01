@@ -4,8 +4,12 @@ class Texte
 
     ENTETE_INSPECT_MOT = " #{'MOT'.ljust(20)}#{'INDEX'.ljust(8)}#{'OFFSET'.ljust(8)}#{'LONG'.ljust(6)}"
 
-    def inspect
-      @inspect ||= "#{mot.ljust(20)}#{index.to_s.ljust(8)}#{offset.to_s.ljust(8)}#{length.to_s.ljust(6)}"
+    def inspect tabulaire = nil
+      if tabulaire
+        @inspect_tab ||= "#{mot.ljust(20)}#{index.to_s.ljust(8)}#{offset.to_s.ljust(8)}#{length.to_s.ljust(6)}"
+      else
+        @inspect ||= "#{mot.jaune} index:#{index} offset:#{offset} len:#{length}"
+      end
     end
 
     # Retourne l'extrait du mot dans le texte avec un nombre +autour+ de

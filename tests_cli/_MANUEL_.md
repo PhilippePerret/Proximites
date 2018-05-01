@@ -13,12 +13,15 @@ Prérequis pour qu'une application CLI soit testable :
 * elle doit utiliser le dossier `tests_cli` et notamment tout le contenu du dossier `tests_cli/lib`
 * On doit trouver la ligne suivante à la fin du module `./lib/required` qui charge toute l'application :
 
-        if CLI.options[:test] 
+        if CLI.options[:test]
           require('./tests_cli/lib/app_required')
         else
           require('./tests_cli/lib/no-tests.rb')
         end
-
+* un dossier `tests_cli` à la racine contenant les éléments
+* un dossier `tests_cli/lib`
+* un dossier `tests_cli/lib/required` contenant tous les éléments requis pour toutes les applications utilisant ces tests.
+* un dossier `tests_cli/lib/app_tests_cli` contenant les éléments propres à l'application utilisés par les tests pour facilité l'interaction. Par exemple des classes qui permettent de récupérer des données.
 
 ## Fonctionnement de l'interactivité
 

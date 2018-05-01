@@ -18,5 +18,7 @@ require './lib/required'
 # On surclasse toutes les méthodes interactives (module ask -> ask-for-tests)
 Dir[FOLDERTESTS+'/lib/required/**/*.rb'].each{|m|load(m)}
 # Dir[FOLDERTESTS+'/lib/required/**/*.rb'].each{|m|require(m)}
+# Les modules propres à l'application s'ils existent
+Dir[FOLDERTESTS+'/lib/app_tests_cli/**/*.rb'].each{|m|load(m)}
 
 Tests.init
