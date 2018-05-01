@@ -11,7 +11,7 @@ class << self
   # on peut faire une proposition de mot que le programme va vérifier (pour voir
   # s'il ne crée par une nouvelle proximité), etc.
   def traite_proximite_mode_interactif iprox
-    Tests::Log << '-> traite_proximite_mode_interactif'
+
     while true
       puts <<-EOT
       #{'o/oo'.jaune} = marquer cette proximité comme traitée/corrigée ('oo' pour confirmer directement)

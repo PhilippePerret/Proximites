@@ -69,7 +69,7 @@ class << self
   end
 
   def pathlog
-    @pathlog ||= './.tests/tests.log'
+    @pathlog ||= File.join(Tests.folder, 'tests.log')
   end
 end#<<self
 end#/Log

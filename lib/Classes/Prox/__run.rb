@@ -23,11 +23,10 @@ class << self
       send(main_command.to_sym)
       # On referme le log de check si nécessaire
       Prox.log_check?     && Prox::LogCheck.close
-      # Si l'option --test a été placée, on ne boucle pas
-      CLI.options[:test]  && break
       # On attend la prochaine commande
       wait_for_next_command || break
     end
+    Tests::Log << 'On en a fini avec l’application.'
   rescue Exception => e
     Tests::Log.error(e)
     error e.message
@@ -47,8 +46,8 @@ class << self
     next_command = nil
     command_in_histo = nil
     while true
-      print "Commande suivante (#{'q'.jaune}, #{'z'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
-      next_command = STDIN.gets.strip
+      q = "Commande suivante (#{'q'.jaune}, #{'z'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) : proximite[ #{command_in_histo}]"
+      next_command = askFor(q)
       case next_command
       when 'q', 'z' then return
       when 'h'
