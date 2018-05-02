@@ -15,12 +15,12 @@ Tests.grand_titre 'Test de la suppression interactive de proximités'
 # On commence par prendre un texte avec un répétition du mot 'texte' et on
 # l'analyse.
 Tests.titre 'On peut supprimer une unique proximité'
-Tests.reponses = ['q'] # pour finir (toujours le mettre)
+Tests.sequence_touches = ['q'] # pour finir (toujours le mettre)
 run "proximite check -t \"Un texte avec un autre texte.\""
 ProximityTest.count.should_equal(1, '1 proximité a été créée.')
 ProximityTest.get_by_index(0).deleted?.should_equal(false, 'la proximité n’est pas deleted.')
 # On supprime cette proximité
-Tests.reponses = [
+Tests.sequence_touches = [
   'so', # pour supprimer la première proximité
   'o',  # Pour confirmer l'enregistrement des informations
   'q'   # pour terminer le programmme
@@ -31,14 +31,14 @@ ProximityTest.get_by_index(0).deleted?.should_equal(true, 'la proximité a été
 
 
 Tests.titre 'On peut supprimer la bonne proximité parmi trois'
-Tests.reponses = ['q']
+Tests.sequence_touches = ['q']
 run 'prox check -t "Un texte pour voir un autre avec un texte et un autre voir."'
 ProximityTest.count.should_equal(3, 'Il y a bien 3 proximités')
 (0..2).each do |index_prox|
   ProximityTest.get_by_index(index_prox).deleted?.should_equal(false, "la proximité #{1+index_prox} n’est pas deleted.")
 end
 # L'affichage du texte est correct
-Tests.reponses = ['q']# Pour terminer le programme
+Tests.sequence_touches = ['q']# Pour terminer le programme
 res = run('proximite texte')
 res.should_equal(
   "\t"+'Un texte pour voir un autre avec un texte et un autre voir.'+RET+
@@ -47,7 +47,7 @@ res.should_equal(
 )
 
 # On supprime interactivement la 2e proximité
-Tests.reponses = [
+Tests.sequence_touches = [
   'n',  # pour passer à la proximité suivante sans rien faire
   's',  # pour supprimer la 2e proximité
   'o',  # pour confirmer cette suppression
@@ -60,7 +60,7 @@ ProximityTest.get_by_index(0).deleted?.should_equal(false, "la 1ère proximité 
 ProximityTest.get_by_index(1).deleted?.should_equal(true, "la 2e proximité EST DELETED.")
 ProximityTest.get_by_index(2).deleted?.should_equal(false, "la 3e proximité n’est pas deleted.")
 # L'affichage du texte est correct
-Tests.reponses = ['q']# Pour terminer le programme
+Tests.sequence_touches = ['q']# Pour terminer le programme
 res = run('proximite texte')
 res.should_equal(
   "\t"+'Un texte pour voir un autre avec un texte et un autre voir.'+RET+

@@ -33,7 +33,23 @@ Au contraire, si on utilise les méthodes `ask`, il suffit de définir avant le 
     require './lib/required'
 
     # On définit ce qui sera tapé
-    Tests.reponses= ['5'] # ou simplement [5]
+    Tests.sequence_touches= ['5'] # ou simplement [5]
 
     # On lance le test (noter que l'option --test sera automatiquement ajouté)
     run './mon/app.rb'
+
+## Séquence de touche
+
+On a vu ci-dessous qu'on définissait la séquence de touches qui va être jouée avant de lancer le programme. De façon simple, cette suite de touches peut être définies simplement avec les touches, des `String` ou des `Fixnum` (nombre).
+
+#### Définir un temps de réponse
+
+Mais on peut également définir un temps de réponse en donnant un `Array` dont la deuxième valeur correspond au nombre de secondes à attendre.
+
+Par exemple :
+
+    Tests.sequence_touches= [
+      ['q', 10.5]
+    ]
+
+Le code ci-dessus fera que le test attendra 10 secondes et demi pour quitter finalement le programme, si la touche `q` permet de le faire.
