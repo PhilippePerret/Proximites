@@ -3,6 +3,23 @@
   Méthodes gérant l'interactivité de la correction des proximités
 =end
 class Proximity
+
+  PANNEAU_AIDE_REPONSES = <<-EOT
+  #{'o/oo'.jaune} = marquer cette proximité comme traitée/corrigée ('oo' pour confirmer directement)
+  #{'p'.jaune} = essayer une proposition de mot (#{'pp[ <mot>]'.jaune} pour le premier mot, #{'ps[ <mot>]'.jaune} pour le second)
+  #{'rp <mot>'.jaune} remplacer le premier mot (#{'rs <mot>'.jaune} pour le second) par <mot>
+  #{'s/so'.jaune} = supprimer cette proximité de la liste (on pourra la revoir avec --all)
+  #{'n'.jaune} = passer à la proximité suivante
+  #{'z'.jaune} = arrêter les corrections.
+
+  EOT
+
+  MESSAGES = {
+    'aide-reponses'   => PANNEAU_AIDE_REPONSES.freeze,
+    'confirm-treated' => 'Cette proximité a-t-elle vraiment été traitée ?'.bleu,
+    'confirm-deleted' => 'Dois-je vraiment supprimer cette proximité (i.e. ne plus en tenir compte) ?'.bleu
+  }
+
 class << self
 
   # En mode interactif, on passe ici pour traiter la proximité
@@ -13,16 +30,10 @@ class << self
   def traite_proximite_mode_interactif iprox
 
     while true
-      puts <<-EOT
-      #{'o/oo'.jaune} = marquer cette proximité comme traitée/corrigée ('oo' pour confirmer directement)
-      #{'p'.jaune} = essayer une proposition de mot (#{'pp[ <mot>]'.jaune} pour le premier mot, #{'ps[ <mot>]'.jaune} pour le second)
-      #{'rp <mot>'.jaune} remplacer le premier mot (#{'rs <mot>'.jaune} pour le second) par <mot>
-      #{'s/so'.jaune} = supprimer cette proximité de la liste (on pourra la revoir avec --all)
-      #{'n'.jaune} = passer à la proximité suivante
-      #{'z'.jaune} = arrêter les corrections.
 
-      EOT
+      puts MESSAGES['aide-reponses']
 
+      # Début de l'opération (pour savoir combien de temps l'opération prendra)
       debut_op = Time.now.to_f # utile pour compter le temps d'une correction
       c = askFor('Opération choisie'.bleu)
       case c
@@ -32,16 +43,13 @@ class << self
       when 'p', /^p[ps]/      then proposer_et_tester_un_mot(iprox, c)
       when 'o', 'ok', 'oui', 'oo'
         # => marquer cette proximité traitée
-        c == 'oo' || yesOrNo('Cette proximité a-t-elle vraiment été traitée ?') || return
+        c == 'oo' || yesOrNo(MESSAGES['confirm-treated']) || return
         correction_proximite_confirmed(iprox, debut_op)
         return
       when 's', 'delete', 'supprimer', 'so'
         # => supprimer cette proximité après confirmation
-        c == 'so' || begin
-          yesOrNo('Dois-je vraiment supprimer cette proximité (i.e. ne plus en tenir compte) ?') || return
-        end
-        iprox.set_deleted
-        self.changements_operes = true
+        c == 'so' || yesOrNo(MESSAGES['confirm-deleted']) || return
+        suppression_proximite_confirmed iprox, debut_op
         return
       else
         error "Le choix #{c} est invalide."
@@ -50,6 +58,15 @@ class << self
     return
   end
   # /traite_proximite_mode_interactif
+
+  # Quand on supprime une proximité
+  # Noter que pour le moment, ce temps est enregistré au même titre qu'une
+  # correction.
+  def suppression_proximite_confirmed iprox, debut_op
+    enregistre_duree_correction_proximite(debut_op, Time.now.to_f)
+    iprox.set_deleted
+    self.changements_operes = true
+  end
 
   # Quand on confirme la proximité opérée.
   def correction_proximite_confirmed iprox, debut_op
