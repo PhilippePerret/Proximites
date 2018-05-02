@@ -94,13 +94,26 @@ class << self
   # les proximités, pour corrections futures
   def remplacer_mot_par_mot iprox, pour_premier, new_mot
     Tests::Log << '-> remplacer_mot_par_mot'
-    old_mot = iprox.send(pour_premier ? :mot_avant : :mot_apres).mot
-    yesOrNo("Veux-tu vraiment remplacer le mot #{old_mot.inspect} par #{new_mot.inspect}") || return
+    imot = iprox.send(pour_premier ? :mot_avant : :mot_apres)
+    imot.mot.my_downcase != new_mot.my_downcase || begin
+      puts "Les deux mots sont identiques. Remplacement inutile."
+      return
+    end
+    yesOrNo("Veux-tu remplacer le mot #{imot.mot.inspect.jaune} par #{new_mot.inspect.jaune}") || return
     load_module 'proximity/replace'
-    if Proximity.replace(iprox, pour_premier, new_mot)
-      notice "#{RETT}Le mot #{old_mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}"
+    if imot.remplace_par(new_mot)
+      # Verrouiller le texte pour ne pas relancer une analyse sur les
+      # anciens mots mais sur les nouveaux.
+      Texte.current.set_info(locked: true)
+      # Demander de confirmer le changement
+      notice("#{RETT}Le mot #{imot.mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
       self.changements_operes = true
     end
+
+    # ATTENTION : Ici, les changements ne sont pas enregistrés
+    return true # pour enregistrer les changements
+
+
   end
 
   # Pour pouvoir proposer un mot et checker pour voir s'il ne va pas créer

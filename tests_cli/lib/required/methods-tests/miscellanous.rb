@@ -2,11 +2,19 @@
 
 # Jouer une commande et retourner le résultat produit à l'écran
 # On peut le tester ensuite avec `retour_contient` `retour_ne_contient_pas`
-def run cmd
+# On peut passer la séquence de touches en second argument.
+def run cmd, sequence_keys = nil
+  sequence_keys.nil? || Tests.sequence_keys= sequence_keys
   Tests::Messages.add_suivi("    Commande : `#{cmd}`")
   cmd = cmd.sub(/^prox(imite)?/,'proximite --test ')
   cmd = cmd.gsub(/\"/, '\\\"')
   res = `bash -c ". /Users/philippeperret/.bash_profile; shopt -s expand_aliases\n#{cmd}"`
+
+  # On s'assure d'avoir bien atteint la fin du programme en cherchant la marque
+  # `EOP` à la toute fin du fichier log. Si le programme ne le fait pas encore,
+  # on lui conseille de le faire.
+  Tests.confirm_program_end
+
   # quiet || puts(res)
 
   # On supprime toujours les couleurs, pour pouvoir étudier les textes

@@ -16,7 +16,7 @@ class Proximity
 
   def initialize mot_avant, mot_apres, distance_min
     @id           = self.class.add(self)
-
+    Tests::Log << "Instanciation de la proximité ##{@id} entre les mots #{mot_avant.real_mot}:#{mot_avant.index} et #{mot_apres.real_mot}:#{mot_apres.index}"
     # Ici, les instances mot_avant et mot_apres sont bien les instances dans la
     # liste des mots. Pour le vérifier, on peut débloquer les trois lignes
     # suivantes et lancer un test quelconque qui crée des proximités

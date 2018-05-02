@@ -2,6 +2,8 @@
 class Proximity
 class << self
 
+  attr_reader :last_id
+
   # La grande table qui va contenir toutes les proximités du texte courant.
   def table
     @table ||= Hash.new()
@@ -18,9 +20,14 @@ class << self
   # donné (on a besoin de l'identifiant car c'est lui qui est conservé dans
   # l'instance occurences, sous l'appellation ``)
   def add iprox
-    new_id_prox = table.count
-    table.merge!(new_id_prox => iprox)
-    return new_id_prox
+    prox_id = next_prox_id
+    table.merge!(prox_id => iprox)
+    @count = nil
+    return prox_id
+  end
+  def next_prox_id
+    @last_id ||= 0
+    @last_id += 1
   end
 
   # Pour détruire une proximité
@@ -29,25 +36,30 @@ class << self
   # proximité est vraiment détruite, ce qui se produit quand on change un mot.
   #
   # Il faut aussi désolidariser les deux mots associés à cette proxmité.
-  def destroy iprox
+  def destroy prox_id
+    prox_id.is_a?(Fixnum) || prox_id = prox_id.id
+    iprox = table[prox_id]
     Occurences[iprox.mot_avant.mot_base].retire_proximite(iprox.mot_avant.prox_ids[:apres])
     Occurences[iprox.mot_apres.mot_base].retire_proximite(iprox.mot_apres.prox_ids[:avant])
     iprox.mot_avant.prox_ids[:apres] = nil
     iprox.mot_apres.prox_ids[:avant] = nil
-    @table.delete(iprox.id)
-    @count = nil
+    @table.delete(prox_id)
+    @count = table.count
+    Tests::Log << "Nouveau compte de proximités mis à #{count} après destruction de proximité ##{prox_id}."
   end
 
   def save
     File.exist?(path_file_table) && File.unlink(path_file_table)
-    File.open(path_file_table,'wb'){|f| Marshal.dump(table,f)}
+    File.open(path_file_table,'wb'){|f| Marshal.dump({table: table, last_id: last_id},f)}
   end
   def load with_message = true
     File.exist?(path_file_table) || begin
       Texte.current.analyse
       return
     end
-    @table = File.open(path_file_table,'rb'){|f| Marshal.load(f)}
+    res = File.open(path_file_table,'rb'){|f| Marshal.load(f)}
+    @table    = res[:table]
+    @last_id  = res[:last_id]
   end
 
 end #/<< self

@@ -87,10 +87,7 @@ class Texte
 
   def liste_mots
     @liste_mots ||= begin
-      lm = segment.split(/[^[[:alnum:]]]/)
-      puts "segment dans liste_mots : #{segment.inspect}"
-      puts "mots : #{lm.inspect}"
-      lm
+      segment.split(/[^[[:alnum:]]]/)
     end
   end
 

@@ -30,7 +30,7 @@ La base de l'interactivité fonctionne sur le fait que ce sont les méthodes `as
 Au contraire, si on utilise les méthodes `ask`, il suffit de définir avant le test les réponses qui seront données. Par exemple, si on imagine qu'une application attend un nombre pour le multiplier par 5. Cette application se trouve à l'adresse `./mon/app.rb`. On peut la tester de cette manière :
 
     # Dans le script test qui sera joué par CMD+i dans Atom
-    require './lib/required'
+    require_relative './lib/required'
 
     # On définit ce qui sera tapé
     Tests.sequence_touches= ['5'] # ou simplement [5]
@@ -41,6 +41,10 @@ Au contraire, si on utilise les méthodes `ask`, il suffit de définir avant le 
 ## Séquence de touche
 
 On a vu ci-dessous qu'on définissait la séquence de touches qui va être jouée avant de lancer le programme. De façon simple, cette suite de touches peut être définies simplement avec les touches, des `String` ou des `Fixnum` (nombre).
+
+La séquence des touches peut également se définir en second argument de la méthode `run` :
+
+    run('prox check -t "Mon texte"', ['q'])
 
 #### Définir un temps de réponse
 

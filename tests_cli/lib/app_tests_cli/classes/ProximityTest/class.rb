@@ -23,7 +23,9 @@ class << self
     path_folder ||= './.texte_prov'
     p = File.join(path_folder,'proximites-texte','proximites.msh')
     File.exist?(p) || raise("Le fichier #{p.inspect} des proximités est introuvable… Il faut lancer un check de texte avant.")
-    File.open(p,'rb'){|f|Marshal.load(f)}
+    res = File.open(p,'rb'){|f|Marshal.load(f)}
+    @last_id = res[:last_id]
+    res[:table]
   end
   def count
     proximites.count

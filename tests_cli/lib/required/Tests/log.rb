@@ -54,7 +54,7 @@ class << self
   # Toutes les lignes du fichier log qui peut être alimenté soit par
   # l'application soit par les commandes de test.
   def lines
-    read.split("\n")
+    read.strip.split("\n")
   end
 
   def read
