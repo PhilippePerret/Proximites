@@ -40,7 +40,10 @@ class << self
 
   # Path au fichier contenant la configuration (fichier Marshal)
   def path_file_config
-    @path_file_config ||= File.join(THISFOLDER,'.config.msh')
+    @path_file_config ||= begin
+      defined?(THISFOLDER) || raise('THISFOLDER devrait être défini…')
+      File.join(THISFOLDER,'.config.msh')
+    end
   end
 
 

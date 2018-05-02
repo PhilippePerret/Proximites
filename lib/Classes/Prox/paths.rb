@@ -29,7 +29,8 @@ class << self
   # Il est défini même lorsque c'est un texte qui est fourni en argument, car
   # ce texte est alors enregistré dans un fichier provisoire dans le dossier
   # `.texte` de l'application.
-  # Sauf si l'option -t est utilisée, définissant
+  # Sauf si l'option -t est utilisée, définissant que c'est un texte qui est
+  # fourni, pas un path.
   # c'est un texte qui est transmis en dernier paramètre, il faut impérativement
   # que ce soit un fichier existant. Cette méthode le vérifie
   def path
@@ -54,6 +55,7 @@ class << self
     @affixe ||= File.basename(path, File.extname(path)).normalize
   end
 
+  # Le dossier du texte courant (i.e. de la Prox courante)
   def folder
     @folder ||= begin
       if path.nil?

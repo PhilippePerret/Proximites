@@ -9,7 +9,7 @@ require_relative './lib/required'
 
 Tests.titre 'Un texte sans répétition est analysé et affiché correctement'
 Tests.sequence_touches = ['q'] # pour finir
-res = run("prox check -t \"Petit texte, sans répétition, et une exclamation !\"")
+res = run("prox check -t \"Petit texte, sans répétition, et une exclamation !\" --force")
 
 ProximityTest.count.should_equal(0, 'Aucune proximité n’a été trouvée.')
 

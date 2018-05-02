@@ -29,6 +29,6 @@ def run cmd
   return res
 end
 
-def fin_tests
-  Tests::Messages.fin
+def fin_tests options = nil
+  Tests::Messages.fin(options)
 end

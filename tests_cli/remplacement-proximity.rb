@@ -11,7 +11,7 @@ Tests.grand_titre 'Remplacement d’une proximité'
 
 Tests.titre 'Remplacement de la seule proximité du texte'
 Tests.sequence_keys= ['q']
-run 'prox check -t "Un texte avec une répétition de texte pour voir !"'
+run 'prox check -t "Un texte avec une répétition de texte pour voir !" --force'
 Tests.titre 'Vérifications avant le remplacement'
 ProximityTest.count.should_equal(1, 'Une seule proximité a été créée')
 iprox = ProximityTest.get_by_index(0)
@@ -31,6 +31,12 @@ motA.prox_ids[:apres].should_equal(0, 'Le prox_ids[:apres] du mot avant est l’
 motB.prox_ids.is_a?(Hash).should_be_true('prox_ids du mot-après est un hash')
 motB.prox_ids[:avant].should_equal(0, 'Le prox_ids[:avant] du mot après est  l’ID de la proximité (0)')
 
+
+
+
+
+
+
 Tests.titre 'Vérification du texte'
 Tests.sequence_touches = ['q']
 res = run('prox texte')
@@ -41,32 +47,38 @@ res.should_equal(
 )
 
 
+
+
 Tests.titre 'Remplacement de la première proximité'
 Tests.sequence_touches = [
   'rp bonjour',   # On remplace le premier par bonjour
+  true,           # On confirme qu'on veut remplacer
   'oo',           # On confirme le modification
   true,           # On confirme l'enregistrement des modifications
   'q'             # pour terminer le programme
 ]
-run 'prox correct'
+run('prox show proximites -i')
 iprox = ProximityTest.get_by_id(0)
-iprox.deleted?.should_be_true('le deleted? de la proxmité #0')
-iprox.treated?.should_be_true('le treated? de la proximité #0')
-# Elle ne devrait plus avoir de mot avant et après
-should_equal(iprox.mot_avant, nil, 'Le mot avant de la proximité n’existe plus')
-should_equal(iprox.mot_apres, nil, 'Le mot après de la proximité n’existe plus')
-motA = TexteTest.mots[1]
-motB = TexteTest.mots[6]
-motA.prox_ids[:apres].should_equal(nil, 'le mot avant ne définit plus prox_ids[:apres]')
-motB.prox_ids[:avant].should_equal(nil, 'Le mot après ne définit plus prox_ids[:avant]')
+should_equal(iprox, nil, 'La proximité #0 a été détruite.')
+# motA = TexteTest.mots[1]
+# motB = TexteTest.mots[6]
+# motA.prox_ids[:apres].should_equal(nil, 'le mot avant ne définit plus prox_ids[:apres]')
+# motB.prox_ids[:avant].should_equal(nil, 'Le mot après ne définit plus prox_ids[:avant]')
 
-Tests.titre 'Vérification du texte'
-Tests.sequence_touches = ['q']
-res = run('prox texte')
-res.should_equal(
-"\t"+'Un bonjour avec une répétition de texte pour voir !'+RET+
-"\t"+'                                                   ',
-'Le texte est correctement affiché, avec la correction'
-)
 
-fin_tests
+
+
+
+
+
+
+# Tests.titre 'Vérification du texte'
+# Tests.sequence_touches = ['q']
+# res = run('prox texte')
+# res.should_equal(
+# "\t"+'Un bonjour avec une répétition de texte pour voir !'+RET+
+# "\t"+'                                                   ',
+# 'Le texte est correctement affiché, avec la correction'
+# )
+
+fin_tests(display_log: true)

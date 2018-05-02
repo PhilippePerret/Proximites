@@ -63,11 +63,11 @@ class << self
     end
   end
 
-  def fin
-    puts "\n\n\n"
-    methode = failure_list.empty? ? :vert : :rouge
-    puts "#{success_list.count} success  -  #{failure_list.count} failures".send(methode)
-    puts "\n\n"
+  # @param {NIL|Hash} options
+  #         :display_log    Si true, affiche le log complet en fin de retour
+  def fin options = nil
+    options ||= Hash.new
+
     unless failure_list.empty?
       failure_list.each do |err|
         puts err.rouge
@@ -90,7 +90,22 @@ class << self
       puts err_msg.rouge
     end
 
-    puts "\n\n\n"
+    puts RET3
+
+    # Affichage du log si demandé
+    options[:display_log] && begin
+      puts "================= TEST LOG ================".jaune
+      puts Tests::Log.read
+      puts "(rechercher '= TEST LOG =' pour aller au début du log de test)"
+      puts "================= /TEST LOG ================".jaune
+      puts RET2
+    end
+
+    # On termine toujours par le nombre de réussites et d'échecs
+    puts RET
+    methode = failure_list.empty? ? :vert : :rouge
+    puts "#{success_list.count} success  -  #{failure_list.count} failures".send(methode)
+    puts RET3
 
   end
   # /fin

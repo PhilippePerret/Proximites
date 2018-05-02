@@ -16,12 +16,14 @@ class << self
   # Ça peut être aussi l'identifiant de la proximité.
   #
   def _show mot = nil
+    Tests::Log << "-> Proximity::_show(mot = #{mot.inspect})"
 
     mode_interactif = CLI.options[:interactif]
     show_all        = !!CLI.options[:all]
 
     if mot.nil?
       liste_proximites = table.values
+      Tests::Log << "liste_proximites = #{liste_proximites.inspect}"
     elsif mot.is_a?(Fixnum)
       liste_proximites = [Proximity[mot]]
       mot = liste_proximites.first.mot_avant.mot
@@ -44,6 +46,7 @@ class << self
 
     # Le nombre total
     nbtotal = liste_proximites.count
+    Tests::Log << "Nombre de proximités : #{nbtotal}"
     mark_nombres_header << "total : #{nbtotal}"
     mark_nombres_footer << "#{'Nombre total de proximités'.ljust(len_libelle_footer)} : #{nbtotal}"
 
@@ -107,6 +110,12 @@ class << self
     # On boucle sur chaque proximité à afficher
 
     liste_proximites.each_with_index do |prox, index_prox|
+      # Ici, +prox+ et la proximité dans Proximity sont vraiment la
+      # même instance. On peut s'en assurer en débloquant les 3 lignes
+      # suivante et en lançant un test avec des proximités
+      # Tests::Log << 'Contrôle des instance proximité traitées'+RETT+
+      #   "Proximité dans la boucle : ID=#{prox.object_id}"+RETT+
+      #   "Proximité dans la liste  : ID=#{Proximity[prox.id].object_id}"
       proced.call(prox, 1 + index_prox)
     end
 
@@ -132,6 +141,7 @@ class << self
       end
       texte_courant.save_all
     end
+    Tests::Log << '<- Proximity::_show'
   end
   # /_show
 

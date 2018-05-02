@@ -2,7 +2,6 @@
 class Proximity
 class << self
   def display_informations
-    texte_courant.mots || texte_courant.load_all
     nombre_proximites = self.count
 
     tbl = Hash.new

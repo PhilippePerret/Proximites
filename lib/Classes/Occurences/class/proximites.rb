@@ -21,8 +21,6 @@ class << self
       print "    Traitement de l'occurence #{'0'.rjust(len_nombre_mots)} sur #{nombre_mots}."
     end
 
-    texte_courant.mots || texte_courant.load_all
-
     index_mot = 0
     table.each do |mot, occurence|
       Prox.log_check? && Prox.log_check("\t* Traitement de l’occurence du mot #{mot.inspect.jaune}")

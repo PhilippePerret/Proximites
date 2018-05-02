@@ -17,13 +17,16 @@ class << self
   # dans le module class/Prox/commands
   #
   def run
-    Tests::Log << '-> Début du programme'
+    Tests::Log << RET3+'START PROGRAMME'
     while true
       runable? || return
+      # Sauf si la commande est `check`, on charge les données s'il y en
+      # a à charger
+      main_command.to_s != 'check' && load_current_data
       # Exécution de la commande demandée
       send(main_command.to_sym)
       # On referme le log de check si nécessaire
-      Prox.log_check?     && Prox::LogCheck.close
+      Prox.log_check? && Prox::LogCheck.close
       # On attend la prochaine commande
       wait_for_next_command || break
     end
@@ -33,7 +36,7 @@ class << self
     error e.backtrace.join("\n")
   ensure
 
-    Tests::Log << '<- Fin du programme'
+    Tests::Log << 'EOP'
 
     # Ce qu'il faut faire dans tous les cas, en cas d'erreur ou non
     # ---------------------------------------------------------------------
@@ -43,6 +46,14 @@ class << self
     Log.reflog.close
     # Fermer le log check s'il est actif
     Prox.log_check? && Prox::LogCheck.close
+  end
+
+  # Quand on appelle cette méthode, on ne connait pas encore le path du
+  # texte courant. On doit le chercher, voir s'il existe et charger toutes les
+  # données
+  def load_current_data
+    path || return
+    Texte.current.load_all
   end
 
   def wait_for_next_command

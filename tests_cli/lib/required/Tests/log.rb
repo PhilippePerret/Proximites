@@ -19,6 +19,10 @@ class << self
   end
   alias :ecrire :<<
 
+  def print mess
+    open() ; reflog.write(mess) ; close()
+  end
+
   # Pour écrire une erreur
   def error err
     err.is_a?(String) || begin

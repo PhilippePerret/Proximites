@@ -27,10 +27,14 @@ class << self
     rep = sequence_keys.shift
 
     # Réponse temporisée
-    rep.is_a?(Array) && begin
+    if rep.is_a?(Array)
       rep, attente = rep
       Tests::Log << "Réponses temporisée (#{attente} secondes)"
       sleep attente.to_f
+    else
+      # On s'arrête toujours un dixième de seconde pour simuler l'entrée
+      # à la console.
+      sleep 0.1
     end
 
     # On retourne toujours une réponse en string, même quand c'est un nombre ou

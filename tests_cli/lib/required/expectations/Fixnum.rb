@@ -1,9 +1,10 @@
 # encoding: UTF-8
+
 class Fixnum
 
   # @usage :  x.should_equal(expected, <message d'erreur>)
   def should_equal expected, mess_ok
-    err = "(FAUX) #{mess_ok}\nAttendu:\n#{expected}\nObtenu:\n#{self}"
+    err = "(FAUX) #{mess_ok}\nAttendu:#{RETTT}#{expected.inspect}\nObtenu:#{RETTT}#{self.inspect}"
     Tests::Messages.evaluate(self === expected, err, mess_ok, self, expected)
   end
   def should_not_equal expected, mess_ok

@@ -28,6 +28,20 @@ class << self
   # on peut faire une proposition de mot que le programme va vérifier (pour voir
   # s'il ne crée par une nouvelle proximité), etc.
   def traite_proximite_mode_interactif iprox
+    Tests::Log << "-> Proximity::traite_proximite_mode_interactif(iprox.id=#{iprox.id}/iprox.object_id:#{iprox.object_id})"
+
+    iprox_id = iprox.id
+    Tests::Log << 'Contrôle d’instance (proximity) dans traite_proximite_mode_interactif'+RETT+
+    "Contrôle de la proximité ##{iprox_id}"+RETT+
+    "Proximité en argument    : #{iprox.object_id}"+RETT+
+    "Proximité dans Proximity : #{Proximity[iprox_id].object_id}"+RETTT+
+      "Mot avant dans prox argument : #{iprox.mot_avant.object_id}"+RETTT+
+      "          dans Texte.mots    : #{Texte.current.mots[iprox.mot_avant.index].object_id}"+RETTT
+
+    iprox.mot_avant.object_id == Texte.current.mots[iprox.mot_avant.index].object_id || begin
+      raise 'Problème d’instance (mot_avant de la proximité envoyée à traite_proximite_mode_interactif) et mot_avant dans Proximity'+RET+
+      '(noter que l’instance Proximity, elle, est correcte)'
+    end
 
     while true
 
@@ -79,6 +93,7 @@ class << self
   # Permet de remplacer un mot du texte par un autre et tenant à jour toutes
   # les proximités, pour corrections futures
   def remplacer_mot_par_mot iprox, pour_premier, new_mot
+    Tests::Log << '-> remplacer_mot_par_mot'
     old_mot = iprox.send(pour_premier ? :mot_avant : :mot_apres).mot
     yesOrNo("Veux-tu vraiment remplacer le mot #{old_mot.inspect} par #{new_mot.inspect}") || return
     load_module 'proximity/replace'

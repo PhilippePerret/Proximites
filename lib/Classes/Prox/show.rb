@@ -17,9 +17,6 @@ class << self
       return
     end
 
-    # Charger toutes les données
-    texte_courant.mots || texte_courant.load_all
-
     case what
     when 'log', 'log_check'
       load_module 'log_check'

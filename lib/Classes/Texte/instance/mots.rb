@@ -5,7 +5,10 @@
 =end
 class Texte
 
-  attr_reader :mots
+  def mots
+    @mots === nil && load_mots
+    @mots
+  end
 
   # Méthode qui analyse le texte pour le décomposer en mots et faire les
   # occurences.

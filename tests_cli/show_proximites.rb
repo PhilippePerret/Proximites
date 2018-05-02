@@ -8,7 +8,7 @@ require_relative './lib/required'
 
 
 Tests.sequence_touches = ['q'] # pour finir tout de suite
-run "proximite check -t \"Analyse d'un petit texte pour voir et voir encore le texte.\""
+run "proximite check -t \"Analyse d'un petit texte pour voir et voir encore le texte.\" --force"
 
 Tests.titre 'Affichage de toutes les proximités trouvées (2)'
 Tests.sequence_touches = ['q'] # pour finir tout de suite

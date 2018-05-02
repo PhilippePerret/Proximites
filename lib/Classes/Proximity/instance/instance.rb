@@ -2,7 +2,12 @@
 class Proximity
 
   attr_reader :id
-  attr_reader :mot_avant, :mot_apres
+
+  # Malheureusement, à l'enregistrement et au rechargement, on n'obtient pas
+  # les mêmes instances. Donc il faut le faire autrement, en faisant un vrai
+  # lien vers l'instance par son index
+  # attr_reader :mot_avant, :mot_apres
+  attr_reader :mot_avant_index, :mot_apres_index
   attr_reader :distance_min
 
   # Méthode couleur pour afficher la proximité dans le texte
@@ -11,11 +16,25 @@ class Proximity
 
   def initialize mot_avant, mot_apres, distance_min
     @id           = self.class.add(self)
-    @mot_avant    = mot_avant
-    @mot_apres    = mot_apres
-    @distance_min = distance_min
-    # puts "Ajout d'une proximité #{mot_avant.mot}:#{mot_avant.offset} <-> #{mot_apres.mot}:#{mot_apres.offset}"
-    STDOUT.flush
+
+    # Ici, les instances mot_avant et mot_apres sont bien les instances dans la
+    # liste des mots. Pour le vérifier, on peut débloquer les trois lignes
+    # suivantes et lancer un test quelconque qui crée des proximités
+    # Tests::Log << 'Instanciation de la proximité'+RETT+
+    #   "ID objet mot_avant:#{mot_avant.object_id} / dans mots : #{texte_courant.mots[mot_avant.index].object_id}"+RETT+
+    #   "ID objet mot_apres:#{mot_apres.object_id} / dans mots : #{texte_courant.mots[mot_apres.index].object_id}"+RETT
+    # @mot_avant    = mot_avant
+    # @mot_apres    = mot_apres
+    @mot_avant_index  = mot_avant.index
+    @mot_apres_index  = mot_apres.index
+    @distance_min     = distance_min
+  end
+
+  def mot_avant
+    Texte.current.mots[mot_avant_index]
+  end
+  def mot_apres
+    Texte.current.mots[mot_apres_index]
   end
 
   # Distance entre les deux mots, en nombre de signes

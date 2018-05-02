@@ -15,7 +15,7 @@ Tests.grand_titre 'Test de la suppression interactive de proximités'
 # l'analyse.
 Tests.titre 'On peut supprimer une unique proximité'
 Tests.sequence_touches = ['q'] # pour finir (toujours le mettre)
-run "proximite check -t \"Un texte avec un autre texte.\""
+run "proximite check -t \"Un texte avec un autre texte.\" --force"
 ProximityTest.count.should_equal(1, '1 proximité a été créée.')
 ProximityTest.get_by_index(0).deleted?.should_equal(false, 'la proximité n’est pas deleted.')
 # On supprime cette proximité
