@@ -1,38 +1,5 @@
 -> Début du programme
--> next_touche (réponses restantes : ["q"])
-Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
-<- Fin du programme
--> Début du programme
--> next_touche (réponses restantes : ["so", "o", "q"])
-Réponse retournée pour askFor("Opération choisie") : "so" (nouvelles réponses restants : ["o", "q"])
--> next_touche (réponses restantes : ["o", "q"])
-Réponse retournée pour yesOrNo("Faut-il enregistrer les changements opérés ?") : "o" (nouvelles réponses restants : ["q"])
--> next_touche (réponses restantes : ["q"])
-Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
-<- Fin du programme
--> Début du programme
--> next_touche (réponses restantes : ["q"])
-Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
-<- Fin du programme
--> Début du programme
--> next_touche (réponses restantes : ["q"])
-Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
-<- Fin du programme
--> Début du programme
--> next_touche (réponses restantes : ["n", "s", "o", "z", "o", "q"])
-Réponse retournée pour askFor("Opération choisie") : "n" (nouvelles réponses restants : ["s", "o", "z", "o", "q"])
--> next_touche (réponses restantes : ["s", "o", "z", "o", "q"])
-Réponse retournée pour askFor("Opération choisie") : "s" (nouvelles réponses restants : ["o", "z", "o", "q"])
--> next_touche (réponses restantes : ["o", "z", "o", "q"])
-Réponse retournée pour yesOrNo("Dois-je vraiment supprimer cette proximité (i.e. ne plus en tenir compte) ?") : "o" (nouvelles réponses restants : ["z", "o", "q"])
--> next_touche (réponses restantes : ["z", "o", "q"])
-Réponse retournée pour askFor("Opération choisie") : "z" (nouvelles réponses restants : ["o", "q"])
--> next_touche (réponses restantes : ["o", "q"])
-Réponse retournée pour yesOrNo("Faut-il enregistrer les changements opérés ?") : "o" (nouvelles réponses restants : ["q"])
--> next_touche (réponses restantes : ["q"])
-Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
-<- Fin du programme
--> Début du programme
--> next_touche (réponses restantes : ["q"])
+-> next_touche (réponses restantes : [["q", 4]])
+Réponses temporisée (4 secondes)
 Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
 <- Fin du programme

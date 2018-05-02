@@ -3,7 +3,8 @@
 DETAILED = true
 require_relative './lib/required'
 
-# run 'prox texte'
+Tests.sequence_keys= [['q', 4]]
+run 'prox texte'
 
 # run 'prox correct'
 

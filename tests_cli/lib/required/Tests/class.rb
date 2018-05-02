@@ -22,20 +22,24 @@ class << self
     options ||= Hash.new
     Tests::Log << "-> next_touche (réponses restantes : #{sequence_keys.inspect})"
     sequence_keys.empty? && raise('no-more-reponse')
+
+    # On prend la touche suivant en la retirant de la liste
     rep = sequence_keys.shift
 
     # Réponse temporisée
     rep.is_a?(Array) && begin
       rep, attente = rep
       Tests::Log << "Réponses temporisée (#{attente} secondes)"
-      sleep attente
+      sleep attente.to_f
     end
 
     # On retourne toujours une réponse en string, même quand c'est un nombre ou
     # un true/false/nil
     rep = rep.to_s
 
-    Tests::Log << "Réponse retournée pour #{options[:from].sans_couleur} : #{rep.inspect} (nouvelles réponses restants : #{sequence_keys.inspect})"
+    Tests::Log << "#{rep.inspect} = réponse retournée pour #{options[:from].sans_couleur} (nouvelles réponses restants : #{sequence_keys.inspect})"
+
+    # On retourne vraiment la réponse
     rep
   rescue Exception => e
     ERRORS.key?(e.message) && Tests::Log.error(ERRORS[e.message])
@@ -47,7 +51,8 @@ class << self
   def sequence_touches
     @sequence_touches ||= begin
       File.exist?(path_sequence_keys_file) || raise('sequence_keys-required')
-      File.read(path_sequence_keys_file).force_encoding('utf-8').split("\n")
+      # File.read(path_sequence_keys_file).force_encoding('utf-8').split("\n")
+      eval(File.read(path_sequence_keys_file))
     end
   end
   alias :sequence_keys :sequence_touches
@@ -56,7 +61,7 @@ class << self
   def sequence_touches= value
     value.is_a?(Array) || raise('Tests.sequence_touches= attend une liste de réponses, même s’il y a une seule réponse.')
     File.exist?(path_sequence_keys_file) && File.unlink(path_sequence_keys_file)
-    File.open(path_sequence_keys_file,'wb'){|f|f.write(value.join("\n"))}
+    File.open(path_sequence_keys_file,'wb'){|f|f.write(value.inspect)}
   end
   alias :sequence_keys= :sequence_touches=
 
