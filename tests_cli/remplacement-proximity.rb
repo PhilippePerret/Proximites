@@ -60,25 +60,18 @@ Tests.sequence_touches = [
 run('prox show proximites -i')
 iprox = ProximityTest.get_by_id(0)
 should_equal(iprox, nil, 'La proximité #0 a été détruite.')
-# motA = TexteTest.mots[1]
-# motB = TexteTest.mots[6]
-# motA.prox_ids[:apres].should_equal(nil, 'le mot avant ne définit plus prox_ids[:apres]')
-# motB.prox_ids[:avant].should_equal(nil, 'Le mot après ne définit plus prox_ids[:avant]')
+motA = TexteTest.mots[1]
+motB = TexteTest.mots[6]
+should_equal(motA.prox_ids[:apres], nil, 'le mot avant ne définit plus prox_ids[:apres]')
+should_equal(motB.prox_ids[:avant], nil, 'Le mot après ne définit plus prox_ids[:avant]')
 
-
-
-
-
-
-
-
-# Tests.titre 'Vérification du texte'
-# Tests.sequence_touches = ['q']
-# res = run('prox texte')
-# res.should_equal(
-# "\t"+'Un bonjour avec une répétition de texte pour voir !'+RET+
-# "\t"+'                                                   ',
-# 'Le texte est correctement affiché, avec la correction'
-# )
+Tests.titre 'Vérification du texte'
+Tests.sequence_touches = ['q']
+res = run('prox texte')
+res.should_equal(
+"\t"+'Un bonjour avec une répétition de texte pour voir !'+RET+
+"\t"+'                                                   ',
+'Le texte est correctement affiché, avec la correction'
+)
 
 fin_tests(display_log: true)

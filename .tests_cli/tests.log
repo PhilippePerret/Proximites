@@ -2,10 +2,84 @@
 
 
 START PROGRAMME
+-> Texte#save_all
+-> Texte#save_mots… OK
+<- Texte#save_all
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
+EOP
+-> Texte#load_mots... OK
+
+
+
+START PROGRAMME
 -> Texte#load_all
 -> Texte#load_mots... OK
 Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
--> next_touche (réponses restantes : [["q", 2]])
-Réponses temporisée (2 secondes)
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
+EOP
+
+
+
+START PROGRAMME
+-> Texte#load_all
+-> Texte#load_mots... OK
+Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
+-> Proximity::_show(mot = nil)
+liste_proximites = [PROXIMITY ID #0
+mot avant : [0;93mtexte[0m index:1 offset:3 len:5
+mot après : [0;93mtexte[0m index:6 offset:32 len:5 (à 29 signes)
+Treated? false / Deleted? false]
+Nombre de proximités : 1
+-> Proximity::traite_proximite_mode_interactif(iprox.id=0/iprox.object_id:70337970671100)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #0
+	Proximité en argument    : 70337970671100
+	Proximité dans Proximity : 70337970671100
+		Mot avant dans prox argument : 70337979000420
+		          dans Texte.mots    : 70337979000420
+		
+-> next_touche (réponses restantes : ["rp bonjour", true, "oo", true, "q"])
+"rp bonjour" = réponse retournée pour askFor("Opération choisie") (nouvelles réponses restants : [true, "oo", true, "q"])
+-> remplacer_mot_par_mot
+-> next_touche (réponses restantes : [true, "oo", true, "q"])
+"true" = réponse retournée pour yesOrNo("Veux-tu vraiment remplacer le mot \"texte\" par \"bonjour\"") (nouvelles réponses restants : ["oo", true, "q"])
+-> Proximity::replace(iprox #0, pour_premier:true, nouveau_mot:"bonjour")
+   Index du mot à remplacer : 1
+   Index du mot à NE PAS remplacer : 6
+Après destruction de la proximité : 
+	imot.prox_ids = {:apres=>nil}
+	autre_imot.prox_ids = {:avant=>nil}
+Identifiant de l’objet à modifier
+		imot.object_id = 70337979000420 / Texte.current.mots[1].object_id = 70337979000420
+Identifiant de l’objet modifié
+		imot.object_id = 70337979000420 / Texte.current.mots[1].object_id = 70337979000420
+Après remplacement du terme dans l’instance Texte::Mot :
+		imot.mot      = "bonjour" / dans texte_courant : "bonjour"
+		imot.real_mot = "bonjour" / dans texte_courant : "bonjour"
+		imot.mot_base = "bonjour" / dans texte_courant : "bonjour"
+Après recherche des nouvelles proximités pour les deux mots
+	imot.prox_ids = {:apres=>nil}
+	autre_imot.prox_ids = {:avant=>nil}
+-> next_touche (réponses restantes : ["oo", true, "q"])
+"oo" = réponse retournée pour askFor("Opération choisie") (nouvelles réponses restants : [true, "q"])
+-> next_touche (réponses restantes : [true, "q"])
+"true" = réponse retournée pour yesOrNo("Faut-il enregistrer les changements opérés ?") (nouvelles réponses restants : ["q"])
+-> Texte#save_all
+-> Texte#save_mots… OK
+<- Texte#save_all
+<- Proximity::_show
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
+EOP
+
+
+
+START PROGRAMME
+-> Texte#load_all
+-> Texte#load_mots... OK
+Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
+-> next_touche (réponses restantes : ["q"])
 "q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
 EOP
