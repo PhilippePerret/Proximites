@@ -7,7 +7,6 @@
   à true.
 
 =end
-DETAILED = true
 require_relative './lib/required'
 
 Tests.grand_titre 'Test de la suppression interactive de proximités'

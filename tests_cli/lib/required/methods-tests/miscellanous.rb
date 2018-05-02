@@ -3,7 +3,7 @@
 # Jouer une commande et retourner le résultat produit à l'écran
 # On peut le tester ensuite avec `retour_contient` `retour_ne_contient_pas`
 def run cmd
-  Tests::Messages.add_suivi("    * Commande : `#{cmd}`")
+  Tests::Messages.add_suivi("    Commande : `#{cmd}`")
   cmd = cmd.sub(/^prox(imite)?/,'proximite --test ')
   cmd = cmd.gsub(/\"/, '\\\"')
   res = `bash -c ". /Users/philippeperret/.bash_profile; shopt -s expand_aliases\n#{cmd}"`

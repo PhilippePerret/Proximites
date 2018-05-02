@@ -4,7 +4,6 @@
   Test d'affichage du texte
 
 =end
-DETAILED = true
 require_relative './lib/required'
 
 

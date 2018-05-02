@@ -1,5 +1,53 @@
 -> Début du programme
--> next_touche (réponses restantes : [["q", 4]])
-Réponses temporisée (4 secondes)
-Réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") : "q" (nouvelles réponses restants : [])
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
+<- Fin du programme
+-> Début du programme
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
+<- Fin du programme
+-> Début du programme
+-> next_touche (réponses restantes : ["rp bonjour", "oo", true, "q"])
+"rp bonjour" = réponse retournée pour askFor("Opération choisie") (nouvelles réponses restants : ["oo", true, "q"])
+-> next_touche (réponses restantes : ["oo", true, "q"])
+"oo" = réponse retournée pour yesOrNo("Veux-tu vraiment remplacer le mot \"texte\" par \"bonjour\"") (nouvelles réponses restants : [true, "q"])
+-> next_touche (réponses restantes : [true, "q"])
+"true" = réponse retournée pour askFor("Opération choisie") (nouvelles réponses restants : ["q"])
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Opération choisie") (nouvelles réponses restants : [])
+-> next_touche (réponses restantes : [])
+###ERROR: [0;91mIl ne reste plus de réponse à prendre. Impossible de poursuivre.[0m
+###ERROR: [0;91mno-more-reponse
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/class.rb:24:in `next_touche'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:42:in `askFor'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/interactif.rb:38:in `traite_proximite_mode_interactif'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:90:in `block in _show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:110:in `block in _show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:109:in `each'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:109:in `each_with_index'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:109:in `_show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Proximity/class/show.rb:24:in `show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/show.rb:32:in `show_informations'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/_main_commands.rb:37:in `show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/_main_commands.rb:46:in `correct'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:24:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+-> next_touche (réponses restantes : [])
+###ERROR: [0;91mIl ne reste plus de réponse à prendre. Impossible de poursuivre.[0m
+###ERROR: [0;91mno-more-reponse
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/class.rb:24:in `next_touche'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:42:in `askFor'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:53:in `wait_for_next_command'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:28:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+<- Fin du programme
+-> Début du programme
+-> next_touche (réponses restantes : ["q"])
+"q" = réponse retournée pour askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (nouvelles réponses restants : [])
 <- Fin du programme

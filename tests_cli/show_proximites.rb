@@ -4,7 +4,6 @@
 Test d'affichage des proximites
 
 =end
-DETAILED = true
 require_relative './lib/required'
 
 
