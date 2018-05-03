@@ -26,7 +26,10 @@ class << self
 
     * Le deuxième argument est toujours une commande.
     * Cette commande doit toujours être une méthode du module
-      `class/Prox/main_commands.rb`
+      `class/Prox/main_commands.rb`, sauf pour certains "raccourcis" comme
+      `prox texte` (raccourci pour `proximite show texte`) ou `prox correct`
+      (raccourci pour `proximite show proximites -i`), les deux commandes les
+      plus fréquentes du programme.
 
 
   CHARGEMENT DES MODULES
@@ -98,6 +101,40 @@ class << self
         utilise la méthode `Prox.log_check <message>` pour enregistrer un
         message.
 
+
+  LISTE DE MOTS SPÉCIAUX
+  ======================
+
+  Mots longs à éviter - LONGS_MOTS_A_EVITER
+  -----------------------------------------
+
+    La liste `Texte::Mot::LONGS_MOTS_A_EVITER` contient les mots longs (c'est-à-
+    dire d'au moins 3 caractères…) qui ne sont pas à analyser, qui sont évités.
+
+  Mots courts à considérer - MOTS_COURTS_A_TRAITER
+  ------------------------------------------------
+
+    A contrario, la liste `Texte::Mot::MOTS_COURTS_A_TRAITER` contient les mots
+    de moins de deux lettres qui sont à prendre en considération dans l'analyse
+    de proximité.
+
+  Mots à distance minimale fixe - MOTS_A_DISTANCE_MIN_FIXE
+  --------------------------------------------------------
+    Des mots comme "mais" ou "cet", quelle que soit leur fréquence, ne doivent
+    être signalés en proximités que s'ils sont à une certaine distance, assez
+    faible de leur occurence précédentes.
+    Ces mot sont définis dans la liste `Texte::Mot::MOTS_A_DISTANCE_MIN_FIXE` et
+    traités dans la méthode `distance_minimum_fixe_too_big?`
+
+  Mots à similarité impossible - ARR_SIMILARITES_IMPOSSIBLES
+  ----------------------------------------------------------
+
+    La liste `Texte::Mot::ARR_SIMILARITES_IMPOSSIBLES` contient les mots qui ne
+    peuvent pas être déclarés similaires, même s'ils partagent 2/3 de leurs let-
+    tre comme le veut la similarité.
+    Par exemple, `maison` et `mais` devrait être considérés similaires puisque
+    2/3 des lettres de `maison`, donc "mais" sont similaire à `mais`, et pour
+    cause.
 
     EOT
   end
