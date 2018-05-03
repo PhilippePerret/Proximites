@@ -13,6 +13,7 @@ class Proximity
     # "\n\n\t#{DIVISEUR}"
     "\t" + as_line(index = nil, nombre_total = nil) + "\n" +
     extraits +
+    "\t" + as_line(index = nil, nombre_total = nil) + "\n" +
     "#{RET2}\t#{DIVISEUR}"
   end
 
@@ -103,8 +104,8 @@ class Proximity
       RET2 +
       arr_mots.join('')
         .segmente(LONGUEUR_SEGMENT, "\t\t")
-        .sub(/#{motAvant}/, mot_avant.real_mot.rouge + mot_avant.next_char)
-        .sub(/#{motApres}/, mot_apres.real_mot.rouge + mot_apres.next_char) +
+        .sub(/#{motAvant}/, mot_avant.real_mot.rouge + mot_avant.disp_next_char)
+        .sub(/#{motApres}/, mot_apres.real_mot.rouge + mot_apres.disp_next_char) +
       RET2
 
     else
