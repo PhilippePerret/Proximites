@@ -5,7 +5,7 @@
 
 =end
 
-require_relative './lib/required'
+require_relative '../lib/required'
 
 Tests.grand_titre 'Remplacement d’une proximité'
 

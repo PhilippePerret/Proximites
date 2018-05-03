@@ -61,13 +61,13 @@ class Texte
     # Définition des infos si nécessaire
     if CLI.options[:dmax_normale]
       d = CLI.options[:dmax_normale].to_i
-      d > 50 || d = d * LONGUEUR_PAGE # valeur donnée en pages
+      d > 50 || d = d * Texte::longueur_page # valeur donnée en pages
       infos.merge!(dmax_normale: d)
       saving_required = true
     end
     if CLI.options[:dmax_possible]
       d = CLI.options[:dmax_possible].to_i
-      d > 50 || d = d * LONGUEUR_PAGE # valeur fournie en pages
+      d > 50 || d = d * Texte::longueur_page # valeur fournie en pages
       infos.merge!(dmax_possible: d)
       saving_required = true
     end

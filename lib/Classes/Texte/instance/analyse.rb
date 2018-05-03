@@ -21,6 +21,11 @@ class Texte
       end
     end
 
+    # On évalue les mots à distance min fixe. Cette distance min fixe doit être
+    # calculée chaque fois car elle dépend de la configuration, par exemple de
+    # la longueur d'une page.
+    Texte::Mot.evalue_valeurs_mots_a_distance_min_fixe
+
     # Clearer la fenêtre
     puts "\033c"
 

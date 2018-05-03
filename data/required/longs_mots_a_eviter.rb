@@ -19,11 +19,19 @@ class Mot
     'cet'     =>  300,
     'du'      =>  50,
     'dehors'  =>  '1p', # = 1 page
-    'eux'     =>  '1p'
+    'eux'     =>  '1p',
+    'mais'    => 50
   }
-  def evalue_valeurs_mots_a_distance_min_fixe
+  def self.evalue_valeurs_mots_a_distance_min_fixe
     MOTS_A_DISTANCE_MIN_FIXE.each do |cle, value|
-      # Remplacer la valeur
+      value =
+        case value
+        when Fixnum then value
+        when /^([0-9]+)p$/
+          # => Nombre de pages
+          nombre_pages = $1.to_i
+        end
+      MOTS_A_DISTANCE_MIN_FIXE[cle] = value
     end
   end
 

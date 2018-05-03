@@ -14,10 +14,12 @@ class << self
   # dans l'application.
   # @usage : Tests::Log << "messages"
   #
-  def << mess
+  def <<(mess, params = nil)
+    params.nil? || mess = mess % params
     open() ; reflog.puts(mess) ; close()
   end
   alias :ecrire :<<
+  alias :w :<<
 
   def print mess
     open() ; reflog.write(mess) ; close()

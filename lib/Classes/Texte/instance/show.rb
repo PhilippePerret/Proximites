@@ -28,36 +28,13 @@ class Texte
     while true
 
       # Faut-il réduire le segment à afficher à une certaine longueur ?
-      start_offset =
-        if CLI.options[:per_page]
-          (CLI.options[:from] ||= 1).to_i - 1
-        elsif CLI.options[:from_page]
-          CLI.options[:from_page].to_i > 0 || CLI.options[:from_page] = 1
-          (CLI.options[:from_page].to_i - 1) * LONGUEUR_PAGE
-        elsif CLI.options[:from]
-          CLI.options[:from].to_i > 0 || CLI.options[:from] = 1
-          CLI.options[:from].to_i - 1
-        else
-          0
-        end
-
-      end_offset =
-        if CLI.options[:per_page]
-          start_offset + LONGUEUR_PAGE - 1
-        elsif CLI.options[:to_page]
-          CLI.options[:to_page].to_i * LONGUEUR_PAGE
-        elsif CLI.options[:to]
-          CLI.options[:to].to_i > start_offset || CLI.options[:to] = (start_offset + 100)
-          CLI.options[:to].to_i - 1
-        else
-          nil
-        end
+      start_offset = options_start_offset
+      end_offset = options_end_offset(start_offset)
 
       puts RET3
-
       # En mode page en page, on indique la page au-dessus et en dessous
       CLI.options[:per_page] && begin
-        mark_page = "PAGE #{(start_offset/LONGUEUR_PAGE) + 1}/#{nombre_pages}"
+        mark_page = "PAGE #{(start_offset/Texte::longueur_page) + 1}/#{nombre_pages}"
         puts "\t#{'-'*40} #{mark_page} #{'-'*40}#{RET2}"
       end
 
@@ -204,15 +181,15 @@ class Texte
         puts "#{RET2}\t#{'-'*40} #{mark_page} #{'-'*40}#{RET2}"
         case askFor('Page suivante ? (ENTER/o = oui, z/n = non, p = précédente, numéro de page)')
         when NilClass, '', 'o', 'oui'
-          CLI.options[:from] += LONGUEUR_PAGE
+          CLI.options[:from] += Texte::longueur_page
         when 'p', 'previous'
-          CLI.options[:from] -= LONGUEUR_PAGE
+          CLI.options[:from] -= Texte::longueur_page
           CLI.options[:from] > -1 || begin
             CLI.options[:from] = 0
             "Il n'y a pas de page avant…".rouge_gras
           end
         when /^([0-9]+)$/
-          CLI.options[:from] = ($1.to_i - 1) * LONGUEUR_PAGE
+          CLI.options[:from] = ($1.to_i - 1) * Texte::longueur_page
         else break
         end
       else
@@ -224,6 +201,38 @@ class Texte
 
   end
   # /Texte#show
+
+  # Retourne le décalage du début de texte voulu, si on ne veut pas tout
+  # le texte (options --from ou --from_page)
+  def options_start_offset
+    if CLI.options[:per_page]
+      (CLI.options[:from] ||= 1).to_i - 1
+    elsif CLI.options[:from_page]
+      CLI.options[:from_page].to_i > 0 || CLI.options[:from_page] = 1
+      (CLI.options[:from_page].to_i - 1) * Texte::longueur_page
+    elsif CLI.options[:from]
+      CLI.options[:from].to_i > 0 || CLI.options[:from] = 1
+      CLI.options[:from].to_i - 1
+    else
+      0
+    end
+  end
+
+  # Retourne le décalage de la fin de portion de texte voulu, si on ne veut
+  # pas tout le texte (options --to ou --to_page)
+  def options_end_offset start_offset
+    if CLI.options[:per_page]
+      start_offset + Texte::longueur_page - 1
+    elsif CLI.options[:to_page]
+      CLI.options[:to_page].to_i * Texte::longueur_page
+    elsif CLI.options[:to]
+      CLI.options[:to].to_i > start_offset || CLI.options[:to] = (start_offset + 100)
+      CLI.options[:to].to_i - 1
+    else
+      nil
+    end
+  end
+
 
   # Méthode pour écrire dans le fichier ou en console les lignes de
   # suivi de proximité.

@@ -2,9 +2,13 @@
 
 
 START PROGRAMME
-Instanciation de la proximité #1 entre les mots texte:1 et texte:7
-Instanciation de la proximité #2 entre les mots texte:7 et texte:14
-Instanciation de la proximité #3 entre les mots marion:4 et marion:11
+Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
+MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
+Distance entre les deux mots = motB.offset - motA.offset = 55
+Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
+MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
+Distance entre les deux mots = motB.offset - motA.offset = 22
+Instanciation de la proximité #1 entre les mots mais:32 et mais:37
 -> Texte#save_all
 -> Texte#save_mots… OK
 <- Texte#save_all
@@ -23,74 +27,17 @@ EOP
 
 
 START PROGRAMME
-Instanciation de la proximité #1 entre les mots texte:1 et texte:7
-Instanciation de la proximité #2 entre les mots texte:7 et texte:14
-Instanciation de la proximité #3 entre les mots marion:4 et marion:11
+Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
+MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
+Distance entre les deux mots = motB.offset - motA.offset = 50
+Instanciation de la proximité #1 entre les mots mais:1 et mais:29
+Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
+MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
+Distance entre les deux mots = motB.offset - motA.offset = 22
+Instanciation de la proximité #2 entre les mots mais:29 et mais:34
 -> Texte#save_all
 -> Texte#save_mots… OK
 <- Texte#save_all
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
-EOP
-
-
-
-START PROGRAMME
--> Texte#load_all
--> Texte#load_mots... OK
-Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
--> Proximity::_show(mot = nil)
-liste_proximites = [PROXIMITY ID #1
-mot avant : [0;93mtexte[0m index:1 offset:3 len:5
-mot après : [0;93mtexte[0m index:7 offset:37 len:5 (à 34 signes)
-Treated? false / Deleted? false, PROXIMITY ID #2
-mot avant : [0;93mtexte[0m index:7 offset:37 len:5
-mot après : [0;93mtexte[0m index:14 offset:70 len:5 (à 33 signes)
-Treated? false / Deleted? false, PROXIMITY ID #3
-mot avant : [0;93mmarion[0m index:4 offset:22 len:6
-mot après : [0;93mmarion[0m index:11 offset:55 len:6 (à 33 signes)
-Treated? false / Deleted? false]
-Nombre de proximités : 3
--> Proximity::traite_proximite_mode_interactif(iprox.id=1/iprox.object_id:70094089228980)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #1
-	Proximité en argument    : 70094089228980
-	Proximité dans Proximity : 70094089228980
-		Mot avant dans prox argument : 70094093000420
-		          dans Texte.mots    : 70094093000420
-		
-[Tests::next_touche] "rs marion" en réponse à askFor("Opération choisie") (touches restantes : [true, "oo", "z", true, "q"])
--> remplacer_mot_par_mot
-[Tests::next_touche] "true" en réponse à yesOrNo("Veux-tu remplacer le mot \"texte\" par \"marion\"") (touches restantes : ["oo", "z", true, "q"])
--> Texte::Mot#replace
-La proximité avant #1 est à détruire.
-Nouveau compte de proximités mis à 2 après destruction de proximité #1.
-La proximité après #2 est à détruire.
-Nouveau compte de proximités mis à 1 après destruction de proximité #2.
-Instanciation de la proximité #4 entre les mots marion:7 et marion:11
-Instanciation de la proximité #5 entre les mots marion:4 et marion:7
-Check de la nouvelle proximité arrière de l'ancien mot avant : [0;93mtexte[0m index:1 offset:3 len:5
-Instanciation de la proximité #6 entre les mots texte:1 et texte:14
-Check de la nouvelle proximité vers l'avant de l'ancien mot après : [0;93mtexte[0m index:14 offset:70 len:5
-Les mots "texte" à 3 et 70 sont déjà en proximité.
-Après recherche des nouvelles proximités
-	prox_ids = {:avant=>5, :apres=>4}
-	imot_avant.prox_ids = {:apres=>6}
-	imot_apres.prox_ids = {:avant=>6}
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", true, "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=3/iprox.object_id:70094089228560)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #3
-	Proximité en argument    : 70094089228560
-	Proximité dans Proximity : 70094089228560
-		Mot avant dans prox argument : 70094092999920
-		          dans Texte.mots    : 70094092999920
-		
-[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : [true, "q"])
-[Tests::next_touche] "true" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : ["q"])
--> Texte#save_all
--> Texte#save_mots… OK
-<- Texte#save_all
-<- Proximity::_show
 [Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
 EOP
 
