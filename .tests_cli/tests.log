@@ -2,50 +2,10 @@
 
 
 START PROGRAMME
-Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
-MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
-Distance entre les deux mots = motB.offset - motA.offset = 55
-Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
-MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
-Distance entre les deux mots = motB.offset - motA.offset = 22
-Instanciation de la proximité #1 entre les mots mais:32 et mais:37
--> Texte#save_all
--> Texte#save_mots… OK
-<- Texte#save_all
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
-EOP
+###ERROR: [0;91mPour voir
 
-
-
-START PROGRAMME
--> Texte#load_all
--> Texte#load_mots... OK
-Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
-EOP
-
-
-
-START PROGRAMME
-Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
-MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
-Distance entre les deux mots = motB.offset - motA.offset = 50
-Instanciation de la proximité #1 entre les mots mais:1 et mais:29
-Texte::Mot::distance_minimum_fixe_too_big?("mais", "mais")
-MOTS_A_DISTANCE_MIN_FIXE["mais"] est définie à 50
-Distance entre les deux mots = motB.offset - motA.offset = 22
-Instanciation de la proximité #2 entre les mots mais:29 et mais:34
--> Texte#save_all
--> Texte#save_mots… OK
-<- Texte#save_all
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
-EOP
-
-
-
-START PROGRAMME
--> Texte#load_all
--> Texte#load_mots... OK
-Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:21:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
 EOP

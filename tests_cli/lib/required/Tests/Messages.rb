@@ -63,6 +63,8 @@ class << self
     end
   end
 
+  # Méthode appelée par 'fin_tests(<option>)' à la fin des tests (ou même
+  # ailleurs) pour écrire le résultat final et le log si demandé.
   # @param {NIL|Hash} options
   #         :display_log    Si true, affiche le log complet en fin de retour
   def fin options = nil
@@ -74,20 +76,16 @@ class << self
       end
     end
 
-    # Écriture du suivi
-    # Maintenant, je le mets en direct à l'écran
-    # if defined?(DETAILED) && DETAILED
-    #   unless suivi.empty?
-    #     suivi.each do |msg|
-    #       puts "#{msg}"
-    #     end
-    #   end
-    # end
-
     # À la fin des tests, on lit le fichier Tests::Log et si on trouve des
     # messages d'erreur, on les affiche.
-    Tests::Log.errors_messages.each do |err_msg|
-      puts err_msg.rouge
+    err_messages = Tests::Log.errors_messages
+    sys_errors_encountered = !err_messages.empty?
+    err_messages.empty? || begin
+      puts RET2 + 'Le programme a rencontré les erreurs-système résumées ci-dessous :'.jaune
+      Tests::Log.errors_messages.each do |err_msg|
+        puts err_msg.rouge
+      end
+      puts RET2 + "Consulter le fichier #{File.expand_path('./tests_cli/tests.log').inspect} pour le détail.".jaune
     end
 
     puts RET3
@@ -105,6 +103,7 @@ class << self
     puts RET
     methode = failure_list.empty? ? :vert : :rouge
     puts "#{success_list.count} success  -  #{failure_list.count} failures".send(methode)
+    sys_errors_encountered && puts('(des erreurs système ont été rencontrées… cf. ci-dessus)')
     puts RET3
 
   end

@@ -44,9 +44,7 @@ class << self
   end
 
   def errors_messages
-    @errors_messages ||= begin
-      lines.select{|line| line.start_with?('###ERROR:')}
-    end
+    lines.select{|line| line.start_with?('###ERROR:')}
   end
 
   # Retourne la dernière ligne enregistrées
