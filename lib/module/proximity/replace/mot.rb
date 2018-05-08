@@ -70,7 +70,7 @@ class Mot
 
     # Vérifier les proximités de l'ancien mot avant s'il existe en avant
     imot_avant && begin
-      Tests::Log << "Check de la nouvelle proximité arrière de l'ancien mot avant : #{imot_avant.inspect}"
+      # Tests::Log << "Check de la nouvelle proximité arrière de l'ancien mot avant : #{imot_avant.inspect}"
       Occurences[imot_avant.mot_base].check_proximite_vers(imot_avant, true)
     end
 
@@ -78,14 +78,14 @@ class Mot
     # Sauf si c'est justement le mot qui a été mis en proximité avec le mot
     # avant.
     imot_apres && begin
-      Tests::Log << "Check de la nouvelle proximité vers l'avant de l'ancien mot après : #{imot_apres.inspect}"
+      # Tests::Log << "Check de la nouvelle proximité vers l'avant de l'ancien mot après : #{imot_apres.inspect}"
       Occurences[imot_apres.mot_base].check_proximite_vers(imot_apres, false)
     end
 
-    Tests::Log << 'Après recherche des nouvelles proximités'+RETT+
-      "prox_ids = #{prox_ids.inspect}"+RETT+
-      (imot_avant ? "imot_avant.prox_ids = #{imot_avant.prox_ids.inspect}" : '- - -')+RETT+
-      (imot_apres ? "imot_apres.prox_ids = #{imot_apres.prox_ids.inspect}" : '- - -')
+    # Tests::Log << 'Après recherche des nouvelles proximités'+RETT+
+    #   "prox_ids = #{prox_ids.inspect}"+RETT+
+    #   (imot_avant ? "imot_avant.prox_ids = #{imot_avant.prox_ids.inspect}" : '- - -')+RETT+
+    #   (imot_apres ? "imot_apres.prox_ids = #{imot_apres.prox_ids.inspect}" : '- - -')
 
     return true # pour continuer
   rescue Exception => e

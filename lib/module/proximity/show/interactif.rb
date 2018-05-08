@@ -8,7 +8,7 @@ class Proximity
   #{'o/oo'.jaune} = marquer cette proximité comme traitée/corrigée ('oo' pour confirmer directement)
   #{'p'.jaune} = essayer une proposition de mot (#{'pp[ <mot>]'.jaune} pour le premier mot, #{'ps[ <mot>]'.jaune} pour le second)
   #{'rp <mot>'.jaune} remplacer le premier mot (#{'rs <mot>'.jaune} pour le second) par <mot>
-  #{'s/so'.jaune} = supprimer cette proximité de la liste (on pourra la revoir avec --all)
+  #{'po/s/so'.jaune} = supprimer cette proximité de la liste (on pourra la revoir avec --all)
   #{'n'.jaune} = passer à la proximité suivante
   #{'z'.jaune} = arrêter les corrections.
 
@@ -60,9 +60,9 @@ class << self
         c == 'oo' || yesOrNo(MESSAGES['confirm-treated']) || return
         correction_proximite_confirmed(iprox, debut_op)
         return
-      when 's', 'delete', 'supprimer', 'so'
+      when 's', 'delete', 'supprimer', 'so', 'po'
         # => supprimer cette proximité après confirmation
-        c == 'so' || yesOrNo(MESSAGES['confirm-deleted']) || return
+        c == 'so' || c == 'po' || yesOrNo(MESSAGES['confirm-deleted']) || return
         suppression_proximite_confirmed iprox, debut_op
         return
       else

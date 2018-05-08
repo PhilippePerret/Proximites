@@ -9,22 +9,25 @@ class Proximity
   # On peut faire soit un affichage complet de toutes les occurences, soit,
   # avec l'option -i/-interactif, afficher proximité après proximité, ce qui
   # permet de les "annoter"
-  def as_block index = nil, nombre_total
+  #
+  # @param {Fixnum} index_prox      Numéro de la proxmité courante
+  # @param {Fixnum} nombre_total    Nombre total de proximités courantes
+  #
+  def as_block index_prox = nil, nombre_total = nil
     # "\n\n\t#{DIVISEUR}"
-    "\t" + as_line(index = nil, nombre_total = nil) + "\n" +
+    "\t" + as_line(index_prox, nombre_total) + "\n" +
     extraits +
-    "\t" + as_line(index = nil, nombre_total = nil) + "\n" +
+    "\t" + as_line(index_prox, nombre_total) + "\n" +
     "#{RET2}\t#{DIVISEUR}"
   end
 
-  def as_line index = nil, nombre_total = nil
-    index ||= (1 + id).to_s
+  def as_line index_prox = nil, nombre_total = nil
     id_str = "#{"##{id}".to_s.ljust(9)}".gris
     dist = "<- #{distance} ->".gris
-    mots = "#{mot_avant.mot.jaune} #{dist} #{mot_apres.mot.jaune}".ljust(70)
+    mots = "#{mot_avant.mot.jaune} #{dist} #{mot_apres.mot.jaune}".ljust(60)
     mindist = "(min: #{distance_min})".ljust(14).gris
-    nomb = "#{index}/#{nombre_total || Proximity.count}".ljust(25)
-    offs = "#{mot_avant.offset}/#{mot_apres.offset}".ljust(20)
+    num  = "#{index_prox}/#{nombre_total || Proximity.count}".ljust(25)
+    offs = "#{mot_avant.index}<->#{mot_apres.index}/#{Texte.current.nombre_total_mots} mots".ljust(25)
     mod  = case
     when deleted? then 'DEL'
     when treated? then 'COR'
@@ -35,7 +38,7 @@ class Proximity
     when treated? then mod.vert
     else mod
     end
-    "#{id_str}#{mots}#{mindist}offsets: #{offs}#{nomb}#{mod}"
+    "#{num}#{mots}#{mindist}index: #{offs}#{id_str}#{mod}"
   end
 
   # Extraits à afficher

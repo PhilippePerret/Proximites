@@ -4,6 +4,9 @@ class << self
   def grand_titre msg
     Messages.add_suivi("*** #{msg.my_upcase} ***\n".jaune.gras)
   end
+  def description msg
+    Messages.add_suivi(msg.segmente(70, "\t\t").gris)
+  end
   def titre msg
     Messages.add_suivi("\n  * #{msg}".jaune)
   end

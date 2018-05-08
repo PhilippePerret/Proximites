@@ -38,7 +38,7 @@ Au contraire, si on utilise les méthodes `ask`, il suffit de définir avant le 
     # On lance le test (noter que l'option --test sera automatiquement ajouté)
     run './mon/app.rb'
 
-## Séquence de touche
+### Séquence de touche
 
 On a vu ci-dessous qu'on définissait la séquence de touches qui va être jouée avant de lancer le programme. De façon simple, cette suite de touches peut être définies simplement avec les touches, des `String` ou des `Fixnum` (nombre).
 
@@ -57,3 +57,17 @@ Par exemple :
     ]
 
 Le code ci-dessus fera que le test attendra 10 secondes et demi pour quitter finalement le programme, si la touche `q` permet de le faire.
+
+## Test final des “tableaux”
+
+La grande différence avec un test normal, c'est qu'ici ont teste les choses seulement à la toute fin, une fois que tout a été exécuté, même lorsqu'il y a de l'activté. Le principe est que :
+
+> `run` retourne toujours l'intégralité de l'affichage qui a été effectué.
+
+C'est donc en testant les différents “panneaux” retournés qu'on peut s'assurer que le programme s'est déroulé normalement (et, bien sûr, en testant les bases de données, les fichiers, etc.)
+
+Pour faciliter le travail des panneaux, on peut demander à l'application qu'elle ajoute un délimiteur de tableau. Il sera ajouté partout où l'on indiquera `puts Tests.delimiteur_tableau`. Dans les tests, il suffira alors de découper le retour selon ce delimiteur pour avoir les différents panneaux :
+
+    res = run('mon programme')
+    res = res.split(Tests.delimiteur_tableau)
+    # => res est un Array qui contient les différents “tableaux”.

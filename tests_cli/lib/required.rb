@@ -23,3 +23,4 @@ Dir[FOLDERTESTS+'/lib/required/**/*.rb'].each{|m|load(m)}
 Dir[FOLDERTESTS+'/lib/app_tests_cli/**/*.rb'].each{|m|load(m)}
 
 Tests.init
+Tests::Data.init

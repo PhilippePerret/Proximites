@@ -23,8 +23,9 @@ class << self
 
     if mot.nil?
       liste_proximites = table.values
-      Tests::Log << "liste_proximites = #{liste_proximites.inspect}"
+      # Tests::Log << "liste_proximites = #{liste_proximites.inspect}"
     elsif mot.is_a?(Fixnum)
+      Proximity[mot] || raise('La proximité d’identifiant #%i n’existe pas.' % [mot])
       liste_proximites = [Proximity[mot]]
       mot = liste_proximites.first.mot_avant.mot
     else
@@ -89,6 +90,7 @@ class << self
       if mode_interactif
         Proc.new do |prox, numero|
           prox.displayable? || next
+          puts Tests.delimiteur_tableau
           puts RET2 + prox.as_block(numero, nombre_proximites) + RET2
           traite_proximite_mode_interactif(prox) && break
         end
@@ -118,6 +120,7 @@ class << self
       #   "Proximité dans la liste  : ID=#{Proximity[prox.id].object_id}"
       proced.call(prox, 1 + index_prox)
     end
+    puts Tests.delimiteur_tableau
 
     # =========================================================
 

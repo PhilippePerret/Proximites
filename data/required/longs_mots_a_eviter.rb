@@ -16,11 +16,18 @@ class Mot
   # Mots écartables, c'est-à-dire les mots qui, même rares, doivent se trouver à
   # une distance normale (page) pour être signalés proche.
   MOTS_A_DISTANCE_MIN_FIXE = {
+    'avec'    =>  100,
     'cet'     =>  300,
     'du'      =>  50,
     'dehors'  =>  '1p', # = 1 page
+    'depuis'  =>  500,
     'eux'     =>  '1p',
-    'mais'    => 50
+    'jamais'  =>  150,
+    'mais'    =>  50,
+    'peu'     =>  150,
+    'sans'    =>  300,
+    'sous'    =>  300,
+    'trop'    =>  300
   }
   def self.evalue_valeurs_mots_a_distance_min_fixe
     MOTS_A_DISTANCE_MIN_FIXE.each do |cle, value|

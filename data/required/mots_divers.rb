@@ -29,11 +29,11 @@ class Mot
   ]
 
   ARR_MOTS_FEMININS_E = [ # => MOTS_FEMININS
-    'clandestine',
-    'différente',
+    'clandestin',
+    'différent',
     'fin',
     'grand',
-    'mauvaise',
+    'mauvais',
     'petit',
     'un'
   ]

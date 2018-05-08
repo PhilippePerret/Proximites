@@ -1,11 +1,74 @@
+Data enregistrées dans le fichier Marshal: {:start_test=>1525756026, :delimiteur_tableau=>"\n------------------------------1525756026------------------------------\n", :updated_at=>1525756026}
+Data enregistrées dans le fichier Marshal: {:start_test=>1525756026, :delimiteur_tableau=>"\n------------------------------1525756026------------------------------\n", :updated_at=>1525756026, :sequence_keys=>["q"]}
 
 
 
 START PROGRAMME
-###ERROR: [0;91mPour voir
+-> Texte#save_all
+-> Texte#save_mots… OK
+<- Texte#save_all
+[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+EOP
+Data enregistrées dans le fichier Marshal: {:start_test=>1525756026, :delimiteur_tableau=>"\n------------------------------1525756026------------------------------\n", :updated_at=>1525756031, :sequence_keys=>["oo", "oo", "so", "oo", "z", "n", "o", "q"]}
 
-/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:21:in `run'
-/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
-/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
-/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+
+
+START PROGRAMME
+-> Texte#load_all
+-> Texte#load_mots... OK
+Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
+-> Proximity::_show(mot = nil)
+Nombre de proximités : 2183
+-> Proximity::traite_proximite_mode_interactif(iprox.id=11/iprox.object_id:70212450123620)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #11
+	Proximité en argument    : 70212450123620
+	Proximité dans Proximity : 70212450123620
+		Mot avant dans prox argument : 70212444575220
+		          dans Texte.mots    : 70212444575220
+		
+[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["oo", "so", "oo", "z", "n", "o", "q"])
+-> Proximity::traite_proximite_mode_interactif(iprox.id=20/iprox.object_id:70212450123440)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #20
+	Proximité en argument    : 70212450123440
+	Proximité dans Proximity : 70212450123440
+		Mot avant dans prox argument : 70212444574960
+		          dans Texte.mots    : 70212444574960
+		
+[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["so", "oo", "z", "n", "o", "q"])
+-> Proximity::traite_proximite_mode_interactif(iprox.id=22/iprox.object_id:70212450123400)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #22
+	Proximité en argument    : 70212450123400
+	Proximité dans Proximity : 70212450123400
+		Mot avant dans prox argument : 70212444574760
+		          dans Texte.mots    : 70212444574760
+		
+[Tests::next_touche] "so" en réponse à askFor("Opération choisie") (touches restantes : ["oo", "z", "n", "o", "q"])
+-> Proximity::traite_proximite_mode_interactif(iprox.id=24/iprox.object_id:70212450123360)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #24
+	Proximité en argument    : 70212450123360
+	Proximité dans Proximity : 70212450123360
+		Mot avant dans prox argument : 70212444574560
+		          dans Texte.mots    : 70212444574560
+		
+[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "n", "o", "q"])
+-> Proximity::traite_proximite_mode_interactif(iprox.id=67/iprox.object_id:70212450122480)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #67
+	Proximité en argument    : 70212450122480
+	Proximité dans Proximity : 70212450122480
+		Mot avant dans prox argument : 70212444573940
+		          dans Texte.mots    : 70212444573940
+		
+[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["n", "o", "q"])
+[Tests::next_touche] "n" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : ["o", "q"])
+[Tests::next_touche] "o" en réponse à yesOrNo("Êtes-vous sûr de ne pas vouloir enregistrer les changements ?") (touches restantes : ["q"])
+-> Texte#save_all
+-> Texte#save_mots… OK
+<- Texte#save_all
+<- Proximity::_show
+[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
 EOP

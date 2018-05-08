@@ -10,16 +10,10 @@ class Tests
 
 class << self
 
-  # Pour ré-initialiser, notamment pour supprimer le dossier `./.texte_prov`
-  # s'il existe
-  def reset
-    File.exist?('./.texte_prov') && FileUtils.rm_rf('./.texte_prov')
-  end
-
+  # Cette méthode est appelée au début des tests
   def init
     # Création du dossier contenant les fichier des tests, au besoin
     `mkdir -p "#{folder}"`
-    File.exist?(path_sequence_keys_file) && File.unlink(path_sequence_keys_file)
     Log.init
     Messages.init
   end
@@ -72,9 +66,7 @@ class << self
   # Les réponses définies dans les tests
   def sequence_touches
     @sequence_touches ||= begin
-      File.exist?(path_sequence_keys_file) || raise('sequence_keys-required')
-      # File.read(path_sequence_keys_file).force_encoding('utf-8').split("\n")
-      eval(File.read(path_sequence_keys_file))
+      Data[:sequence_keys] || raise('sequence_keys-required')
     end
   end
   alias :sequence_keys :sequence_touches
@@ -82,19 +74,19 @@ class << self
   # Pour définir les réponses à simuler
   def sequence_touches= value
     value.is_a?(Array) || raise('Tests.sequence_touches= attend une liste de réponses, même s’il y a une seule réponse.')
-    File.exist?(path_sequence_keys_file) && File.unlink(path_sequence_keys_file)
-    File.open(path_sequence_keys_file,'wb'){|f|f.write(value.inspect)}
+    Data.save(sequence_keys: value)
   end
   alias :sequence_keys= :sequence_touches=
 
-  def path_sequence_keys_file
-    @path_sequence_keys_file ||= File.join(folder, 'sequence_keys')
+  # Pour délimiter les retours successifs avec un délimiteur qui permettra de
+  # tester plus facilement les résultats
+  def delimiteur_tableau
+    @delimiteur_tableau ||= Data[:delimiteur_tableau]
   end
 
-  # Le dossier des tests
-  def folder
-    @folder ||= './.tests_cli'
-  end
+  # ---------------------------------------------------------------------
+  #   Paths
+  # ---------------------------------------------------------------------
 
   # Le path du texte courant
   def current_texte_path
@@ -105,6 +97,11 @@ class << self
   def current_folder_proximites
     ctp = current_texte_path
     File.join(File.dirname(ctp), "proximites-#{File.basename(ctp,File.extname(ctp))}")
+  end
+
+  # Le dossier des tests
+  def folder
+    @folder ||= './.tests_cli'
   end
 
 
