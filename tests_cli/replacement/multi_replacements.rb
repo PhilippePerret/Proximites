@@ -7,8 +7,6 @@
 =end
 require_relative '../lib/required'
 
-Tests.reset # notamment pour supprimer le texte provisoire existant
-
 Tests.grand_titre 'Remplacement créant une nouvelle proximité de l’ancien mot'
 # Exemple :
 #   Un texte avec un texte et un autre texte.

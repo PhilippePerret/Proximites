@@ -8,6 +8,7 @@ class String
   end
   def should_contain expected, mess_ok = nil
     ok = self.include?(expected)
+    mess_ok ||= ('Le texte """%s""" contient """%s"""' % [self, expected])
     err = ok ? '' : "(FAUX) #{mess_ok}\nLe texte :\n'''\n#{self}\n'''\n\n… devrait contenir :\n'''\n#{expected}\n'''"
     Tests::Messages.evaluate(ok, err, mess_ok, self, expected)
   end

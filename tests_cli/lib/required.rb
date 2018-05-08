@@ -24,3 +24,4 @@ Dir[FOLDERTESTS+'/lib/app_tests_cli/**/*.rb'].each{|m|load(m)}
 
 Tests.init
 Tests::Data.init
+Tests.reset

@@ -24,14 +24,12 @@ class << self
   # Attention : se rappeler qu'au cours d'un test, seuls les tests doivent
   # passer par ici, au tout début
   def init
-    puts "-> Data.init"
     exist? && File.unlink(file_path)
     @data = {
       start_test: Time.now.to_i,
       delimiteur_tableau: (RET+('-'*30)+Time.now.to_i.to_s+('-'*30)+RET)
     }
     save
-    puts "<- Data.init"
   end
 
   def data

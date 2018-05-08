@@ -86,6 +86,7 @@ class String
     seg = self
     while seg.length > longueur
       ri = seg.rindex(' ', longueur)
+      ri || break
       li << seg[0..ri]
       seg = seg[ri+1..-1]
     end

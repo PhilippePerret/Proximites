@@ -1,5 +1,5 @@
-Data enregistrées dans le fichier Marshal: {:start_test=>1525756026, :delimiteur_tableau=>"\n------------------------------1525756026------------------------------\n", :updated_at=>1525756026}
-Data enregistrées dans le fichier Marshal: {:start_test=>1525756026, :delimiteur_tableau=>"\n------------------------------1525756026------------------------------\n", :updated_at=>1525756026, :sequence_keys=>["q"]}
+Data enregistrées dans le fichier Marshal: {:start_test=>1525758783, :delimiteur_tableau=>"\n------------------------------1525758783------------------------------\n", :updated_at=>1525758783}
+Data enregistrées dans le fichier Marshal: {:start_test=>1525758783, :delimiteur_tableau=>"\n------------------------------1525758783------------------------------\n", :updated_at=>1525758783, :sequence_keys=>["q"]}
 
 
 
@@ -9,7 +9,7 @@ START PROGRAMME
 <- Texte#save_all
 [Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
 EOP
-Data enregistrées dans le fichier Marshal: {:start_test=>1525756026, :delimiteur_tableau=>"\n------------------------------1525756026------------------------------\n", :updated_at=>1525756031, :sequence_keys=>["oo", "oo", "so", "oo", "z", "n", "o", "q"]}
+Data enregistrées dans le fichier Marshal: {:start_test=>1525758783, :delimiteur_tableau=>"\n------------------------------1525758783------------------------------\n", :updated_at=>1525758783, :sequence_keys=>["rp bonjour", "o", "oo", "z", "q"]}
 
 
 
@@ -18,57 +18,121 @@ START PROGRAMME
 -> Texte#load_mots... OK
 Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
 -> Proximity::_show(mot = nil)
-Nombre de proximités : 2183
--> Proximity::traite_proximite_mode_interactif(iprox.id=11/iprox.object_id:70212450123620)
+Nombre de proximités : 2
+-> Proximity::traite_proximite_mode_interactif(iprox.id=1/iprox.object_id:70321747788240)
 Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #11
-	Proximité en argument    : 70212450123620
-	Proximité dans Proximity : 70212450123620
-		Mot avant dans prox argument : 70212444575220
-		          dans Texte.mots    : 70212444575220
+	Contrôle de la proximité #1
+	Proximité en argument    : 70321747788240
+	Proximité dans Proximity : 70321747788240
+		Mot avant dans prox argument : 70321747773360
+		          dans Texte.mots    : 70321747773360
 		
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["oo", "so", "oo", "z", "n", "o", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=20/iprox.object_id:70212450123440)
+[Tests::next_touche] "rp bonjour" en réponse à askFor("Opération choisie") (touches restantes : ["o", "oo", "z", "q"])
+-> remplacer_mot_par_mot
+[Tests::next_touche] "o" en réponse à yesOrNo("Veux-tu remplacer le mot \"texte\" par \"bonjour\"") (touches restantes : ["oo", "z", "q"])
+-> Texte::Mot#replace
+La proximité après #1 est à détruire.
+Nouveau compte de proximités mis à 1 après destruction de proximité #1.
+[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "q"])
+-> Proximity::traite_proximite_mode_interactif(iprox.id=2/iprox.object_id:70321747787920)
 Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #20
-	Proximité en argument    : 70212450123440
-	Proximité dans Proximity : 70212450123440
-		Mot avant dans prox argument : 70212444574960
-		          dans Texte.mots    : 70212444574960
+	Contrôle de la proximité #2
+	Proximité en argument    : 70321747787920
+	Proximité dans Proximity : 70321747787920
+		Mot avant dans prox argument : 70321747772840
+		          dans Texte.mots    : 70321747772840
 		
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["so", "oo", "z", "n", "o", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=22/iprox.object_id:70212450123400)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #22
-	Proximité en argument    : 70212450123400
-	Proximité dans Proximity : 70212450123400
-		Mot avant dans prox argument : 70212444574760
-		          dans Texte.mots    : 70212444574760
-		
-[Tests::next_touche] "so" en réponse à askFor("Opération choisie") (touches restantes : ["oo", "z", "n", "o", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=24/iprox.object_id:70212450123360)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #24
-	Proximité en argument    : 70212450123360
-	Proximité dans Proximity : 70212450123360
-		Mot avant dans prox argument : 70212444574560
-		          dans Texte.mots    : 70212444574560
-		
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "n", "o", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=67/iprox.object_id:70212450122480)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #67
-	Proximité en argument    : 70212450122480
-	Proximité dans Proximity : 70212450122480
-		Mot avant dans prox argument : 70212444573940
-		          dans Texte.mots    : 70212444573940
-		
-[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["n", "o", "q"])
-[Tests::next_touche] "n" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : ["o", "q"])
-[Tests::next_touche] "o" en réponse à yesOrNo("Êtes-vous sûr de ne pas vouloir enregistrer les changements ?") (touches restantes : ["q"])
--> Texte#save_all
--> Texte#save_mots… OK
-<- Texte#save_all
-<- Proximity::_show
+[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["q"])
+[Tests::next_touche] "q" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : [])
+###ERROR: [0;91mIl ne reste plus de réponse à prendre. Impossible de poursuivre.[0m
+###ERROR: [0;91mno-more-reponse
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/Class.rb:36:in `next_touche'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:22:in `yesOrNo'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:143:in `_show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Proximity/class/show.rb:24:in `show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/show.rb:29:in `show_informations'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/_main_commands.rb:37:in `show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/_main_commands.rb:46:in `correct'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:27:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+###ERROR: [0;91mIl ne reste plus de réponse à prendre. Impossible de poursuivre.[0m
+###ERROR: [0;91mno-more-reponse
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/Class.rb:36:in `next_touche'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:42:in `askFor'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:64:in `wait_for_next_command'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:31:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+EOP
+Data enregistrées dans le fichier Marshal: {:start_test=>1525758783, :delimiteur_tableau=>"\n------------------------------1525758783------------------------------\n", :updated_at=>1525758784, :sequence_keys=>["q"]}
+
+
+
+START PROGRAMME
 [Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+EOP
+Data enregistrées dans le fichier Marshal: {:start_test=>1525758783, :delimiteur_tableau=>"\n------------------------------1525758783------------------------------\n", :updated_at=>1525758785, :sequence_keys=>["rp mot", "o", "oo", "z", "q"]}
+
+
+
+START PROGRAMME
+-> Texte#load_all
+-> Texte#load_mots... OK
+Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
+-> Proximity::_show(mot = nil)
+Nombre de proximités : 2
+-> Proximity::traite_proximite_mode_interactif(iprox.id=1/iprox.object_id:70222283669980)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #1
+	Proximité en argument    : 70222283669980
+	Proximité dans Proximity : 70222283669980
+		Mot avant dans prox argument : 70222283663300
+		          dans Texte.mots    : 70222283663300
+		
+[Tests::next_touche] "rp mot" en réponse à askFor("Opération choisie") (touches restantes : ["o", "oo", "z", "q"])
+-> remplacer_mot_par_mot
+[Tests::next_touche] "o" en réponse à yesOrNo("Veux-tu remplacer le mot \"texte\" par \"mot\"") (touches restantes : ["oo", "z", "q"])
+-> Texte::Mot#replace
+La proximité après #1 est à détruire.
+Nouveau compte de proximités mis à 1 après destruction de proximité #1.
+[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "q"])
+-> Proximity::traite_proximite_mode_interactif(iprox.id=2/iprox.object_id:70222283669660)
+Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
+	Contrôle de la proximité #2
+	Proximité en argument    : 70222283669660
+	Proximité dans Proximity : 70222283669660
+		Mot avant dans prox argument : 70222283662780
+		          dans Texte.mots    : 70222283662780
+		
+[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["q"])
+[Tests::next_touche] "q" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : [])
+###ERROR: [0;91mIl ne reste plus de réponse à prendre. Impossible de poursuivre.[0m
+###ERROR: [0;91mno-more-reponse
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/Class.rb:36:in `next_touche'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:22:in `yesOrNo'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/module/proximity/show/show.rb:143:in `_show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Proximity/class/show.rb:24:in `show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/show.rb:29:in `show_informations'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/_main_commands.rb:37:in `show'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/_main_commands.rb:46:in `correct'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:27:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
+###ERROR: [0;91mIl ne reste plus de réponse à prendre. Impossible de poursuivre.[0m
+###ERROR: [0;91mno-more-reponse
+
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/required/Tests/Class.rb:36:in `next_touche'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/tests_cli/lib/app/ask-for-tests.rb:42:in `askFor'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:64:in `wait_for_next_command'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/lib/Classes/Prox/__run.rb:31:in `run'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:12:in `block in <main>'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `chdir'
+/Users/philippeperret/Documents/Ecriture/Divers/Programmes/Proximites/proximite.rb:10:in `<main>'[0m
 EOP

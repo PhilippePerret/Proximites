@@ -83,6 +83,7 @@ class << self
   def delimiteur_tableau
     @delimiteur_tableau ||= Data[:delimiteur_tableau]
   end
+  alias :delimiteur_tableaux :delimiteur_tableau
 
   # ---------------------------------------------------------------------
   #   Paths

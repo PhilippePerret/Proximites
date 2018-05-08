@@ -45,6 +45,7 @@ class << self
 
     while true
 
+      puts Tests.delimiteur_tableau # Pour les tests
       puts MESSAGES['aide-reponses']
 
       # Début de l'opération (pour savoir combien de temps l'opération prendra)
@@ -99,14 +100,17 @@ class << self
       puts "Les deux mots sont identiques. Remplacement inutile."
       return
     end
+    puts Tests.delimiteur_tableau # Pour les tests
     yesOrNo("Veux-tu remplacer le mot #{imot.mot.inspect.jaune} par #{new_mot.inspect.jaune}") || return
     load_module 'proximity/replace'
+    old_mot = ('%s' % [imot.mot]).freeze
     if imot.remplace_par(new_mot)
       # Verrouiller le texte pour ne pas relancer une analyse sur les
       # anciens mots mais sur les nouveaux.
       Texte.current.set_info(locked: true)
       # Demander de confirmer le changement
-      notice("#{RETT}Le mot #{imot.mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
+      # notice("#{RETT}Le mot #{imot.mot} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
+      notice("#{RETT}Le mot #{old_mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
       self.changements_operes = true
     end
 

@@ -12,7 +12,6 @@ Tests.grand_titre 'Tests des corrections interactives'
 Tests.description 'On analyse un grand texte, puis on se lance dans la correction interactive, donc proximité par proximité, parfois ne supprimant une correction, parfois en la corrigeant.'
 
 # On peut commenter les lignes suivantes après l'analyse du texte
-Tests.reset
 Tests.titre 'Analyse du texte'
 run("proximite check test/texte_long.txt", ['q'])
 
@@ -34,7 +33,6 @@ puts "Nombre de tableaux : #{res.count}"
 res.each do |tbl|
   puts tbl
   STDOUT.flush
-  sleep 5
 end
 
 # Le texte devrait avoir affiché la première correction à faire, c'est-à-dire le
