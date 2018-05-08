@@ -14,7 +14,7 @@ class Proximity
   # valeur de distance min beaucoup trop élevée. On indique que cette distance
   # ne peut pas être supérieure à 10 pages pour les mots de peu d'occurence
   # Note: Cette valeur peut être surclassée avec l'option --dmax_possible=.
-  DISTANCE_MAX_POSSIBLE = 3 * DISTANCE_MAX_NORMALE # 2 pages
+  DISTANCE_MAX_POSSIBLE = 2 * DISTANCE_MAX_NORMALE # 2 pages
 
   class << self
 

@@ -31,7 +31,7 @@ class Texte
 
     texte_long? && begin
       print "\033[2;1H" # 2e ligne
-      print("*** Analyse du texte…")
+      puts '*** Analyse du texte…'
     end
     suivi '-> Texte#check (grand check complet avec sauvegarde)'
     Prox.log_check? && Prox.log_check("Début de l'analyse du texte", is_op = true)

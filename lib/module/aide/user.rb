@@ -177,15 +177,15 @@ Trouvez ci-dessous les commandes les plus usitées.
             ces du même mot sont à moins de 10 signes, ils sont considérés comme
             proches.
 
-        #{'--brut'.gras}
+        #{'--fin'.gras}
 
-            Pour utiliser la distance fixe (cf. ci-dessous) pour chaque mot,
-            sans tenir comme de leur fréquence. Rappel : dans le comportement
-            normal du programme, on étudie la distance de proximité en fonction
-            de l'occurence du mot. Plus il est rare et plus cette distance est
-            élevée.
-
-            Valeur distance fixe : (#{Proximity::DISTANCE_MAX_NORMALE})
+            L'analyse de proximité se fait sur la base d'une page, c'est-à-dire
+            de #{Proximity::DISTANCE_MAX_NORMALE} signes. En ajoutant cette op-
+            tions, on peut faire un traitement plus fin, qui tienne un peu comp-
+            te de la “rareté” du mot. Si un mot est très rare (moins de 0.02
+            pour 1000 mots), on ne devrait pas le trouver à moins de 4 pages et
+            s'il est simplement “rare”, on ne devra pas le trouver à moins de 2
+            pages d'une de ses occurences.
 
         #{'--log'.gras}
 
@@ -304,7 +304,7 @@ Trouvez ci-dessous les commandes les plus usitées.
   et il est beaucoup plus pratique d’afficher les proximités les unes après les
   autres grâce à l’option `interactif` :
 
-      #{'prox -i s[how] proximites'.jaune}
+      #{'prox -i s[how] proximites'.jaune} ou #{'prox correct'.jaune}
 
   Les avantages sont les suivants :
 

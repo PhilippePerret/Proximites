@@ -1,5 +1,5 @@
 {:
-table{io:Proximity	:@idi:@mot_avant_indexi:@mot_apres_indexi
-:@distance_miniiio;	;i;i;	i;
-iiio;	;i;i.;	i1;
-ii:last_idi
+table{io:Proximity:@idi:@mot_avant_indexi:@mot_apres_indexi:@distance_minii:@distanceiD:@is_deletedTio;
+;i;i.;	i1;
+ii;ii	o;	;i	;i;	i;
+ii:last_idi	

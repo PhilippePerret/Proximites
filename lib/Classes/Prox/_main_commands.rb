@@ -25,6 +25,7 @@ class << self
     when 'proximites'
       Occurences.check_proximites
     else
+      load_module 'texte/analyse'
       texte_courant.analyse
     end
     texte_courant.set_info(:last_command, ARGV.join(' '))

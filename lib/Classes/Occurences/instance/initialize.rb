@@ -23,7 +23,6 @@ class Occurences
   # @param {Texte::Mot} imot
   #
   def add imot, similarite = nil
-    suivi "Ajout d’une occurence de #{imot.mot_base.inspect}"
     if @offsets.empty? || imot.offset > @offsets[-1]
       # Le cas normal, où on ajoute les occurences les unes au bout des
       # autres. Par exemple lors de l'analyse du texte.

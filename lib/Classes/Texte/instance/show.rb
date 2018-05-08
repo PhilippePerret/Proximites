@@ -239,8 +239,8 @@ class Texte
   # On indique en début de ligne la longueur de la ligne.
   # On initialise les lignes ensuite.
   def ecrire_lignes_up_and_down
-    puts "\t#{segment_up}"
-    puts "\t#{segment_do}"
+    puts "\t#{segment_up.gsub(/\n/,'¶')}"
+    puts "\t#{segment_do.gsub(/\n/,'¶')}"
     puts "\n"
     init_line_up_and_down
   end

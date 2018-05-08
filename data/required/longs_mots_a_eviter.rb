@@ -16,18 +16,19 @@ class Mot
   # Mots écartables, c'est-à-dire les mots qui, même rares, doivent se trouver à
   # une distance normale (page) pour être signalés proche.
   MOTS_A_DISTANCE_MIN_FIXE = {
-    'avec'    =>  100,
-    'cet'     =>  300,
-    'du'      =>  50,
-    'dehors'  =>  '1p', # = 1 page
-    'depuis'  =>  500,
+    'alors'   =>  300,  'avant'   =>  100, 'avec'    =>  100,
+    'bien'    =>  400,
+    'cet'     =>  300,  'comme'   =>  400,
+    'dans'    =>  300,  'dehors'  =>  '1p', 'depuis'  =>  500, 'du' =>  50,
     'eux'     =>  '1p',
     'jamais'  =>  150,
-    'mais'    =>  50,
-    'peu'     =>  150,
-    'sans'    =>  300,
-    'sous'    =>  300,
-    'trop'    =>  300
+    'leur'    =>  300,
+    'mais'    =>  50,   'même' => 400,
+    'peu'     =>  150, 'plus'    =>  200, 'pour'    =>  200,
+    'que'     =>  100, 'qui'     =>  200,
+    'sans'    =>  300, 'sous'    =>  300, 'sur' => 300,
+    'trop'    =>  300,
+    'vers'    =>  400
   }
   def self.evalue_valeurs_mots_a_distance_min_fixe
     MOTS_A_DISTANCE_MIN_FIXE.each do |cle, value|
@@ -49,6 +50,7 @@ class Mot
   LOCUTIONS_REPETITIVES = {
     'loin'  => ['loin en loin'],
     'moins' => ['moins en moins'],
+    'peu'   => ['peu à peu'],
     'temps' => ['temps en temps'],
     'coute' => ['coute que coute'],
     'encore' => ['encore et encore'] # penser au test des deux mots

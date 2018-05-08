@@ -45,14 +45,25 @@ class Occurences
   def presence
     @presence ||= (1000.0 * count / Texte.current.nombre_total_mots).round(2)
   end
+
+
   # Distance minimum pour ne pas considérer deux mots en proximité,
   # lorsque l'option --brut n'est pas utilisée
+  # AVANT, on tenait compte de la fréquence exact du mot. Maintenant, on consi-
+  # dère seulement les mots à moins d'une page et un peu suivant leur rareté
+  # qui est une puissance de la fréquence.
   def distance_min
     @distance_min ||= begin
-      d = (Proximity.distance_max_normale / presence).to_i
-      d > Proximity::DISTANCE_MIN_POSSIBLE || d = Proximity::DISTANCE_MIN_POSSIBLE
-      d < Proximity.distance_max_possible || d = Proximity.distance_max_possible
-      d
+      d = Proximity.distance_max_normale.to_i # défaut : une page
+      if CLI.options[:fin]
+        case
+        when mot_rare?      then 2 * d # défaut : 2 pages
+        when mot_tres_rare? then 4 * d # défaut : 4 pages
+        else d
+        end
+      else
+        d
+      end
     end
   end
 

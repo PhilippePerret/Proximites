@@ -22,6 +22,19 @@ class Occurences
     end
     @occurences_traitable
   end
+  # /traitable?
+
+  # Retourne TRUE si c'est un mot rare, c'est-à-dire à moins de 2 pour 1000
+  # dans le texte
+  def mot_rare?
+    @is_mot_rare ||= presence < 0.2
+  end
+
+  # Retourne TRUE si c'est un mot très rare, c'est-à-dire à moins de 3 occurences
+  def mot_tres_rare?
+    @is_mot_tres_rare ||= presence < 0.02
+  end
+
 
   def check_if_traitable
     mot_length == 0 && (return 'vide')

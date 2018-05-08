@@ -1,3 +1,10 @@
+
+Texte 24 de Cloaca maxima
+21 507
+18 412    # après réduction des mots_rares
+  # Après ajout de certains mots à distance réduite comme 'plus' etc.
+
+
 # Proximité
 
 C'est un petit programme destiné à repérer les proximités entre les mots dans un texte.

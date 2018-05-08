@@ -49,6 +49,10 @@ class String
     "\033[0;91m#{self}\033[0m"
   end
 
+  def rouge_clair
+    "\033[0;35m#{self}\033[0m"
+  end
+
   def gris
     "\033[0;90m#{self}\033[0m"
   end

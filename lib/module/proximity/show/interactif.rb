@@ -156,7 +156,6 @@ class << self
 
     # On teste la validité du mot proposé, pour savoir s'il ne
     # rentre pas en conflit avec un autre mot du texte.
-    puts "*** Test de la validité de la proposition : #{nouveau_mot.inspect}"
 
     # On peut avoir fourni plusieurs mots, il faudra tester chacun d'un.
     # Une autre solution est de suggérer les mots l'un après l'autre
@@ -165,7 +164,11 @@ class << self
     # Le mot de référence en fonction du fait qu'on veut remplacer le premier
     # ou le second mot.
     imot_reference = iprox.send(pour_premier ? :mot_avant : :mot_apres)
-    puts "  * Mot de référence à remplacer (#{pour_premier ? 'premier' : 'second'}) : #{imot_reference.mot}"
+
+    puts RET2 +
+          '*** Test de la validité de la proposition : ' + nouveau_mot.inspect
+    puts  '  * Mot de référence à remplacer (%s) : %s' % [(pour_premier ? 'premier' : 'second '), imot_reference.mot.inspect]
+
     offset_mot_ref = imot_reference.offset
     # puts "  * Offset : #{offset_mot_ref}"
 
@@ -180,42 +183,100 @@ class << self
       mot_base = imot_test.mot_base
       # puts "\t* Son mot de base est : #{imot_test.mot_base}"
 
-      ioccurences = Occurences[mot_base]
-      if ioccurences
-        # puts "\t= Une instance occurences de #{mot_base.inspect} existe."
-        distance_min = ioccurences.distance_min
-        # On passe en revue chaque offset des occurences pour voir s'il y en
-        # a une à une distance inférieure de la distance min
-        ioccurences.offsets.each do |offset|
-          distance = offset - offset_mot_ref
-          trop_proche = distance.abs <= distance_min
-          # puts "distance : #{distance} (min : #{distance_min})"
-          if distance < 0 && trop_proche
-            # Trop proche d'un mot avant
-            sens = "avant"
-          elsif distance > 0 && trop_proche
-            # Trop proche d'un mot après
-            sens = "après"
-          elsif distance > distance_min
-            # On est trop loin, on peut s'arrêter là
-            nombre_occurences = ioccurences.count
-            puts "#{RET}\t= Ce mot peut être utilisé sans risque (à titre informatif, il est répété #{nombre_occurences} fois dans ce texte).#{RET2}".bleu
-            next
-          end
-          # Ce mot est trop proche
-          puts "#{RET2}\t# Le mot base #{mot_base.inspect} (utilisé #{nombre_occurences} fois dans ce texte) se trouve à "+"#{distance.abs} signes #{sens} le #{pour_premier ? 'premier' : 'second'} mot. Il est inutilisable.".rouge + "#{RET2}"
-          return false
-        end
-      else
-        puts "\t= Aucune occurence du mot base #{mot_base.inspect} n'existe dans ce texte, donc le mot est forcément bon.#{RET2}".bleu
-        next
+      res = check_proximites_possible(imot_test, pour_premier)
+      puts RET3
+      getc('Tapez une touche quelconque pour passer à la suite…')
+      case res
+      when NilClass   then next
+      when FalseClass then return false
       end
     end
     # /loop sur chaque mot proposé
 
     return true
   end
+  # /proposer_et_tester_un_mot
 
+
+  def check_proximites_possible(imot_test, pour_premier)
+    ioccurences = Occurences[imot_test.mot_base]
+    if ioccurences
+      res = ioccurences.check_proximites_possibles_avec(imot_test, pour_premier)
+      case res
+      when NilClass # On
+        # <= Aucune occurence proche n'a été trouvée
+        # => On peut passer au mot suivant (si un autre a été proposé)
+        return nil
+      when FalseClass
+        # On a trouvé une occurence trop près
+        return false
+      end
+    else
+      puts (
+        ('  = Aucune occurence du mot base “%s” n’existe dans ce texte.' % [imot_test.mot_base]) +
+        RET + '  => Il est forcément utilisable.'
+      ).bleu
+      return nil
+    end
+  end
 
 end #/<< self
 end #/Proximity
+
+# ---------------------------------------------------------------------
+#
+#   CLASSE Occurences
+#
+# ---------------------------------------------------------------------
+class Occurences
+  # ---------------------------------------------------------------------
+  #
+  #   INSTANCES
+  #
+  # ---------------------------------------------------------------------
+
+  def check_proximites_possibles_avec imot_test, pour_premier
+    # puts "\t= Une instance occurences de #{mot_base.inspect} existe."
+    distance_min = self.distance_min
+
+    # On passe en revue chaque offset des occurences pour voir s'il y en
+    # a une à une distance inférieure de la distance min
+    sens = nil
+    self.offsets.each do |offset|
+
+      distance = offset - imot_test.offset
+      trop_proche = distance.abs <= distance_min
+      # puts "distance : #{distance} (min : #{distance_min})"
+      if distance < 0 && trop_proche
+        # Trop proche d'un mot avant
+        sens = "avant"
+      elsif distance > 0 && trop_proche
+        # Trop proche d'un mot après
+        sens = "après"
+      elsif distance > distance_min
+        # On est trop loin, on peut s'arrêter là
+        puts (
+          ('  = Ce mot est répété %i fois dans ce texte, aux index : %s, donc trop loin du mot courant.' % [self.count, self.offsets.join(', ')]) +
+          RET + '  => Il peut être utilisé sans souci.').bleu
+        return nil
+      end
+      # /boucle sur tous les offsets du mot
+
+      # Ce mot est trop proche. On affiche un message pour le signaler
+
+      distance = distance.abs
+      couleur, etagere =
+        if distance > (Proximity::DISTANCE_MAX_NORMALE * 2 / 3) then
+          [:rouge_clair, 'déconseillé']
+        else
+          [:rouge, 'inutilisable']
+        end
+      puts (
+        ( '  # Le mot base “%s” (utilisé %i dans ce texte) se trouve à %i signes %s le %s' % [imot_test.mot_base, self.count, distance, sens, (pour_premier ? 'premier' : 'second')]) +
+        RET + ( '  => Il est %s.' % [etagere] )).send(couleur)
+      return false
+    end
+  end
+  #/check_proximites_possibles_avec
+
+end
