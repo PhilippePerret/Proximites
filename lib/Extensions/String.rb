@@ -1,4 +1,7 @@
 # encoding: UTF-8
+#
+# version 1.2.0
+#
 class String
 
   # Le texte en bleu gras pour le terminal

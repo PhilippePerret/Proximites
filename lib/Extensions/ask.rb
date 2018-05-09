@@ -9,10 +9,10 @@
 def getc message
   print "#{message} : "
   begin
-    system("stty raw -echo")
+    system('stty raw -echo')
     str = STDIN.getc
   ensure
-    system("stty -raw echo")
+    system('stty -raw echo')
   end
   return str
 end
@@ -28,14 +28,14 @@ def yesOrNo question
   r = STDIN.gets.strip
   r == '' && r == nil
   case r.upcase
-  when 'N','NO','NON', NilClass then return false
+  when 'N','NO','NON', nil, NilClass then return false
   else return true
   end
 end
 
 # Pose la +question+ qui attend forcément une valeur non nulle et raise
 # l'exception +msg_error+ dans le cas contraire.
-def askForOrRaise(question, msg_error = "Cette donnée est obligatoire")
+def askForOrRaise(question, msg_error = 'Cette donnée est obligatoire')
   print "#{question} : "
   r = STDIN.gets.strip
   r != '' || raise(msg_error)

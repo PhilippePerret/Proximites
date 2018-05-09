@@ -16,10 +16,10 @@ class Mot
   # Mots écartables, c'est-à-dire les mots qui, même rares, doivent se trouver à
   # une distance normale (page) pour être signalés proche.
   MOTS_A_DISTANCE_MIN_FIXE = {
-    'alors'   =>  300,  'avant'   =>  100, 'avec'    =>  100,
+    'alors'   =>  300,  'arrière' =>  300,  'avant'   =>  100, 'avec'    =>  100,
     'bien'    =>  400,
     'cet'     =>  300,  'comme'   =>  400,
-    'dans'    =>  300,  'dehors'  =>  '1p', 'depuis'  =>  500, 'du' =>  50,
+    'dans'    =>  300,  'dehors'  =>  '1p', 'depuis'  =>  500, 'derrière' => 300, 'du' =>  50,
     'eux'     =>  '1p',
     'jamais'  =>  150,
     'leur'    =>  300,

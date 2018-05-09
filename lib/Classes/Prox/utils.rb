@@ -6,7 +6,7 @@ class Prox
 class << self
 
   def load_module relp, options = nil
-    p = File.join('.','lib','module',relp)
+    p = File.join(folder_module,relp)
     case
     when !File.exist?(p) && !File.exists?("#{p}.rb")
       error "Le module `#{p}` est introuvable."

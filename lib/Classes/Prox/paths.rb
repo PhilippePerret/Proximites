@@ -55,6 +55,11 @@ class << self
     @affixe ||= File.basename(path, File.extname(path)).normalize
   end
 
+  def folder_module
+    @folder_module ||= File.expand_path(File.join('.','lib','module'))
+  end
+
+
   # Le dossier du texte courant (i.e. de la Prox courante)
   def folder
     @folder ||= begin
