@@ -140,7 +140,7 @@ class << self
     # informations.
     if mode_interactif && changements_operes
       yesOrNo("Faut-il enregistrer les changements opérés ?") || begin
-        yesOrNo('Êtes-vous sûr de ne pas vouloir enregistrer les changements ?'.rouge) || return
+        yesOrNo('Êtes-vous sûr de ne pas vouloir enregistrer les changements ?'.rouge) && return
       end
       texte_courant.save_all
     end

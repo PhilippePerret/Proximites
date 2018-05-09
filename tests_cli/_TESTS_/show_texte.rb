@@ -4,7 +4,7 @@
   Test d'affichage du texte
 
 =end
-require_relative './lib/required'
+require_relative '../lib/required'
 
 
 Tests.titre 'Un texte sans répétition est analysé et affiché correctement'

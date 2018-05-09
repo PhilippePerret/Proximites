@@ -16,7 +16,7 @@ class << self
     @data.merge!(updated_at: Time.now.to_i)
     File.exist?(file_path) && File.unlink(file_path)
     File.open(file_path,'wb'){|f|
-      Tests::Log << "Data enregistrées dans le fichier Marshal: #{data.inspect}"
+      # Tests::Log << "Data enregistrées dans le fichier Marshal: #{data.inspect}"
       Marshal.dump(data,f)
     }
   end

@@ -6,7 +6,7 @@
 def run cmd, sequence_keys = nil
   sequence_keys.nil? || Tests.sequence_keys= sequence_keys
   Tests::Messages.add_suivi("    Commande : `#{cmd}`")
-  cmd = cmd.sub(/^prox(imite)?/,'proximite --test ')
+  cmd += ' --test'
   cmd = cmd.gsub(/\"/, '\\\"')
   res = `bash -c ". /Users/philippeperret/.bash_profile; shopt -s expand_aliases\n#{cmd}"`
 

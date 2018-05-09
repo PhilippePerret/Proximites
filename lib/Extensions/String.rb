@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# version 1.2.0
+# version 1.2.1
 #
 class String
 
@@ -90,14 +90,16 @@ class String
   # truncate le texte
   def segmente longueur, heading = ''
     li  = Array.new
-    seg = self
-    while seg.length > longueur
-      ri = seg.rindex(' ', longueur)
-      ri || break
-      li << seg[0..ri]
-      seg = seg[ri+1..-1]
+    # Il faut traiter le cas où le texte contient des retours chariots
+    self.split(RET).each do |seg|
+      while seg.length > longueur
+        ri = seg.rindex(' ', longueur)
+        ri || break
+        li << seg[0..ri]
+        seg = seg[ri+1..-1]
+      end
+      seg.length > 0 && li << seg
     end
-    seg.length > 0 && li << seg
     return heading + li.join("\n#{heading}")
   end
 

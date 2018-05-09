@@ -5,7 +5,7 @@
   anciens mots (pas de nouvelles avec le nouveau mot)
 
 =end
-require_relative '../lib/required'
+require_relative '../../lib/required'
 
 Tests.grand_titre 'Remplacement créant une nouvelle proximité de l’ancien mot'
 # Exemple :

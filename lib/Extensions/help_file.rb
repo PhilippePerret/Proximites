@@ -37,7 +37,7 @@ class HelpFile
 
   # Le fichier construit avec le texte final
   def path
-    @path ||= File.join(folder,".HF#{name}")
+    @path ||= File.join(folder,".xHF#{name}")
   end
   # Si on définit le texte
   def prepare_et_save

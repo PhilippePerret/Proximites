@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_relative '../lib/required'
+require_relative '../../lib/required'
 
 
 run('prox check -t "Un texte avec deux fois le mot texte."', ['q'])

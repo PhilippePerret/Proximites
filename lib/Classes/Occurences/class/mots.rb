@@ -32,7 +32,6 @@ class << self
       # /fin de boucle sur tous les mots
       similarite_trouvee || begin
         # puts "CRÉATION DE L'OCCURENCE #{imot.mot_base} nécessaire"
-        suivi "Création de l’occurence #{imot.mot_base.inspect}"
         table.merge!(imot.mot_base => new(imot))
         add_finaly(imot)
       end

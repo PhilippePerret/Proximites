@@ -70,7 +70,7 @@ class Occurences
       motA.offset < motB.offset || raise("Les mots sont mal agencés…")
 
       # Si les deux mots sont en proximité, il n'y a rien à faire
-      if motA.prox_ids[:apres] && (motA.prox_ids[:apres] == motB.prox_ids[:avant])
+      if motA.prox_ids && motA.prox_ids[:apres] && (motA.prox_ids[:apres] == motB.prox_ids[:avant])
         Tests::Log << "Les mots #{motA.mot_base.inspect} à #{motA.offset} et #{motB.offset} sont déjà en proximité."
       else
         # Sinon, on les associe

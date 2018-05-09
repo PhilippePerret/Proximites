@@ -4,7 +4,7 @@
   En fait, ça, ça correspond à un test de TestsCLI.
 
 =end
-require_relative './lib/required'
+require_relative '../lib/required'
 
 Tests.grand_titre 'Test de temporisation de la réponse'
 Tests.titre 'On demande d’attendre 4 secondes avant de répondre'

@@ -8,7 +8,7 @@
 
 =end
 
-require_relative '../lib/required'
+require_relative '../../lib/required'
 
 Tests.reset
 

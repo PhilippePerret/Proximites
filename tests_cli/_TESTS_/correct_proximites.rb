@@ -4,7 +4,7 @@
 Test d'affichage des proximites
 
 =end
-require_relative './lib/required'
+require_relative '../lib/required'
 
 
 

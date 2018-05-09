@@ -1,5 +1,5 @@
 # encoding: UTF-8
-require_relative '../lib/required'
+require_relative '../../lib/required'
 =begin
 
   Ce texte s'assure que les mots remplacés sont bien remplacés dans le texte
