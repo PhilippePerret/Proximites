@@ -95,13 +95,27 @@ class << self
   # les proximités, pour corrections futures
   def remplacer_mot_par_mot iprox, pour_premier, new_mot
     Tests::Log << '-> remplacer_mot_par_mot'
+    puts Tests.delimiteur_tableau # Pour les tests
     imot = iprox.send(pour_premier ? :mot_avant : :mot_apres)
+
+    # Le remplacement est identique au mot existant => idiot
     imot.mot.my_downcase != new_mot.my_downcase || begin
       puts "Les deux mots sont identiques. Remplacement inutile."
       return
     end
-    puts Tests.delimiteur_tableau # Pour les tests
-    yesOrNo("Veux-tu remplacer le mot #{imot.mot.inspect.jaune} par #{new_mot.inspect.jaune}") || return
+
+    # Une proximité existe avec le nouveau mot => demande de confirmation
+    infosprox = infos_proximity_for(imot, new_mot.my_downcase)
+    Tests::Log << "infosprox: #{infosprox.inspect}"
+    if infosprox[:proche]
+      puts ('Attention, le mot “%s” se trouve à %i caractères %s le mot à remplacer.' % [new_mot, infosprox[:distance], (infosprox[:avant] ? 'avant' : 'après')]).rouge
+      yesOrNo('Confirmez-vous quand même le remplacement ?') || return
+    else
+      # Le remplacement peut se faire. Demande de confirmation.
+      yesOrNo('Remplacer le mot “%s” par “%s” (note : la proximité a été checkée avec succès)' % [imot.mot.jaune, new_mot.jaune]) || return
+    end
+
+    # On procède vraiment au remplacement
     load_module 'proximity/replace'
     old_mot = ('%s' % [imot.mot]).freeze
     if imot.remplace_par(new_mot)
@@ -110,14 +124,71 @@ class << self
       Texte.current.set_info(locked: true)
       # Demander de confirmer le changement
       # notice("#{RETT}Le mot #{imot.mot} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
-      notice("#{RETT}Le mot #{old_mot.inspect} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
+      notice(RETT+('Le mot “%s” a été remplacé par “%s”.' % [old_mot, new_mot])+RETT+'Il faut encore confirmer la correction.'+RET2)
       self.changements_operes = true
     end
+    return true
+  end
 
-    # ATTENTION : Ici, les changements ne sont pas enregistrés
-    return true # pour enregistrer les changements
+  # Renvoie les informations de proximité du mot {Texte::Mot} +imot+ avec le
+  # mot +new_mot+. Noter qu'+imot+, ici, ne sert qu'à connaitre l'offset du
+  # mot.
+  def infos_proximity_for imot, new_mot
+    occur = Occurences[new_mot.my_downcase]
+    # Si le mot de base n'a pas d'occurence
+    if occur.nil?
+      {proche: false, raison: 'Seule occurence', }
+    else # <= Il y a des occurences du mot de base
+      infosprox = index_of_nearest_offset(occur.offsets, imot.offset, occur.distance_min)
+      if infosprox
+        return infosprox.merge({
+          proche: true,
+          nombre_occurences: occur.count,
+          raison: 'Occurence proche trouvée.'
+          })
+      else
+        return {
+          proche: false,
+          nombre_occurences: occur.count,
+          raison: 'Aucune occurence assez proche.'
+        }
+      end
+    end
+  end
+  def index_of_nearest_offset liste, expected_offset, max_distance
+    # Offset après lequel on pourra s'arrêter
+    max_offset = expected_offset + max_distance
+    liste.each_with_index do |offset, index_offset|
+      dist = (offset - expected_offset).abs
+      if dist <= max_distance
+        return {index: index_offset, avant: offset < expected_offset, distance: dist}
+      elsif offset > max_offset
+        return nil
+      end
+    end
+  end
 
-
+  # Quand on tape 'r' seul, c'est qu'on veut remplacer un des mots de la
+  # proximité. 'rp <mot>' ou 'rs <mot>' a pu être donné, qui précise si c'est le
+  # premier (p) ou le seconde (s) mot qu'il faut changer, ainsi que le nouveau
+  # mot (<mot>) à affecter. Dans le cas contraire, il faut demander toutes ces
+  # informations
+  def ask_si_avant_ou_apres_et_new_mot args
+    args = args.split(' ')
+    pour_premier  = args.shift
+    nouveau_mot   = args.empty? ? nil : args.join(' ')
+    pour_premier =
+      case pour_premier[1]
+      when 'p' then true
+      when 's' then false
+      else
+        yesOrNo('Remplacer le premier mot ?') || return
+      end
+    nouveau_mot || begin
+      nouveau_mot = askFor(RET2 + "Remplacer le #{pour_premier ? 'premier' : 'second'} mot par")
+      nouveau_mot || return
+    end
+    return [pour_premier, nouveau_mot]
   end
 
   # Pour pouvoir proposer un mot et checker pour voir s'il ne va pas créer
@@ -127,69 +198,38 @@ class << self
   #
   def proposer_et_tester_un_mot iprox, choix
 
-    nouveau_mot   = nil
-    pour_premier  = (choix == 'p' ? nil : (choix.start_with?('pp') ? true : false))
-
-    if pour_premier === nil
-      rep = askFor(RET2+'Est-ce une proposition pour le premier mot ? (premier: o, p ou 1, second: n, s, 2)')
-      pour_premier =
-        case rep
-        when 'o', 'p', '1' then true
-        when 'n', 's', '2' then false
-        else
-          error "Je ne comprends pas ce choix."
-          return
-        end
-    else
-      # Quand pour_premier est false ou true, c'est que 'pp' ou 'ps' ont été
-      # fournis. Un mot a pu être ajouté
-      choix = choix.split(' ')
-      choix.shift # on retire 'pp' ou 'ps'
-      choix.empty? || nouveau_mot = choix.join(' ')
-    end
-
-    # On demande le nouveau mot, sauf s'il a été fourni
-    nouveau_mot || begin
-      nouveau_mot = askFor(RET2+"Remplacer le #{pour_premier ? 'premier' : 'second'} mot par le mot")
-      nouveau_mot || return
-    end
-
-    # On teste la validité du mot proposé, pour savoir s'il ne
-    # rentre pas en conflit avec un autre mot du texte.
+    pour_premier, new_mot = ask_si_avant_ou_apres_et_new_mot choix
 
     # On peut avoir fourni plusieurs mots, il faudra tester chacun d'un.
     # Une autre solution est de suggérer les mots l'un après l'autre
-    mots = nouveau_mot.strip.my_downcase.split(/[^[[:alnum:]]]/)
-
+    mots = new_mot.strip.my_downcase.split(/[^[[:alnum:]]]/)
     # Le mot de référence en fonction du fait qu'on veut remplacer le premier
     # ou le second mot.
-    imot_reference = iprox.send(pour_premier ? :mot_avant : :mot_apres)
+    imot_ref = iprox.send(pour_premier ? :mot_avant : :mot_apres)
 
     puts RET2 +
           '*** Test de la validité de la proposition : ' + nouveau_mot.inspect
-    puts  '  * Mot de référence à remplacer (%s) : %s' % [(pour_premier ? 'premier' : 'second '), imot_reference.mot.inspect]
-
-    offset_mot_ref = imot_reference.offset
-    # puts "  * Offset : #{offset_mot_ref}"
+    puts  '  * Mot de référence à remplacer (%s) : %s' % [(pour_premier ? 'premier' : 'second '), imot_ref.mot.inspect]
 
     # On teste pour chaque mot en en faisant des instances
     mots.each do |mot|
 
-      # puts "\t* Test validité de #{mot.inspect}"
-
-      # On fait juste une instance pour obtenir le mot de base.
-      imot_test = Texte::Mot.new(nil, mot, imot_reference.index, offset_mot_ref)
-
-      mot_base = imot_test.mot_base
-      # puts "\t* Son mot de base est : #{imot_test.mot_base}"
-
-      res = check_proximites_possible(imot_test, pour_premier)
-      puts RET3
-      getc('Tapez une touche quelconque pour passer à la suite…')
-      case res
-      when NilClass   then next
-      when FalseClass then return false
+      infosprox = infos_proximity_for(imot_ref)
+      nboccur = infosprox[:nombre_occurences]
+      if infosprox[:proche]
+        # <= Un mot proche a été trouvé
+        puts '  = Proximité trouvée à %i caractères' % [infosprox[:distance]]
+        distance_acceptable = infosprox[:distance] > (Proximity::DISTANCE_MAX_NORMALE * 2 / 3)
+        color =  ? :mauve : :rouge
+        msg = distance_acceptable ? 'acceptable' : 'fortement déconseillé'
+        puts ('# Ce mot est %s' % [msg]).send(distance_acceptable ? :mauve : :rouge)
+      else
+        # <= Aucun mot proche n'a été trouvé
+        msg = nboccur > 0 ? (' sur %i occurences' % [nboccur]) : 'car ce mot n’existe pas'
+        puts '  = Pas de proximité trouvée %s.' % [msg]
+        puts '  => Ce mot est utilisable sans problème.'.blue
       end
+      getc('Tapez une touche quelconque pour passer à la suite…')
     end
     # /loop sur chaque mot proposé
 
@@ -197,86 +237,5 @@ class << self
   end
   # /proposer_et_tester_un_mot
 
-
-  def check_proximites_possible(imot_test, pour_premier)
-    ioccurences = Occurences[imot_test.mot_base]
-    if ioccurences
-      res = ioccurences.check_proximites_possibles_avec(imot_test, pour_premier)
-      case res
-      when NilClass # On
-        # <= Aucune occurence proche n'a été trouvée
-        # => On peut passer au mot suivant (si un autre a été proposé)
-        return nil
-      when FalseClass
-        # On a trouvé une occurence trop près
-        return false
-      end
-    else
-      puts (
-        ('  = Aucune occurence du mot base “%s” n’existe dans ce texte.' % [imot_test.mot_base]) +
-        RET + '  => Il est forcément utilisable.'
-      ).bleu
-      return nil
-    end
-  end
-
 end #/<< self
 end #/Proximity
-
-# ---------------------------------------------------------------------
-#
-#   CLASSE Occurences
-#
-# ---------------------------------------------------------------------
-class Occurences
-  # ---------------------------------------------------------------------
-  #
-  #   INSTANCES
-  #
-  # ---------------------------------------------------------------------
-
-  def check_proximites_possibles_avec imot_test, pour_premier
-    # puts "\t= Une instance occurences de #{mot_base.inspect} existe."
-    distance_min = self.distance_min
-
-    # On passe en revue chaque offset des occurences pour voir s'il y en
-    # a une à une distance inférieure de la distance min
-    sens = nil
-    self.offsets.each do |offset|
-
-      distance = offset - imot_test.offset
-      trop_proche = distance.abs <= distance_min
-      # puts "distance : #{distance} (min : #{distance_min})"
-      if distance < 0 && trop_proche
-        # Trop proche d'un mot avant
-        sens = "avant"
-      elsif distance > 0 && trop_proche
-        # Trop proche d'un mot après
-        sens = "après"
-      elsif distance > distance_min
-        # On est trop loin, on peut s'arrêter là
-        puts (
-          ('  = Ce mot est répété %i fois dans ce texte, aux index : %s, donc trop loin du mot courant.' % [self.count, self.offsets.join(', ')]) +
-          RET + '  => Il peut être utilisé sans souci.').bleu
-        return nil
-      end
-      # /boucle sur tous les offsets du mot
-
-      # Ce mot est trop proche. On affiche un message pour le signaler
-
-      distance = distance.abs
-      couleur, etagere =
-        if distance > (Proximity::DISTANCE_MAX_NORMALE * 2 / 3) then
-          [:rouge_clair, 'déconseillé']
-        else
-          [:rouge, 'inutilisable']
-        end
-      puts (
-        ( '  # Le mot base “%s” (utilisé %i dans ce texte) se trouve à %i signes %s le %s' % [imot_test.mot_base, self.count, distance, sens, (pour_premier ? 'premier' : 'second')]) +
-        RET + ( '  => Il est %s.' % [etagere] )).send(couleur)
-      return false
-    end
-  end
-  #/check_proximites_possibles_avec
-
-end

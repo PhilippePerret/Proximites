@@ -32,11 +32,17 @@ class Mot
   #    proximité avec un autre mot.
   #  * Le mot remplacé peut très bien être en proximité
   #
-  # Note : pour un texte court, ne serait-il pas intéressant de refaire
-  #        simplement le check ?…
+  # Notes :
+  # -------
+  #       * Si le programme trouve une proximité, elle demande confirmation
+  #         avant de procéder au changement.
+  #       * pour un texte court, ne serait-il pas intéressant de refaire
+  #         simplement le check ?…
   #
   # Le mot remplacé pouvant être en proximité avec deux mots (avant et après),
   # c'est cette méthode qui est appelée pour modifier un mot
+  #
+  #
   def remplace_par nouveau_mot_str
     Tests::Log << '-> Texte::Mot#replace'
 

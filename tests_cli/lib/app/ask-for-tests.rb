@@ -1,13 +1,14 @@
 # encoding: utf-8
 #
 # ask-for-test
-# v. 1.2
+# v. 1.2.2
 #
 # Voir aussi le module Extension/ask.rb qui fonctionne en parallèle de celui-ci
 #
 
 
 def getc message
+  puts '%s :' % message
   return Tests.next_touche(from: 'getc')
 end
 
@@ -18,6 +19,7 @@ end
 # de test
 #
 def yesOrNo question
+  puts '%s :' % question
   # Tests.suivi("-> yesOrNo('#{question}')")
   case Tests.next_touche(from: "yesOrNo(#{question.inspect})")
   when 'true', 'o', 'oui', 'y', 'yes' # next_touche retourne toujours un string
@@ -30,6 +32,7 @@ end
 # Pose la +question+ qui attend forcément une valeur non nulle et raise
 # l'exception +msg_error+ dans le cas contraire.
 def askForOrRaise(question, msg_error = "Cette donnée est obligatoire")
+  puts '%s :' % question
   val = Tests.next_touche(from: "askForOrRaise(#{question.inspect})")
   val.is_a?(Array) || raise('Pour un askForOrRaise, il faut fournir un Array avec en première valeur la réponse donnée en ligne de commande et en seconde valeur le message de l’erreur générée. Elle sera générée si la première valeur est vide.')
   r, msg_error = val
@@ -39,6 +42,7 @@ end
 
 # Pose la +question+ et retourne la réponse, même vide.
 def askFor(question, default = nil)
+  puts '%s :' % question
   Tests.next_touche(from: "askFor(#{question.inspect})")
 end
 

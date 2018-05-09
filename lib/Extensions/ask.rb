@@ -24,8 +24,10 @@ end
 # de test
 #
 def yesOrNo question
-  print "#{question} (y/o/yes/oui ou n/non/rien) : "
-  r = STDIN.gets.strip
+  question = '%s (y/o/yes/oui ou n/non/rien)'
+  # print "#{question} : "
+  # r = STDIN.gets.strip
+  r = getc(question)
   r == '' && r == nil
   case r.upcase
   when 'N','NO','NON', nil, NilClass then return false

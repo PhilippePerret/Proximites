@@ -15,113 +15,20 @@ START PROGRAMME
 -> Texte#load_mots... OK
 Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
 -> Proximity::_show(mot = nil)
-Nombre de proximités : 725
--> Proximity::traite_proximite_mode_interactif(iprox.id=6/iprox.object_id:70321010939000)
+Nombre de proximités : 1
+-> Proximity::traite_proximite_mode_interactif(iprox.id=1/iprox.object_id:70284527041320)
 Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #6
-	Proximité en argument    : 70321010939000
-	Proximité dans Proximity : 70321010939000
-		Mot avant dans prox argument : 70321009529240
-		          dans Texte.mots    : 70321009529240
+	Contrôle de la proximité #1
+	Proximité en argument    : 70284527041320
+	Proximité dans Proximity : 70284527041320
+		Mot avant dans prox argument : 70284527053940
+		          dans Texte.mots    : 70284527053940
 		
-[Tests::next_touche] "rp climatisationnelle" en réponse à askFor("Opération choisie") (touches restantes : ["o", "oo", "z", "n", "o", "q"])
+[Tests::next_touche] "rp vent" en réponse à askFor("Opération choisie") (touches restantes : ["n", "n", "po", "z", true, "z", "z", "z", "z"])
 -> remplacer_mot_par_mot
-[Tests::next_touche] "o" en réponse à yesOrNo("Veux-tu remplacer le mot \"orage\" par \"climatisationnelle\"") (touches restantes : ["oo", "z", "n", "o", "q"])
--> Texte::Mot#replace
-La proximité après #6 est à détruire.
-Nouveau compte de proximités mis à 724 après destruction de proximité #6.
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "n", "o", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=18/iprox.object_id:70321010938760)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #18
-	Proximité en argument    : 70321010938760
-	Proximité dans Proximity : 70321010938760
-		Mot avant dans prox argument : 70321009528360
-		          dans Texte.mots    : 70321009528360
-		
-[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["n", "o", "q"])
-[Tests::next_touche] "n" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : ["o", "q"])
-[Tests::next_touche] "o" en réponse à yesOrNo("Êtes-vous sûr de ne pas vouloir enregistrer les changements ?") (touches restantes : ["q"])
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
-EOP
-
-
-
-START PROGRAMME
--> Texte#load_all
--> Texte#load_mots... OK
-Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
--> Proximity::_show(mot = nil)
-Nombre de proximités : 725
--> Proximity::traite_proximite_mode_interactif(iprox.id=6/iprox.object_id:70306711705020)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #6
-	Proximité en argument    : 70306711705020
-	Proximité dans Proximity : 70306711705020
-		Mot avant dans prox argument : 70306711114240
-		          dans Texte.mots    : 70306711114240
-		
-[Tests::next_touche] "rp climatisationnelle" en réponse à askFor("Opération choisie") (touches restantes : ["o", "oo", "z", "n", "n", "q"])
--> remplacer_mot_par_mot
-[Tests::next_touche] "o" en réponse à yesOrNo("Veux-tu remplacer le mot \"orage\" par \"climatisationnelle\"") (touches restantes : ["oo", "z", "n", "n", "q"])
--> Texte::Mot#replace
-La proximité après #6 est à détruire.
-Nouveau compte de proximités mis à 724 après destruction de proximité #6.
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "n", "n", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=18/iprox.object_id:70306711704780)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #18
-	Proximité en argument    : 70306711704780
-	Proximité dans Proximity : 70306711704780
-		Mot avant dans prox argument : 70306711113360
-		          dans Texte.mots    : 70306711113360
-		
-[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["n", "n", "q"])
-[Tests::next_touche] "n" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : ["n", "q"])
-[Tests::next_touche] "n" en réponse à yesOrNo("Êtes-vous sûr de ne pas vouloir enregistrer les changements ?") (touches restantes : ["q"])
--> Texte#save_all
--> Texte#save_mots… OK
-<- Texte#save_all
+infosprox: {:index=>0, :avant=>false, :distance=>9, :proche=>true}
+[Tests::next_touche] "n" en réponse à yesOrNo("Confirmez-vous quand même le remplacement ?") (touches restantes : ["n", "po", "z", true, "z", "z", "z", "z"])
+[Tests::next_touche] "n" en réponse à askFor("Opération choisie") (touches restantes : ["po", "z", true, "z", "z", "z", "z"])
 <- Proximity::_show
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
-EOP
-
-
-
-START PROGRAMME
--> Texte#load_all
--> Texte#load_mots... OK
-Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
--> Proximity::_show(mot = nil)
-Nombre de proximités : 724
--> Proximity::traite_proximite_mode_interactif(iprox.id=18/iprox.object_id:70186682416560)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #18
-	Proximité en argument    : 70186682416560
-	Proximité dans Proximity : 70186682416560
-		Mot avant dans prox argument : 70186671307500
-		          dans Texte.mots    : 70186671307500
-		
-[Tests::next_touche] "rp climatisationnelle" en réponse à askFor("Opération choisie") (touches restantes : ["o", "oo", "z", "o", "q"])
--> remplacer_mot_par_mot
-[Tests::next_touche] "o" en réponse à yesOrNo("Veux-tu remplacer le mot \"deux\" par \"climatisationnelle\"") (touches restantes : ["oo", "z", "o", "q"])
--> Texte::Mot#replace
-La proximité après #18 est à détruire.
-Nouveau compte de proximités mis à 723 après destruction de proximité #18.
-[Tests::next_touche] "oo" en réponse à askFor("Opération choisie") (touches restantes : ["z", "o", "q"])
--> Proximity::traite_proximite_mode_interactif(iprox.id=34/iprox.object_id:70186682416220)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #34
-	Proximité en argument    : 70186682416220
-	Proximité dans Proximity : 70186682416220
-		Mot avant dans prox argument : 70186671307140
-		          dans Texte.mots    : 70186671307140
-		
-[Tests::next_touche] "z" en réponse à askFor("Opération choisie") (touches restantes : ["o", "q"])
-[Tests::next_touche] "o" en réponse à yesOrNo("Faut-il enregistrer les changements opérés ?") (touches restantes : ["q"])
--> Texte#save_all
--> Texte#save_mots… OK
-<- Texte#save_all
-<- Proximity::_show
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+[Tests::next_touche] "po" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : ["z", true, "z", "z", "z", "z"])
 EOP
