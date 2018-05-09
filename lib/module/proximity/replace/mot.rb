@@ -71,11 +71,13 @@ class Mot
     # On regarde si l'autre mot que le mot modifié entre en proximité avec
     # un autre
     # Vérifier les proximités du nouveau mot vers l'avant et vers l'arrière
-    Occurences[mot_base].check_proximite_vers(self, true)
-    Occurences[mot_base].check_proximite_vers(self, false)
+    if mot_base != ''
+      Occurences[mot_base].check_proximite_vers(self, true)
+      Occurences[mot_base].check_proximite_vers(self, false)
+    end
 
     # Vérifier les proximités de l'ancien mot avant s'il existe en avant
-    imot_avant && begin
+    imot_avant && Occurences[imot_avant.mot_base] && begin
       # Tests::Log << "Check de la nouvelle proximité arrière de l'ancien mot avant : #{imot_avant.inspect}"
       Occurences[imot_avant.mot_base].check_proximite_vers(imot_avant, true)
     end
@@ -83,7 +85,7 @@ class Mot
     # Vérifier les proximités de l'ancien mot après s'il existe en arrière
     # Sauf si c'est justement le mot qui a été mis en proximité avec le mot
     # avant.
-    imot_apres && begin
+    imot_apres && Occurences[imot_apres.mot_base] && begin
       # Tests::Log << "Check de la nouvelle proximité vers l'avant de l'ancien mot après : #{imot_apres.inspect}"
       Occurences[imot_apres.mot_base].check_proximite_vers(imot_apres, false)
     end
@@ -97,6 +99,7 @@ class Mot
   rescue Exception => e
     Tests::Log.error(e)
     error("#{e.message} (détail dans le fichier ./.tests_cli/test.log)")
+    puts e.backtrace.join("\n").rouge
     return false
   end
 
@@ -111,7 +114,7 @@ class Mot
     # Il faut forcément le faire avant de mettre les nouvelles valeurs,
     # car l'occurence se sert de mot_base, par exemple.
     new_mot_base != mot_base && begin
-      occurence.retire_mot(self)
+      occurence && occurence.retire_mot(self)
     end
 
     # On peut véritablement modifier le mot.

@@ -7,6 +7,7 @@ class Texte
 
   def save_all
     Tests::Log << '-> Texte#save_all'
+    print 'Sauvegarde de tous les éléments. Merci de patienter…'
     Prox.log_check? && Prox.log_check("*** Sauvegarde de tous les éléments…", is_op = true)
     `mkdir -p "#{Prox.folder}"`
     Prox.log_check? && Prox.log_check("  * Sauvegarde des mots…")
@@ -16,11 +17,13 @@ class Texte
     Prox.log_check? && Prox.log_check("  * Sauvegarde des proximités…")
     Proximity.save
     Prox.log_check? && Prox.log_check("=== Fin de la sauvegarde", is_op = true)
+    puts ' OK'
     Tests::Log << '<- Texte#save_all'
   end
 
   def load_all
     Tests::Log << '-> Texte#load_all'
+    print('Chargement des données. Merci de patienter…')
     load_mots
     Occurences.load
     Proximity.load
@@ -38,6 +41,7 @@ class Texte
         raise "Proximity ##{iprox.id} : l’instance du mot après ne correspond pas (object_id)."
       end
     end
+    puts ' OK'
     Tests::Log << 'Au chargement, les object_id des intances Texte::Mot des proximités correspondent.'
   end
 

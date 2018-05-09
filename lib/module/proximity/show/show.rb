@@ -139,9 +139,11 @@ class << self
     # Si des modifications ont été opérées, on doit enregistrer toutes les
     # informations.
     if mode_interactif && changements_operes
-      yesOrNo("Faut-il enregistrer les changements opérés ?") || begin
-        yesOrNo('Êtes-vous sûr de ne pas vouloir enregistrer les changements ?'.rouge) && return
+      yesOrNo('Faut-il enregistrer les changements opérés ?') || begin
+        puts ''
+        yesOrNo('Êtes-vous sûr de ne pas vouloir enregistrer les changements ? Ils seront perdus'.rouge) && return
       end
+      puts ''
       texte_courant.save_all
     end
     Tests::Log << '<- Proximity::_show'

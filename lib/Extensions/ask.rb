@@ -24,13 +24,13 @@ end
 # de test
 #
 def yesOrNo question
-  question = '%s (y/o/yes/oui ou n/non/rien)'
+  question = '%s (y/o = oui / n/rien = non)' % [question]
   # print "#{question} : "
   # r = STDIN.gets.strip
   r = getc(question)
   r == '' && r == nil
   case r.upcase
-  when 'N','NO','NON', nil, NilClass then return false
+  when 'N', nil, NilClass then return false
   else return true
   end
 end

@@ -29,6 +29,8 @@ Tests.show_tableaux_in(res) # <--- POUR VOIR LES TABLEAUX
 # 'Le programme demande de confirmer le remplacement.')
 
 
+# TODO Faire les tests avec un texte de remplacement vide
+
 
 
 # res = run('prox correct', [

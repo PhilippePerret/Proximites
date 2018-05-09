@@ -39,8 +39,10 @@ class << self
   def destroy prox_id
     prox_id.is_a?(Fixnum) || prox_id = prox_id.id
     iprox = table[prox_id]
-    Occurences[iprox.mot_avant.mot_base].retire_proximite(iprox.mot_avant.prox_ids[:apres])
-    Occurences[iprox.mot_apres.mot_base].retire_proximite(iprox.mot_apres.prox_ids[:avant])
+    occur_motA = Occurences[iprox.mot_avant.mot_base]
+    occur_motA && occur_motA.retire_proximite(iprox.mot_avant.prox_ids[:apres])
+    occur_motB = Occurences[iprox.mot_apres.mot_base]
+    occur_motB && occur_motB.retire_proximite(iprox.mot_apres.prox_ids[:avant])
     iprox.mot_avant.prox_ids[:apres] = nil
     iprox.mot_apres.prox_ids[:avant] = nil
     @table.delete(prox_id)

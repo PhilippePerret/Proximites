@@ -100,19 +100,22 @@ class << self
 
     # Le remplacement est identique au mot existant => idiot
     imot.mot.my_downcase != new_mot.my_downcase || begin
-      puts "Les deux mots sont identiques. Remplacement inutile."
+      puts 'Les deux mots sont identiques. Remplacement inutile.'
       return
     end
 
-    # Une proximité existe avec le nouveau mot => demande de confirmation
-    infosprox = infos_proximity_for(imot, new_mot.my_downcase)
-    Tests::Log << "infosprox: #{infosprox.inspect}"
-    if infosprox[:proche]
-      puts ('Attention, le mot “%s” se trouve à %i caractères %s le mot à remplacer.' % [new_mot, infosprox[:distance], (infosprox[:avant] ? 'avant' : 'après')]).rouge
-      yesOrNo('Confirmez-vous quand même le remplacement ?') || return
-    else
-      # Le remplacement peut se faire. Demande de confirmation.
-      yesOrNo('Remplacer le mot “%s” par “%s” (note : la proximité a été checkée avec succès)' % [imot.mot.jaune, new_mot.jaune]) || return
+    if new_mot != ''
+      # Une proximité existe avec le nouveau mot => demande de confirmation
+      infosprox = infos_proximity_for(imot, new_mot.my_downcase)
+      Tests::Log << "infosprox: #{infosprox.inspect}"
+      if infosprox[:proche]
+        puts ('Attention, le mot “%s” se trouve à %i caractères %s le mot à remplacer.' % [new_mot, infosprox[:distance], (infosprox[:avant] ? 'avant' : 'après')]).rouge
+        puts RET2
+        yesOrNo('Confirmez-vous quand même le remplacement ?') || return
+      else
+        # Le remplacement peut se faire. Demande de confirmation.
+        yesOrNo('Remplacer le mot “%s” par “%s” (note : la proximité a été checkée avec succès)' % [imot.mot.jaune, new_mot.jaune]) || return
+      end
     end
 
     # On procède vraiment au remplacement
@@ -124,7 +127,8 @@ class << self
       Texte.current.set_info(locked: true)
       # Demander de confirmer le changement
       # notice("#{RETT}Le mot #{imot.mot} a été remplacé par #{new_mot.inspect}.#{RETT}Il faut encore confirmer la correction.#{RET2}")
-      notice(RETT+('Le mot “%s” a été remplacé par “%s”.' % [old_mot, new_mot])+RETT+'Il faut encore confirmer la correction.'+RET2)
+      msg = ('Le mot “%s” a été %s.' % [old_mot, (new_mot == '' ? 'supprimé' : ('remplacé par “%s”' % [new_mot])) ])
+      notice(RETT+msg+RETT+'Il faut encore confirmer la correction.'+RET2)
       self.changements_operes = true
     end
     return true
@@ -137,7 +141,7 @@ class << self
     occur = Occurences[new_mot.my_downcase]
     # Si le mot de base n'a pas d'occurence
     if occur.nil?
-      {proche: false, raison: 'Seule occurence', }
+      {proche: false, raison: 'Seule occurence', nombre_occurences: 0}
     else # <= Il y a des occurences du mot de base
       infosprox = index_of_nearest_offset(occur.offsets, imot.offset, occur.distance_min)
       if infosprox
@@ -182,7 +186,7 @@ class << self
       when 'p' then true
       when 's' then false
       else
-        yesOrNo('Remplacer le premier mot ?') || return
+        yesOrNo('Remplacer le premier mot ?')
       end
     nouveau_mot || begin
       nouveau_mot = askFor(RET2 + "Remplacer le #{pour_premier ? 'premier' : 'second'} mot par")
@@ -198,7 +202,13 @@ class << self
   #
   def proposer_et_tester_un_mot iprox, choix
 
-    pour_premier, new_mot = ask_si_avant_ou_apres_et_new_mot choix
+    pour_premier, new_mot = ask_si_avant_ou_apres_et_new_mot(choix)
+    new_mot.nil? && return # abandon
+
+    new_mot != '' || begin
+      error 'Tester de supprimer le mot n’est pas utile.'
+      return
+    end
 
     # On peut avoir fourni plusieurs mots, il faudra tester chacun d'un.
     # Une autre solution est de suggérer les mots l'un après l'autre
@@ -208,30 +218,35 @@ class << self
     imot_ref = iprox.send(pour_premier ? :mot_avant : :mot_apres)
 
     puts RET2 +
-          '*** Test de la validité de la proposition : ' + nouveau_mot.inspect
+          ('*** Test de la validité de la proposition : “%s”' % new_mot)
     puts  '  * Mot de référence à remplacer (%s) : %s' % [(pour_premier ? 'premier' : 'second '), imot_ref.mot.inspect]
 
     # On teste pour chaque mot en en faisant des instances
     mots.each do |mot|
 
-      infosprox = infos_proximity_for(imot_ref)
+      infosprox = infos_proximity_for(imot_ref, mot)
       nboccur = infosprox[:nombre_occurences]
       if infosprox[:proche]
         # <= Un mot proche a été trouvé
-        puts '  = Proximité trouvée à %i caractères' % [infosprox[:distance]]
         distance_acceptable = infosprox[:distance] > (Proximity::DISTANCE_MAX_NORMALE * 2 / 3)
-        color =  ? :mauve : :rouge
-        msg = distance_acceptable ? 'acceptable' : 'fortement déconseillé'
-        puts ('# Ce mot est %s' % [msg]).send(distance_acceptable ? :mauve : :rouge)
+        color = distance_acceptable ? :mauve : :rouge
+        msg   = distance_acceptable ? 'acceptable' : 'fortement déconseillé'
+        msg = (
+          '  = “%s” trouvé %s à %i signes.' % [mot, (infosprox[:avant] ? 'avant' : 'après'), infosprox[:distance]]
+        )+RET+(
+          '  # => Ce mot est %s' % [msg]
+        )
+        puts msg.send(distance_acceptable ? :mauve : :rouge)
       else
         # <= Aucun mot proche n'a été trouvé
         msg = nboccur > 0 ? (' sur %i occurences' % [nboccur]) : 'car ce mot n’existe pas'
-        puts '  = Pas de proximité trouvée %s.' % [msg]
-        puts '  => Ce mot est utilisable sans problème.'.blue
+        puts '  = Aucune proximité trouvée %s.' % [msg]
+        puts '  => Ce mot est utilisable sans problème.'.bleu
       end
-      getc('Tapez une touche quelconque pour passer à la suite…')
     end
     # /loop sur chaque mot proposé
+    getc(RET3 + 'Tapez une touche quelconque pour passer à la suite…')
+    puts RET
 
     return true
   end
