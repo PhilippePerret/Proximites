@@ -71,9 +71,12 @@ class Mot
     # On regarde si l'autre mot que le mot modifié entre en proximité avec
     # un autre
     # Vérifier les proximités du nouveau mot vers l'avant et vers l'arrière
-    if mot_base != ''
+    if Occurences[mot_base]
       Occurences[mot_base].check_proximite_vers(self, true)
       Occurences[mot_base].check_proximite_vers(self, false)
+    elsif mot_base != ''
+      puts "Bizarrement, `Occurences[#{mot_base.inspect}]` est nil alors qu'une occurence de ce mot vient logiquement d'être créée…".rouge
+      puts 'Toujours est-il que je ne peux pas checker les proximités avant et après du mot.'
     end
 
     # Vérifier les proximités de l'ancien mot avant s'il existe en avant
@@ -109,12 +112,20 @@ class Mot
     # Différence de longueur entre le mot précédent et le nouveau mot.
     diff_len = new_mot.length - length
 
-    new_mot_base = Texte::Mot.get_mot_base(new_mot)
+    old_mot_base = "#{self.mot_base}".freeze
+    new_mot_base = Texte::Mot.get_mot_base(new_mot).freeze
+    Tests::Log << <<-EOT
+old mot base : #{old_mot_base.inspect}
+new mot base : #{new_mot_base.inspect}
+    EOT
 
     # Il faut forcément le faire avant de mettre les nouvelles valeurs,
     # car l'occurence se sert de mot_base, par exemple.
-    new_mot_base != mot_base && begin
-      occurence && occurence.retire_mot(self)
+    new_mot_base != old_mot_base && begin
+      Tests::Log << <<-EOT
+Occurences[old_mot_base].mot = Occurences[#{old_mot_base}].mot = #{Occurences[old_mot_base] ? Occurences[old_mot_base].mot : '---'}
+      EOT
+      Occurences[old_mot_base].retire_mot(self)
     end
 
     # On peut véritablement modifier le mot.

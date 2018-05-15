@@ -1,0 +1,9 @@
+.git
+
+test/
+*.msh
+test/proximites-texte_court/infos.msh
+test/proximites-texte_court/mots.msh
+test/proximites-texte_court/infos.msh
+test/proximites-texte_court/mots.msh
+./texte_prov

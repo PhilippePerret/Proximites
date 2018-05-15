@@ -22,7 +22,7 @@ class << self
       runable? || return
       # Sauf si la commande est `check`, on charge les données s'il y en
       # a à charger
-      main_command.to_s != 'check' && load_current_data
+      command_sans_data?(main_command.to_s) || load_current_data
       # Exécution de la commande demandée
       send(main_command.to_sym)
       # On referme le log de check si nécessaire
@@ -48,6 +48,9 @@ class << self
     Prox.log_check? && Prox::LogCheck.close
   end
 
+  def command_sans_data?(command)
+    return ['check', 'control'].include?(command)
+  end
   # Quand on appelle cette méthode, on ne connait pas encore le path du
   # texte courant. On doit le chercher, voir s'il existe et charger toutes les
   # données
@@ -60,8 +63,9 @@ class << self
     next_command = nil
     command_in_histo = nil
     while true
-      q = "Commande suivante sans `proximite ` (#{'q'.jaune}, #{'z'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) [ #{command_in_histo}]"
-      next_command = askFor(q)
+      q = "#{RET2}Commande suivante sans `proximite ` (#{'q'.jaune}, #{'z'.jaune} = terminer, #{'h'.jaune} = historique, #{'rien'.jaune} pour la même) [ #{command_in_histo}]"
+      next_command = getc(q.bleu)
+      puts 'Choix : %s' % [next_command.inspect]
       case next_command
       when 'q', 'z', nil then return
       when 'h'

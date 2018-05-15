@@ -11,6 +11,7 @@ class CLI
     'c'               => 'check',
     'fp'              => 'from_page',
     'i'               => 'interactif',
+    'qm'              => 'quick_mode',
     'o'               => 'output',
     'pp'              => 'per_page',
     'prog'            => 'programmation',

@@ -4,6 +4,7 @@ class Occurences
   # Pour retirer le mot +imot+ ({Texte::Mot}) des occurences courantes (quand
   # par exemple il a été modifié)
   def retire_mot imot
+    Tests::Log << ('-> Occurences[%s]#retire_mot(%s)' % [self.mot, imot.inspect.sans_couleur])
     # Dans un premier temps, on doit trouver l'index du mot dans les listes,
     index_mot_in_liste = nil
     @offsets.each_with_index do |offset, index|
@@ -13,6 +14,8 @@ class Occurences
       end
     end
     index_mot_in_liste || begin
+      Tests::Log << ('Un index du mot %s aurait du être trouvé dans l’occurence de “%s”, avec l’offset %i dans la liste des offsets :' % [imot.mot, self.mot, imot.offset])
+      Tests::Log << offsets.inspect
       raise 'Un index aurait dû être trouvé…'
     end
 

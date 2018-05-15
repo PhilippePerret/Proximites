@@ -19,7 +19,8 @@ class Mot
     'alors'   =>  300,  'arrière' =>  300,  'avant'   =>  100, 'avec'    =>  100,
     'bien'    =>  400,
     'cet'     =>  300,  'comme'   =>  400,
-    'dans'    =>  300,  'dehors'  =>  '1p', 'depuis'  =>  500, 'derrière' => 300, 'du' =>  50,
+    'dans'    =>  300,  'dehors'  =>  '1p', 'depuis'  =>  500, 'derrière' => 300,
+    'donc'    =>  300,  'du' =>  50,
     'eux'     =>  '1p',
     'jamais'  =>  150,
     'leur'    =>  300,
@@ -48,12 +49,17 @@ class Mot
   # TODO Traiter "mètre par mètre", "coudée par coudée", "centimètre par centimètre"
   # TODO Traiter "mot pour mot", "geste pour geste", etc.
   LOCUTIONS_REPETITIVES = {
-    'loin'  => ['loin en loin'],
-    'moins' => ['moins en moins'],
-    'peu'   => ['peu à peu'],
-    'temps' => ['temps en temps'],
-    'coute' => ['coute que coute'],
-    'encore' => ['encore et encore'] # penser au test des deux mots
+    'côte'    => ['côte à côte'],
+    'coute'   => ['coute que coute'],
+    'encore'  => ['encore et encore'], # penser au test des deux mots
+    'jour'    => ['jour le jour', 'jour après jour'],
+    'loin'    => ['loin en loin'],
+    'moins'   => ['moins en moins'],
+    'nez'     => ['nez à nez'],
+    'peu'     => ['peu à peu'],
+    'temps'   => ['temps en temps'],
+    'tête'    => ['tête à tête'], # Note : pas de tirets pour la vérification
+    'tour'    => ['tour à tour']
   }
 
   LOCUTIONS_TIRETS = {

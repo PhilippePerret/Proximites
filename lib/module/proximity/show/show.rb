@@ -19,6 +19,7 @@ class << self
     Tests::Log << "-> Proximity::_show(mot = #{mot.inspect})"
 
     mode_interactif = CLI.options[:interactif]
+    quick_mode      = CLI.options[:quick_mode]
     show_all        = !!CLI.options[:all]
 
     if mot.nil?
@@ -52,8 +53,17 @@ class << self
     mark_nombres_footer << "#{'Nombre total de proximités'.ljust(len_libelle_footer)} : #{nbtotal}"
 
     # Ne prendre que les proximités qui n'ont pas été marquées traitées ou
-    # supprimées (sauf si options --all, traitée dans displayable?)
-    liste_proximites  = liste_proximites.select{ |prox| prox.displayable? }
+    # supprimées (sauf si options --all, traitée dans displayable? et sauf si
+    # on est en mode rapide et qu'on présente les non displayable et les
+    # traitées dans ce mode.
+    if quick_mode
+      # <= mode rapide
+      # => on ne prend pas les proximités déjà traitées
+      liste_proximites  = liste_proximites.select{ |prox| prox.displayable? && !prox.treated_in_quick_mode? }
+    else
+      # <= mode normal
+      liste_proximites  = liste_proximites.select{ |prox| prox.displayable? }
+    end
     nombre_proximites = liste_proximites.count
 
     CLI.options[:all] || begin
@@ -88,14 +98,42 @@ class << self
     #
     proced =
       if mode_interactif
-        Proc.new do |prox, numero|
-          prox.displayable? || next
-          puts Tests.delimiteur_tableau
-          puts RET2 + prox.as_block(numero, nombre_proximites) + RET2
-          traite_proximite_mode_interactif(prox) && break
+        if quick_mode
+          # <= Mode rapide
+          # => Régler les touches de façon adéquate
+          Proc.new do |prox, numero|
+            puts Tests.delimiteur_tableau
+            puts RET2 + prox.as_block(numero, nombre_proximites) + RET2
+            touche = traite_proximite_mode_interactif_quick_mode(prox)
+            case touche
+            when :save_and_quit
+              texte_courant.save_all
+              nil
+            when :quit      then
+
+              nil
+            when :previous  then numero - 2  # => index_prox -= 1
+            when :next      then numero      # => index_prox += 1
+            else nil # pour sortir
+            end
+          end #/Proc.new
+        else
+          # <= Mode normal
+          # => Régler les touches
+          Proc.new do |prox, numero|
+            prox.nil? && begin
+              puts "La proximité numéro #{numero} n'a pas pu être traitée, elle est nulle."
+              next
+            end
+            prox.displayable? || next
+            puts Tests.delimiteur_tableau
+            puts RET2 + prox.as_block(numero, nombre_proximites) + RET2
+            traite_proximite_mode_interactif(prox) && break
+          end
         end
       else
         Proc.new do |prox, numero|
+          prox.nil? && next
           prox.displayable? || next
           puts prox.as_block(numero, nombre_proximites)
         end
@@ -111,14 +149,22 @@ class << self
     # =========================================================
     # On boucle sur chaque proximité à afficher
 
-    liste_proximites.each_with_index do |prox, index_prox|
-      # Ici, +prox+ et la proximité dans Proximity sont vraiment la
-      # même instance. On peut s'en assurer en débloquant les 3 lignes
-      # suivante et en lançant un test avec des proximités
-      # Tests::Log << 'Contrôle des instance proximité traitées'+RETT+
-      #   "Proximité dans la boucle : ID=#{prox.object_id}"+RETT+
-      #   "Proximité dans la liste  : ID=#{Proximity[prox.id].object_id}"
-      proced.call(prox, 1 + index_prox)
+    if quick_mode
+      index_prox = 0
+      while iprox = liste_proximites[index_prox]
+        # puts "*** Traitement de iprox #{iprox.id}"
+        index_prox = proced.call(iprox, 1 + index_prox)
+        # puts "#{RET}index_prox = #{index_prox.inspect}".jaune
+        index_prox || begin
+          # puts "index_prox est nil, j'arrête"
+          break
+        end
+      end
+    else
+      # <= Mode normal
+      liste_proximites.each_with_index do |prox, index_prox|
+        proced.call(iprox, 1 + index_prox)
+      end
     end
     puts Tests.delimiteur_tableau
 
@@ -138,10 +184,12 @@ class << self
 
     # Si des modifications ont été opérées, on doit enregistrer toutes les
     # informations.
-    if mode_interactif && changements_operes
+    if !quick_mode && mode_interactif && changements_operes
       yesOrNo('Faut-il enregistrer les changements opérés ?') || begin
-        puts ''
-        yesOrNo('Êtes-vous sûr de ne pas vouloir enregistrer les changements ? Ils seront perdus'.rouge) && return
+        yesOrNo(RET+'Êtes-vous sûr de ne pas vouloir enregistrer les changements ? Ils seront perdus'.rouge) && begin
+          puts RET+'Les modifications ne sont pas enregistrées.'
+          return
+        end
       end
       puts ''
       texte_courant.save_all

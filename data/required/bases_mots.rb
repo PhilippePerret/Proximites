@@ -32,6 +32,7 @@ POUR_BASE_MOTS = {
   'faire'     => ['fais', 'fait', 'faisait', 'faisaient', 'fit', 'fut'],
   'glisser'   => ['glissa', 'glisse'],
   'grandir'   => ['grandi'], # pour éviter "grand"
+  'jeter'     => ['jette', 'jettera', 'jetteront', 'jeta', 'jetait', 'jeté'],
   'laisser'   => ['laissa', 'laissai', 'laissait', 'laisse', 'laissez'],
   'lancer'    => ['lança', 'lançait'],
   'oublier'   => ['oublié'],
@@ -64,7 +65,7 @@ POUR_BASE_MOTS = {
   'venir'     => ['venait'],
   'vivre'     => ['vivait'],
   'vouloir'   => ['veut', 'veux', 'voulais', 'voulait', 'voulaient', 'voulez', 'voulu', 'voulut'],
-  'voir'      => ['veux', 'voyait']
+  'voir'      => ['vois', 'voyait', 'voyant']
 }
 
 # On peut construire la table qui va vraiment servir à retrouver le mot de

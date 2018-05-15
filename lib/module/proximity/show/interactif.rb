@@ -14,10 +14,22 @@ class Proximity
 
   EOT
 
+  PANNEAU_AIDE_REPONSES_QUICK_MODE = <<-EOT
+  #{'s'.jaune} = supprimer cette proximité (ne pas la traiter)
+  #{'t'.jaune} = “désupprimer” la proximité courante (pour la traiter)
+  #{'n'.jaune} = passer cette proximité pour la traiter plus tard
+  #{'o'.jaune} = marquer cette proximité comme traitée
+  #{'p'.jaune} = previous = revenir à la proximité précédentes
+  #{'q'.jaune} = interrompre la procédure et enregistrer les choix.
+  #{'z'.jaune} = interrompre la procédure SANS enregistrer les choix
+  EOT
+
+
   MESSAGES = {
-    'aide-reponses'   => PANNEAU_AIDE_REPONSES.freeze,
-    'confirm-treated' => 'Cette proximité a-t-elle vraiment été traitée ?'.bleu,
-    'confirm-deleted' => 'Dois-je vraiment supprimer cette proximité (i.e. ne plus en tenir compte) ?'.bleu
+    'aide-reponses'     => PANNEAU_AIDE_REPONSES.freeze,
+    'aide-reponses-qm'  => PANNEAU_AIDE_REPONSES_QUICK_MODE.freeze,
+    'confirm-treated'   => 'Cette proximité a-t-elle vraiment été traitée ?'.bleu,
+    'confirm-deleted'   => 'Dois-je vraiment supprimer cette proximité (i.e. ne plus en tenir compte) ?'.bleu
   }
 
 class << self
@@ -31,12 +43,12 @@ class << self
     Tests::Log << "-> Proximity::traite_proximite_mode_interactif(iprox.id=#{iprox.id}/iprox.object_id:#{iprox.object_id})"
 
     iprox_id = iprox.id
-    Tests::Log << 'Contrôle d’instance (proximity) dans traite_proximite_mode_interactif'+RETT+
-    "Contrôle de la proximité ##{iprox_id}"+RETT+
-    "Proximité en argument    : #{iprox.object_id}"+RETT+
-    "Proximité dans Proximity : #{Proximity[iprox_id].object_id}"+RETTT+
-      "Mot avant dans prox argument : #{iprox.mot_avant.object_id}"+RETTT+
-      "          dans Texte.mots    : #{Texte.current.mots[iprox.mot_avant.index].object_id}"+RETTT
+    # Tests::Log << 'Contrôle d’instance (proximity) dans traite_proximite_mode_interactif'+RETT+
+    # "Contrôle de la proximité ##{iprox_id}"+RETT+
+    # "Proximité en argument    : #{iprox.object_id}"+RETT+
+    # "Proximité dans Proximity : #{Proximity[iprox_id].object_id}"+RETTT+
+    #   "Mot avant dans prox argument : #{iprox.mot_avant.object_id}"+RETTT+
+    #   "          dans Texte.mots    : #{Texte.current.mots[iprox.mot_avant.index].object_id}"+RETTT
 
     iprox.mot_avant.object_id == Texte.current.mots[iprox.mot_avant.index].object_id || begin
       raise 'Problème d’instance (mot_avant de la proximité envoyée à traite_proximite_mode_interactif) et mot_avant dans Proximity'+RET+
@@ -74,6 +86,72 @@ class << self
   end
   # /traite_proximite_mode_interactif
 
+
+  # En mode interactif, on passe ici pour traiter la proximité
+  #
+  # On peut déterminer si la proximité est corrigée, s'il faut la supprimer,
+  # on peut faire une proposition de mot que le programme va vérifier (pour voir
+  # s'il ne crée par une nouvelle proximité), etc.
+  def traite_proximite_mode_interactif_quick_mode iprox
+    Tests::Log << "-> Proximity::traite_proximite_mode_interactif_quick_mode(iprox.id=#{iprox.id}/iprox.object_id:#{iprox.object_id})"
+
+    iprox_id = iprox.id
+    # Tests::Log << 'Contrôle d’instance (proximity) dans traite_proximite_mode_interactif'+RETT+
+    # "Contrôle de la proximité ##{iprox_id}"+RETT+
+    # "Proximité en argument    : #{iprox.object_id}"+RETT+
+    # "Proximité dans Proximity : #{Proximity[iprox_id].object_id}"+RETTT+
+    #   "Mot avant dans prox argument : #{iprox.mot_avant.object_id}"+RETTT+
+    #   "          dans Texte.mots    : #{Texte.current.mots[iprox.mot_avant.index].object_id}"+RETTT
+
+    iprox.mot_avant.object_id == Texte.current.mots[iprox.mot_avant.index].object_id || begin
+      raise 'Problème d’instance (mot_avant de la proximité envoyée à traite_proximite_mode_interactif_quick_mode) et mot_avant dans Proximity'+RET+
+      '(noter que l’instance Proximity, elle, est correcte)'
+    end
+
+    while true
+
+      puts Tests.delimiteur_tableau # Pour les tests
+      puts MESSAGES['aide-reponses-qm']
+
+      # Début de l'opération (pour savoir combien de temps l'opération prendra)
+      debut_op = Time.now.to_f # utile pour compter le temps d'une correction
+      case getc('Opération choisie'.bleu)
+      when NilClass, 'n'
+        # => Garder ce mot pour le traiter plus tard
+        mark_treated_in_quick_mode(iprox)
+        return :next
+      when 't'
+        unsupprime_proximite(iprox)
+        mark_treated_in_quick_mode(iprox)
+        return :next
+      when 'o'
+        correction_proximite_confirmed(iprox, debut_op)
+        return :next
+      when 'p'
+        # => Revenir au mot précédent
+        return :previous
+      when 'q'
+        # => Interrompre en sauvant
+        return :save_and_quit
+      when 'z'
+        # => Interrompre sans sauver
+        if self.changements_operes
+          yesOrNo('Voulez-vous vraiment quitter sans sauver ?') && (return :quit)
+        else
+          return :quit
+        end
+      when 's'
+        # => supprimer cette proximité
+        suppression_proximite_confirmed(iprox, debut_op)
+        return :next
+      else
+        "Ce choix est invalide.".rouge_gras
+      end
+    end
+    return
+  end
+  # /traite_proximite_mode_interactif_quick_mode
+
   # Quand on supprime une proximité
   # Noter que pour le moment, ce temps est enregistré au même titre qu'une
   # correction.
@@ -81,6 +159,18 @@ class << self
     enregistre_duree_correction_proximite(debut_op, Time.now.to_f)
     iprox.set_deleted
     self.changements_operes = true
+  end
+
+  def unsupprime_proximite iprox
+    iprox.set_undeleted
+    self.changements_operes = true
+  end
+
+  # En mode rapide, pour que ce mode se souvienne des proximités déjà
+  # traitée, on met la propriété `treated_in_quick_mode` de la propriété à
+  # true
+  def mark_treated_in_quick_mode iprox
+    iprox.set_treated_in_quick_mode
   end
 
   # Quand on confirme la proximité opérée.

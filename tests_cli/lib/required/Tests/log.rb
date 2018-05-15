@@ -30,7 +30,7 @@ class << self
     err.is_a?(String) || begin
       err = err.message + "\n\n" + err.backtrace.join("\n")
     end
-    ecrire('###ERROR: ' + "#{err}".rouge)
+    w('###ERROR: ' + "#{err}".rouge)
   end
 
   # Méthode appelée à la fin des tests, qui lit le fichier log pour voir

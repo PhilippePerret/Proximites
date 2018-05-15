@@ -5,30 +5,26 @@ START PROGRAMME
 -> Texte#save_all
 -> Texte#save_mots… OK
 <- Texte#save_all
-[Tests::next_touche] "q" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+[Tests::next_touche] "q" en réponse à askFor("\n\nCommande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
 EOP
 
 
 
 START PROGRAMME
--> Texte#load_all
--> Texte#load_mots... OK
-Au chargement, les object_id des intances Texte::Mot des proximités correspondent.
--> Proximity::_show(mot = nil)
-Nombre de proximités : 1
--> Proximity::traite_proximite_mode_interactif(iprox.id=1/iprox.object_id:70284527041320)
-Contrôle d’instance (proximity) dans traite_proximite_mode_interactif
-	Contrôle de la proximité #1
-	Proximité en argument    : 70284527041320
-	Proximité dans Proximity : 70284527041320
-		Mot avant dans prox argument : 70284527053940
-		          dans Texte.mots    : 70284527053940
-		
-[Tests::next_touche] "rp vent" en réponse à askFor("Opération choisie") (touches restantes : ["n", "n", "po", "z", true, "z", "z", "z", "z"])
--> remplacer_mot_par_mot
-infosprox: {:index=>0, :avant=>false, :distance=>9, :proche=>true}
-[Tests::next_touche] "n" en réponse à yesOrNo("Confirmez-vous quand même le remplacement ?") (touches restantes : ["n", "po", "z", true, "z", "z", "z", "z"])
-[Tests::next_touche] "n" en réponse à askFor("Opération choisie") (touches restantes : ["po", "z", true, "z", "z", "z", "z"])
-<- Proximity::_show
-[Tests::next_touche] "po" en réponse à askFor("Commande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : ["z", true, "z", "z", "z", "z"])
+[Tests::next_touche] "q" en réponse à askFor("\n\nCommande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+EOP
+
+
+
+START PROGRAMME
+-> Texte#save_all
+-> Texte#save_mots… OK
+<- Texte#save_all
+[Tests::next_touche] "q" en réponse à askFor("\n\nCommande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
+EOP
+
+
+
+START PROGRAMME
+[Tests::next_touche] "q" en réponse à askFor("\n\nCommande suivante sans `proximite ` (q, z = terminer, h = historique, rien pour la même) [ ]") (touches restantes : [])
 EOP

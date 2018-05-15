@@ -3,6 +3,27 @@
 Bienvenue dans le programme proximite dont le but principal est de corriger les
 problèmes de trop grande proximité des mots dans un texte quelconque.
 
+= SYNOPSIS CLASSIQUE =
+
+  * On écrit son texte
+  * On en sort une version .prox.txt du texte original.
+  * On lance la commande `#{'prox check path/to/file.tx'.jaune}`
+    => Elle fait l'analyse des proximités du texte, ce qui peut prendre un mo-
+    ment si le texte est long.
+  * On lance la commande `#{'prox correct -qm'.jaune}` pour distinguer rapide-
+    ment les vraies proximités à corriger des autres à supprimer.
+  * On ouvre le fichier `.prox.txt` dans TextMate en s'assurant qu'il se règle
+    bien au format `Prox (Phil)` (TextMate permet de rechercher très vite les
+    mots qui pourraient se trouver autour)
+  * On lance la commande `#{'prox correct'.jaune}` pour passer en revue chaque
+    proximité.
+  * Pour tester une proximité, c'est-à-dire tester un nouveau mot en s'assurant
+    que ce nouveau mot ne crée pas un nouveau problème de proximité, on peut
+    utiliser la ligne de commande (avec `pp` ou `ps`) ou, plus clairement pour
+    le moment, TextMate en sélectionnant le nouveau mot et en tapant CMD+MAJ+F
+    pour afficher les nouvelles proximités éventuelles.
+  * On corrige la proximité dans le texte original.
+
 = COMMANDES PRINCIPALES =
 
 Trouvez ci-dessous les commandes les plus usitées.
@@ -20,6 +41,14 @@ Trouvez ci-dessous les commandes les plus usitées.
       teractif) permettra d'afficher les proximités l'une après l'autre.
 
       Noter que la commande `correct` sous-entend l'option `-i` par défaut.
+
+      MODE RAPIDE
+
+      On peut ajouter aussi l'option `--quick_mode` (ou `-qm`) qui permet un
+      traitement plus rapide des proximités avec le fait de ne pas avoir à jouer
+      la touche entrée lors du passage en revue des proximités.
+      Ce mode permet de supprimer toutes les proximités indésirable (p) et de
+      garder les proximités à traiter (n) pour ensuite les repasser en revue.
 
   #{'prox[imite] show texte [--from_page=C][--to_page=X]'.jaune}
   #{'prox[imite] texte [--from_page=C][--to_page=X]'.jaune}
@@ -346,3 +375,13 @@ Trouvez ci-dessous les commandes les plus usitées.
   Les informations récupérées sont :
 
       * la durée des corrections.
+
+
+  Vérification des données
+  ========================
+
+  Lorsque de graves problèmes surviennent, par exemple sur un grand texte, après
+  de multiples transformations, on peut lancer une vérification des données par
+  la commande :
+
+      #{'prox[imite] control [<path/to/texte>] [options]'.jaune}

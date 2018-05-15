@@ -32,6 +32,12 @@ class << self
   end
   alias :analyse :check
 
+  # Controle de la validité des fichiers/données produits.
+  def control
+    load_module 'prox/control'
+    Prox.data_control
+  end
+
   # Montre les informations d'occurence et de proximité du fichier donné
   # en argument
   def show

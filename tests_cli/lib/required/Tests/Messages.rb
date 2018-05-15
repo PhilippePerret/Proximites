@@ -73,7 +73,7 @@ class << self
   def fin options = nil
     options ||= Hash.new
 
-    unless failure_list.empty?
+    failure_list.empty? || begin
       failure_list.each do |err|
         puts err.rouge
       end
