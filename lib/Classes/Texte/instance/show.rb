@@ -3,16 +3,31 @@ class Texte
 
   MAX_LEN_LINE = 80
 
+  class << self
+    def colors
+      @colors ||= begin
+        if CLI.options[:output]
+          [:rouge_html, :fond1_html, :vert_html, :fond2_html, :mauve_html, :fond3_html, :jaune_html, :fond4_html, :bleu_html, :fond5_html, :gris_html]
+        else
+          [:rouge, :fond1, :vert, :fond2, :mauve, :fond3, :jaune, :fond4, :bleu, :fond5, :gris]
+        end
+      end
+    end
+    def nombre_colors
+      @nombre_colors ||= colors.count
+    end
+  end
+
   attr_accessor :segment_up, :segment_do, :longueur_segment
 
-  COLORS    = [:rouge, :fond1, :vert, :fond2, :mauve, :fond3, :jaune, :fond4, :bleu, :fond5, :gris]
-  NOMBRE_COLORS = COLORS.count
+
   def next_color
     @icolor ||= -1
     @icolor += 1
-    @icolor < NOMBRE_COLORS || @icolor = 0
-    COLORS[@icolor]
+    @icolor < self.class.nombre_colors || @icolor = 0
+    self.class.colors[@icolor]
   end
+
 
   # Méthode principale répondant à la commande `proximite show texte` pour
   # afficher le texte avec les proximités
@@ -199,6 +214,11 @@ class Texte
 
     end #/boucle si on doit présenter plusieurs pages interactivement
 
+    # Si c'est un export vers un fichier, il faut le finaliser
+    if CLI.options[:output]
+      finaliseOuputHtml
+    end
+
   end
   # /Texte#show
 
@@ -239,10 +259,54 @@ class Texte
   # On indique en début de ligne la longueur de la ligne.
   # On initialise les lignes ensuite.
   def ecrire_lignes_up_and_down
-    puts "\t#{segment_up.gsub(/\n/,'¶')}"
-    puts "\t#{segment_do.gsub(/\n/,'¶')}"
-    puts "\n"
+    if CLI.options[:output]
+      refHtmlFile.puts(segment_up.gsub(/\n/,'¶'))
+      refHtmlFile.puts(segment_do.gsub(/\n/,'¶'))
+    else
+      puts "\t#{segment_up.gsub(/\n/,'¶')}"
+      puts "\t#{segment_do.gsub(/\n/,'¶')}"
+      puts "\n"
+    end
     init_line_up_and_down
+  end
+
+  # Référence au fichier HTML qui reçoit les lignes colorisées, pour
+  # export des proximités
+  def refHtmlFile
+    @refHtmlFile ||= File.open(outputHtmlPath,'a')
+  end
+  # Path du fichier provisoire qui reçoit le code HTML des lignes qui
+  # montre les proximités colorisées
+  def outputHtmlPath
+    @outputHtmlPath ||= './output.html'
+  end
+  # Path au fichier HTML final qui contient la liste des proximités colorisées
+  def finalOutputHtmlPath
+    @finalOutputHtmlPath ||= File.join(Prox.folder_texte,"#{Prox.affixe}-proximites.html")
+  end
+  # Finalisation du fichier HTML contenant les proximités
+  def finaliseOuputHtml
+    refHtmlFile.close
+    code = File.read(outputHtmlPath).force_encoding('utf-8')
+    code = <<-HTML
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>PROXIMITÉS</title>
+  </head>
+  <body>
+    <pre><code>
+#{code}
+    </code></pre>
+  </body>
+</html>
+    HTML
+
+    File.open(finalOutputHtmlPath, 'wb'){|f| f.write(code)}
+    File.unlink(outputHtmlPath) if File.exists?(finalOutputHtmlPath)
+    puts "Le fichier HTML montrant toutes les proximités a été produit.\nIl se trouve dans le fichier '#{File.basename(finalOutputHtmlPath)}',\ndans le dossier contenant le texte (*).\n(*) #{Prox.folder_texte}".vert
+    `open -a Finder "#{Prox.folder_texte}"`
   end
 
 

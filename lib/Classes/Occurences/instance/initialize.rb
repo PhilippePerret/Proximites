@@ -10,7 +10,7 @@ class Occurences
     mot.is_a?(String) || mot = mot.mot_base
     @mot          = mot
     @proximites   = Array.new # liste d'ID de Proximity
-    @offsets      = Array.new # Liste de Fixnum (offset du mot)
+    @offsets      = Array.new # Liste de Integer (offset du mot)
     @indexes      = Array.new # Liste des index des mots
     @derives      = Array.new # les mots dérivés (mot != mot_base)
     @similarites  = Array.new # les mots similaires

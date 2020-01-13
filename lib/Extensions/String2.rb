@@ -18,11 +18,11 @@ class String
   # +ibit+ Indice du bit à modifier
   # +valbit+ Valeur à donner au bit +ibit+ (0-start)
   #
-  # @param {Fixnum} dec
+  # @param {Integer} dec
   #                 Index dans le string (0-start)
-  # @param {Fixnum} val
+  # @param {Integer} val
   #                 Nouvelle valeur à lui donner, en base 10
-  # @param {Fixnum} base
+  # @param {Integer} base
   #                 Base dans laquelle écrire le bit (10 par défaut)
   #
   # @return {String}
@@ -35,12 +35,12 @@ class String
   end
 
   # Retourne le "bit" à +dec+ dans self
-  # @param {Fixnum} dec
+  # @param {Integer} dec
   #                 Offset dans la chaine
-  # @param {Fixnum} base
+  # @param {Integer} base
   #                 Optionnellement, la base du bit (de 2 à 36)
   #
-  # @return {Fixnum} bit
+  # @return {Integer} bit
   #                  La valeur du bit dans la base donnée ou 10
   def get_bit dec, base = nil
     self[dec].to_i(base||10)
@@ -126,7 +126,7 @@ class String
     return str
   end
 
-  # {Fixnum} Quand le string est une horloge, la transforme en
+  # {Integer} Quand le string est une horloge, la transforme en
   # secondes
   def h2s
     str = self.split(':').reverse

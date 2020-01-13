@@ -26,7 +26,7 @@ class Time
 
   # Retourne le laps de temps entre maintenant et le temps fourni en
   # argument.
-  # @param {Time|Fixnum} +time+ Soit le temps, soit le nombre de secondes
+  # @param {Time|Integer} +time+ Soit le temps, soit le nombre de secondes
   # @param {Hash} options Des options
   #
   def laps_from time, options = nil

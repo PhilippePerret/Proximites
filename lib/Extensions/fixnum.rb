@@ -1,5 +1,5 @@
 # encoding: UTF-8
-class Fixnum
+class Integer
 
   # Reçoit un nombre de secondes et retourne un string de la forme "h:mm:ss"
   def as_horloge
@@ -63,4 +63,4 @@ class Fixnum
     "#{self * 100} #{pour_mille ? '‰' : '%'}"
   end
 
-end #/Fixnum
+end #/Integer

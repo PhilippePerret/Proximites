@@ -7,22 +7,21 @@ problèmes de trop grande proximité des mots dans un texte quelconque.
 
   * On écrit son texte
   * On en sort (compile) une version .prox.txt du texte original.
-  * On lance la commande `#{'prox check /absolute/path/to/file.tx'.jaune}`
+  * On lance la commande `[0;93mprox check /absolute/path/to/file.tx[0m`
     => Elle fait l'analyse des proximités du texte, ce qui peut prendre un mo-
     ment si le texte est long.
-    Ajouter l'option #{'--dmax_normale=XXXX'.jaune} pour modifier la distance normale
-    de proximité (en remplaçant 'XXXX' par le nombre de caractères voulus,
-    1500 par défaut).
+    Ajouter l'option [0;93m--dmax_normale=1000[0m pour modifier la distance
     (noter qu'il faut fournir absolument le chemin absolu, on ne peut pas se
      trouver dans le dossier du projet)
-  * On lance la commande `#{'prox correct -qm'.jaune}` pour distinguer rapide-
+  * On lance la commande `[0;93mprox correct -qm[0m` pour distinguer rapide-
     ment les vraies proximités à corriger des autres à supprimer.
-  * On lance la commande `#{'prox show texte --output'.jaune}` pour sortir un
+  * On lance la commande `[0;93mprox show texte --output[0m` pour sortir un
     fichier HTML qui montre toutes les proximités trouvées.
+    normale de proximité (1500 par défaut).
   * On ouvre le fichier `.prox.txt` dans TextMate en s'assurant qu'il se règle
     bien au format `Prox (Phil)` (TextMate permet de rechercher très vite les
     mots qui pourraient se trouver autour)
-  * On lance la commande `#{'prox correct'.jaune}` pour passer en revue chaque
+  * On lance la commande `[0;93mprox correct[0m` pour passer en revue chaque
     proximité.
   * Pour tester une proximité, c'est-à-dire tester un nouveau mot en s'assurant
     que ce nouveau mot ne crée pas un nouveau problème de proximité, on peut
@@ -35,13 +34,13 @@ problèmes de trop grande proximité des mots dans un texte quelconque.
 
 Trouvez ci-dessous les commandes les plus usitées.
 
-  #{'prox[imite] check mon/fichier.txt'.jaune}
+  [0;93mprox[imite] check mon/fichier.txt[0m
 
       Incontournable, elle lance le check du texte contenu dans le fichier
       `mon/fichier.txt`
 
-  #{'prox[imite] show proximites [-i]'.jaune}
-  #{'prox[imite] correct'}
+  [0;93mprox[imite] show proximites [-i][0m
+  prox[imite] correct
 
       Si c'est un texte court, on peut afficher la liste des proximités de cette
       façon, sans l'option `-i`. Si c'est un texte long, l'option `-i` (pour in-
@@ -57,14 +56,14 @@ Trouvez ci-dessous les commandes les plus usitées.
       Ce mode permet de supprimer toutes les proximités indésirable (p) et de
       garder les proximités à traiter (n) pour ensuite les repasser en revue.
 
-  #{'prox[imite] show texte [--from_page=C][--to_page=X]'.jaune}
-  #{'prox[imite] texte [--from_page=C][--to_page=X]'.jaune}
+  [0;93mprox[imite] show texte [--from_page=C][--to_page=X][0m
+  [0;93mprox[imite] texte [--from_page=C][--to_page=X][0m
 
       Permet d'afficher le texte avec l'indication des proximités. Si le texte
       est long, on peut demander l'affichage de pages en pages avec :
 
-  #{'prox[imite] show texte -pp'.jaune}
-  #{'prox[imite] show texte --per_page'.jaune}
+  [0;93mprox[imite] show texte -pp[0m
+  [0;93mprox[imite] show texte --per_page[0m
 
       Affiche le texte avec l'indication des proximités de page en page.
 
@@ -73,7 +72,7 @@ Trouvez ci-dessous les commandes les plus usitées.
 
   La base des commandes est :
 
-      #{'prox[imite] [commande] [arg-commande] [path] [options]'.jaune}
+      [0;93mprox[imite] [commande] [arg-commande] [path] [options][0m
 
   Le `[path]` peut être omis si c’est le même que pour la commande précédente.
   Pour le moment, les `[options]` doivent impérativement être mises après.
@@ -81,54 +80,54 @@ Trouvez ci-dessous les commandes les plus usitées.
   Options générales
   -----------------
 
-      #{'--verbose/-vb'.gras}     Mode verbeux, pour afficher tous les messages.
+      [1m--verbose/-vb[0m     Mode verbeux, pour afficher tous les messages.
 
-      #{'--ksort=[count|mot]'.gras}
+      [1m--ksort=[count|mot][0m
 
           Permet de déterminer la clé de classement lors de l'affichage d'une
           liste. Par exemple, pour voir les occurences de tous les mots classés
           par ordre alphabétique :
 
-              #{'prox show occurences test/texte_court.txt --ksort=mot'.jaune}
-              #{'prox proximites --ksort=count'.jaune}
+              [0;93mprox show occurences test/texte_court.txt --ksort=mot[0m
+              [0;93mprox proximites --ksort=count[0m
 
           Par défaut, c'est `count` qui est utilisé, en mettant les plus nom-
           breux en haut (ordre décroissant).
 
-      #{'--all'.gras}
+      [1m--all[0m
 
           Pour  tout traiter, suivant les cas. Par exemple, avec les proximités,
           l’option signifie qu’il faut afficher toutes les proximités, même cel-
           les qui ont été marquées supprimées ou traitées :
 
-              #{'prox show proximites test/texte_long.txt --all'.jaune}
+              [0;93mprox show proximites test/texte_long.txt --all[0m
 
-      #{'--only=X'.gras}
+      [1m--only=X[0m
 
           Pour limiter l’affichage à un certain nombre d’items. Ne fonctionne
           pas encore pour tout.
           Par exemple, si on veut seulement voir les 100 premiers mots à occu-
           rences fortes, on peut faire :
 
-              #{'prox show occurences --only=100 mon/fichier/texte.txt'.jaune}
+              [0;93mprox show occurences --only=100 mon/fichier/texte.txt[0m
 
-      #{'-tr/--treated'.gras}
+      [1m-tr/--treated[0m
 
           Pour ne considérer que les occurences traitées. Par exemple, quand on
           demande :
 
-              #{'prox show occurences --treated'.jaune}
+              [0;93mprox show occurences --treated[0m
 
           … alors seules les occurences traitées seront affichées.
           Noter que le path n'est pas indiqué, il s'agit donc du dernier fichier
           traités.
 
-      #{'-t/--texte'.gras}
+      [1m-t/--texte[0m
 
           Indique que le dernier paramètre n’est pas le path  du  fichier texte,
           mais le texte à étudier. Par exemple :
 
-              #{'prox -t check "Le texte à étudier."'.jaune}
+              [0;93mprox -t check \"Le texte à étudier.\"[0m
 
   Configuration
   -------------
@@ -139,7 +138,7 @@ Trouvez ci-dessous les commandes les plus usitées.
   Aide
   ----
 
-  #{'prox'.gras} #{'prox help'.gras} #{'prox aide'.gras}
+  [1mprox[0m [1mprox help[0m [1mprox aide[0m
 
       Pour afficher cette aide.
 
@@ -148,8 +147,8 @@ Trouvez ci-dessous les commandes les plus usitées.
   Analyse du texte
   ----------------
 
-  #{'prox c[heck] <path> [options]'.gras}
-  #{'prox -t c[heck] <texte> [options]'.gras}
+  [1mprox c[heck] <path> [options][0m
+  [1mprox -t c[heck] <texte> [options][0m
 
 
       Méthode principale pour checker le texte qui se trouve au path  +path+ ou
@@ -159,15 +158,15 @@ Trouvez ci-dessous les commandes les plus usitées.
       Options
       -------
 
-        #{'--from=X'.gras}
+        [1m--from=X[0m
 
             Pour n'analyser le texte qu'à partir du caractère d'offset X.
 
-        #{'--to=X'.gras}
+        [1m--to=X[0m
 
             Pour n'analyser le texte que jusqu'au caractère d'offset X.
 
-        #{'--dmax_possible=<nombre signes|pages>'.gras}
+        [1m--dmax_possible=<nombre signes|pages>[0m
 
             Définit la distance de proximité maximale.
             Rappel : la distance maximale de proximité entre deux occurences du
@@ -177,20 +176,20 @@ Trouvez ci-dessous les commandes les plus usitées.
             Mais avec des mots qui n'apparaitrait que 2 ou 3 fois sur 400 pages,
             la distance de proximité pourrait être de 200 pages, ce qui est trop
             grand et ne veut plus rien dire.
-            On utilise donc cette #{'distance maximale possible'.gras} pour limiter la
+            On utilise donc cette [1mdistance maximale possible[0m pour limiter la
             distance à quelque chose de raisonnable : 3 pages par défaut.
             Rappel : une page fait 1500 signes.
             Exemple pour limiter la distance max à 2 pages, donc 3000 signes.
 
-              #{'prox check mon/texte.txt --dmax_possible=3000'}
+              prox check mon/texte.txt --dmax_possible=3000
 
             ou (le programme détecte si ce sont des pages ou des signes à partir
             du moment où le nombre est inférieur ou supérieur à 50)
 
-              #{'prox check mon/texte.txt --dmax_possible=2'}
+              prox check mon/texte.txt --dmax_possible=2
 
 
-        #{'--dmax_normale=<nombre signes|pages>'.gras}
+        [1m--dmax_normale=<nombre signes|pages>[0m
 
             Par défaut, la distance normale de proximité — c'est-à-dire la distan-
             ce sous laquelle on considère qu'un mot quelconque est en proximité –
@@ -199,23 +198,23 @@ Trouvez ci-dessous les commandes les plus usitées.
             dans les données du texte (fichier .config.rb)
             Par exemple :
 
-              #{'prox check -t "Mon texte est un texte." --dmax_normale=10'.jaune}
+              [0;93mprox check -t \"Mon texte est un texte.\" --dmax_normale=10[0m
 
             … définira que la distance normale est de 10 signes. Si deux occuren-
             ces du même mot sont à moins de 10 signes, ils sont considérés comme
             proches.
 
-        #{'--fin'.gras}
+        [1m--fin[0m
 
             L'analyse de proximité se fait sur la base d'une page, c'est-à-dire
-            de #{Proximity::DISTANCE_MAX_NORMALE} signes. En ajoutant cette op-
+            de 1500.0 signes. En ajoutant cette op-
             tions, on peut faire un traitement plus fin, qui tienne un peu comp-
             te de la “rareté” du mot. Si un mot est très rare (moins de 0.02
             pour 1000 mots), on ne devrait pas le trouver à moins de 4 pages et
             s'il est simplement “rare”, on ne devra pas le trouver à moins de 2
             pages d'une de ses occurences.
 
-        #{'--log'.gras}
+        [1m--log[0m
 
             Pour enregistrer dans un fichier tous les choix qui ont permis de
             faire les choix de proximité. Ce fichier doit permettre de s'assurer
@@ -224,7 +223,7 @@ Trouvez ci-dessous les commandes les plus usitées.
 
             Pour lire le log, utiliser la commande :
 
-                #{'prox[imite] show log'.jaune}
+                [0;93mprox[imite] show log[0m
 
   Affichage des résultats
   =======================
@@ -232,22 +231,22 @@ Trouvez ci-dessous les commandes les plus usitées.
     Résumé des commandes
     --------------------
 
-          #{'prox[imite] show proximites [-i][--all]'.jaune}
-          #{'prox[imite] show proximite <mot> [-i]'.jaune}
-          #{'prox[imite] show proximite <ID> [-i]'.jaune}
-          #{'prox[imite] proximites [--all]'.jaune}
+          [0;93mprox[imite] show proximites [-i][--all][0m
+          [0;93mprox[imite] show proximite <mot> [-i][0m
+          [0;93mprox[imite] show proximite <ID> [-i][0m
+          [0;93mprox[imite] proximites [--all][0m
 
-          #{'prox[imite] show occurences'.jaune}
-          #{'prox[imite] show occurence <mot>'.jaune}
-          #{'prox[imite] occurences'.jaune}
+          [0;93mprox[imite] show occurences[0m
+          [0;93mprox[imite] show occurence <mot>[0m
+          [0;93mprox[imite] occurences[0m
 
-          #{'prox[imite] show text[e] [-fp/--from_page=X] [-tp/--to_page=Z]'.jaune}
+          [0;93mprox[imite] show text[e] [-fp/--from_page=X] [-tp/--to_page=Z][0m
 
-          #{'prox[imite] infos'.jaune}
-          #{'prox[imite] stats'.jaune}
+          [0;93mprox[imite] infos[0m
+          [0;93mprox[imite] stats[0m
 
 
-  #{'prox s[how] <what> [path] [options]'.gras}
+  [1mprox s[how] <what> [path] [options][0m
 
       Permet d'afficher les résultats de test de proximité  et  d'occurence.  On
       peut les afficher en console ou  dans un fichier séparés  ne contenant que
@@ -259,16 +258,16 @@ Trouvez ci-dessous les commandes les plus usitées.
       Sans option, les données sont affichées en console. Pour les  mettre  dans
       un fichier qui sera ouvert :
 
-          #{'prox s[how] [path] --output=[format]/-o=[format] --open'.jaune}
+          [0;93mprox s[how] [path] --output=[format]/-o=[format] --open[0m
 
       Par défaut, le format est du simple texte (.txt)
 
-  #{'prox[imite] proximites [--ksort=count]'.jaune}
+  [0;93mprox[imite] proximites [--ksort=count][0m
 
       Permet d’afficher seulement les mots qu'on trouve en proximités, sans
       répétition, mais sans détail de ces proximités.
 
-  #{'prox[imite] show text[e]'.jaune}
+  [0;93mprox[imite] show text[e][0m
 
       Affiche le texte en indiquant les proximités qui ont été relevées, de fa-
       çon très visuel.
@@ -277,16 +276,16 @@ Trouvez ci-dessous les commandes les plus usitées.
       ficchage à une portion de texte (une page fait 1500 signes par défaut).
       Exemple :
 
-          #{'prox show texte --from_page=1O0 -tp=120'.jaune}
+          [0;93mprox show texte --from_page=1O0 -tp=120[0m
           # Affiche le texte, des pages 100 à 120
 
       On peut aussi le faire avec --from et --to en indiquand le décalage. Par
       exemple :
 
-          #{'prox show text --from=12566 --to=12800'.jaune}
+          [0;93mprox show text --from=12566 --to=12800[0m
           # Affiche le texte, du signe 12566 au signe 12800
 
-  #{'prox s[how] stats [path]'.jaune}
+  [0;93mprox s[how] stats [path][0m
 
       Pour afficher les statistiques concernant le texte, c’est-à-dire le nombre de
       mots, de proxmités, la longueur du texte, etc.
@@ -298,17 +297,17 @@ Trouvez ci-dessous les commandes les plus usitées.
       Résumé de toutes les commandes
       ------------------------------
 
-          #{'prox s[how] proximites [path] [options]'.jaune}
+          [0;93mprox s[how] proximites [path] [options][0m
             # Affiche toutes les proximités les unes au-dessus des autres.
-          #{'prox -i s[how] proximites [path] [options]'.jaune}
+          [0;93mprox -i s[how] proximites [path] [options][0m
             # Passe en revue toutes les proximités en mode interactif
-          #{'prox s[how] proximite <mot> [path] [options]'.jaune}
+          [0;93mprox s[how] proximite <mot> [path] [options][0m
             # Noter le singulier.
             # Proximités du mot <mot>. Avec l’option `-i`, en mode interactif.
-          #{'prox s[how] proximite <ID> [path] [options]'.jaune}
+          [0;93mprox s[how] proximite <ID> [path] [options][0m
             # Noter le singulier.
             # Proximité d'identifiant <ID> en mode interactif avec l’option -i.
-          #{'prox[imite] proximites [--ksort=count]'.jaune}
+          [0;93mprox[imite] proximites [--ksort=count][0m
             # Affiche la liste simple des mots en proximité, classés soit par
             # order alphabétique (défaut) soit suivant le nombre de proximités
             # trouvées (--ksort=count)
@@ -320,10 +319,10 @@ Trouvez ci-dessous les commandes les plus usitées.
   Pouvoir faire une analyse des proximités de mots et pouvoir les corriger, sa-
   chant que le français supporte mal ces répétitions.
 
-  Après avoir lancé le check du texte (`#{'prox check mon/fichier.txt'.jaune}`), on
+  Après avoir lancé le check du texte (`[0;93mprox check mon/fichier.txt[0m`), on
   peut lancer la commande suivante pour voir s’afficher toutes les proximités :
 
-      #{'prox s[how] proximites'.jaune}
+      [0;93mprox s[how] proximites[0m
 
   (noter que le path a été mémorisé, inutile de le remettre)
   Cette méthode affiche toutes les proximités de mots trouvés.
@@ -332,7 +331,7 @@ Trouvez ci-dessous les commandes les plus usitées.
   et il est beaucoup plus pratique d’afficher les proximités les unes après les
   autres grâce à l’option `interactif` :
 
-      #{'prox -i s[how] proximites'.jaune} ou #{'prox correct'.jaune}
+      [0;93mprox -i s[how] proximites[0m ou [0;93mprox correct[0m
 
   Les avantages sont les suivants :
 
@@ -348,19 +347,19 @@ Trouvez ci-dessous les commandes les plus usitées.
   Information sur un mot
   ======================
 
-      #{'prox[imite] s[how] <mot> [--deep]'.jaune}
+      [0;93mprox[imite] s[how] <mot> [--deep][0m
 
           Affiche toutes les informations sur le mot <mot>, c’est-à-dire son
           nombre d’occurences, de proximités.
 
-          Si l’option #{'--deep'.gras} est utilisée, on affiche les infos en
+          Si l’option [1m--deep[0m est utilisée, on affiche les infos en
           profondeur, c’est-à-dire par exemple qu’on va donner les offsets de
           chacune des occurences, le détail des proximités, etc.
 
   Informations sur le texte
   =========================
 
-  #{'prox[imite] infos'.gras}
+  [1mprox[imite] infos[0m
 
   Affiche des informations générales sur le texte, comme la dernière commande
   utilisée, le nombre de corrections effectuées, la durée moyenne de correction,
@@ -375,9 +374,9 @@ Trouvez ci-dessous les commandes les plus usitées.
   ---------------------------------------------
 
   On peut récupérer des informations générales (comme la durée des corrections)
-  d'un autre fichier à l'aide de la commande #{'get'.jaune} :
+  d'un autre fichier à l'aide de la commande [0;93mget[0m :
 
-      #{'prox[imité] get infos <path/to/file>'.jaune}
+      [0;93mprox[imité] get infos <path/to/file>[0m
 
   Les informations récupérées sont :
 
@@ -391,4 +390,4 @@ Trouvez ci-dessous les commandes les plus usitées.
   de multiples transformations, on peut lancer une vérification des données par
   la commande :
 
-      #{'prox[imite] control [<path/to/texte>] [options]'.jaune}
+      [0;93mprox[imite] control [<path/to/texte>] [options][0m

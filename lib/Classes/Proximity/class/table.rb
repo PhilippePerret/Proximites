@@ -37,7 +37,7 @@ class << self
   #
   # Il faut aussi désolidariser les deux mots associés à cette proxmité.
   def destroy prox_id
-    prox_id.is_a?(Fixnum) || prox_id = prox_id.id
+    prox_id.is_a?(Integer) || prox_id = prox_id.id
     iprox = table[prox_id]
     occur_motA = Occurences[iprox.mot_avant.mot_base]
     occur_motA && occur_motA.retire_proximite(iprox.mot_avant.prox_ids[:apres])

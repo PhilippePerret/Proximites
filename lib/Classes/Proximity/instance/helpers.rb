@@ -10,8 +10,8 @@ class Proximity
   # avec l'option -i/-interactif, afficher proximité après proximité, ce qui
   # permet de les "annoter"
   #
-  # @param {Fixnum} index_prox      Numéro de la proxmité courante
-  # @param {Fixnum} nombre_total    Nombre total de proximités courantes
+  # @param {Integer} index_prox      Numéro de la proxmité courante
+  # @param {Integer} nombre_total    Nombre total de proximités courantes
   #
   def as_block index_prox = nil, nombre_total = nil
     # "\n\n\t#{DIVISEUR}"

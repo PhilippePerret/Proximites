@@ -10,10 +10,10 @@ class Occurences
   # les instances Texte::Mot portent le nom `imot`.
   attr_reader :mot
 
-  # {Array of Fixnum} Tous les indexs de mots de cette occurence
+  # {Array of Integer} Tous les indexs de mots de cette occurence
   attr_reader :indexes
 
-  # {Array of Fixnum} Liste de tous les offsets
+  # {Array of Integer} Liste de tous les offsets
   # La liste a été ajoutée quand on veut tester les propositions de nouveaux
   # mots, pour vérifier la distance (et seulement la distance)
   attr_reader :offsets

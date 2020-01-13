@@ -46,7 +46,6 @@ class << self
 
   # Affiche toutes les occurences
   def show
-    suivi '-> Occurences::show'
     if CLI.options[:output]
       # <= Sortie dans un fichier
       p = File.expand_path('./occurences')

@@ -40,7 +40,7 @@ Au contraire, si on utilise les méthodes `ask`, il suffit de définir avant le 
 
 ### Séquence de touche
 
-On a vu ci-dessous qu'on définissait la séquence de touches qui va être jouée avant de lancer le programme. De façon simple, cette suite de touches peut être définies simplement avec les touches, des `String` ou des `Fixnum` (nombre).
+On a vu ci-dessous qu'on définissait la séquence de touches qui va être jouée avant de lancer le programme. De façon simple, cette suite de touches peut être définies simplement avec les touches, des `String` ou des `Integer` (nombre).
 
 La séquence des touches peut également se définir en second argument de la méthode `run` :
 

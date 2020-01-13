@@ -25,7 +25,7 @@ class << self
     if mot.nil?
       liste_proximites = table.values
       # Tests::Log << "liste_proximites = #{liste_proximites.inspect}"
-    elsif mot.is_a?(Fixnum)
+    elsif mot.is_a?(Integer)
       Proximity[mot] || raise('La proximité d’identifiant #%i n’existe pas.' % [mot])
       liste_proximites = [Proximity[mot]]
       mot = liste_proximites.first.mot_avant.mot
@@ -64,11 +64,12 @@ class << self
       # <= mode normal
       liste_proximites  = liste_proximites.select{ |prox| prox.displayable? }
     end
+
+    # Nombre proximités à traiter
     nombre_proximites = liste_proximites.count
 
     CLI.options[:all] || begin
       mark_nombres_header << "non traitées : #{nombre_proximites}"
-      mark_nombres_footer << "#{'Proximités non traitées'.ljust(len_libelle_footer)} : #{nombre_proximites}"
     end
 
     CLI.options[:only] && begin
@@ -149,9 +150,14 @@ class << self
     # =========================================================
     # On boucle sur chaque proximité à afficher
 
+    # Pour comptabiliser les proximités traitées, afin d'indiquer un
+    # nombre juste en footer
+    nombre_proximites_treated = 0
+
     if quick_mode
       index_prox = 0
       while iprox = liste_proximites[index_prox]
+        nombre_proximites_treated += 1
         # puts "*** Traitement de iprox #{iprox.id}"
         index_prox = proced.call(iprox, 1 + index_prox)
         # puts "#{RET}index_prox = #{index_prox.inspect}".jaune
@@ -163,6 +169,7 @@ class << self
     else
       # <= Mode normal
       liste_proximites.each_with_index do |prox, index_prox|
+        nombre_proximites_treated += 1
         proced.call(iprox, 1 + index_prox)
       end
     end
@@ -175,6 +182,9 @@ class << self
 
     # FOOTER
     # ======
+    CLI.options[:all] || begin
+      mark_nombres_footer << "#{'Proximités non traitées'.ljust(len_libelle_footer)} : #{nombre_proximites - nombre_proximites_treated} (#{nombre_proximites} - #{nombre_proximites_treated})"
+    end
     duree_corrections = estimation_duree_corrections(nombre_proximites)
     mark_nombres_footer << "#{'Durée corrections estimée'.ljust(len_libelle_footer)} : #{duree_corrections}"
     mark_nombres_footer << "#{'Durée d’une correction'.ljust(len_libelle_footer)} : #{texte.info(:duree_moy_correction_prox).round(2)} secs"

@@ -59,6 +59,11 @@ class << self
     @folder_module ||= File.expand_path(File.join('.','lib','module'))
   end
 
+  # Dossier qui contient le texte analysé
+  def folder_texte
+    @folder_texte ||= File.dirname(path)
+  end
+
 
   # Le dossier du texte courant (i.e. de la Prox courante)
   def folder

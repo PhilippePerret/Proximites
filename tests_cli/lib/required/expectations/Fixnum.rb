@@ -1,6 +1,6 @@
 # encoding: UTF-8
 
-class Fixnum
+class Integer
 
   # @usage :  x.should_equal(expected, <message d'erreur>)
   def should_equal expected, mess_ok
@@ -25,4 +25,4 @@ class Fixnum
   end
 
 
-end #/Fixnum
+end #/Integer

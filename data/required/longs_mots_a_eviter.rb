@@ -35,7 +35,7 @@ class Mot
     MOTS_A_DISTANCE_MIN_FIXE.each do |cle, value|
       value =
         case value
-        when Fixnum then value
+        when Integer then value
         when /^([0-9]+)p$/
           # => Nombre de pages
           nombre_pages = $1.to_i

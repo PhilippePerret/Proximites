@@ -3,7 +3,7 @@ class Prox
 class << self
 
   # On s'assure :
-  #   - que tous les fichiers nécessaires ait été produits
+  #   - que tous les fichiers nécessaires aient été produits
   def control_files
 
     confirm(File.exist?(folder), 'Le dossier principal “%s” existe', [File.basename(folder)])
